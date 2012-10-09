@@ -4,13 +4,27 @@ function FirstView() {
 	var self = Ti.UI.createView();
 	
 	//label using localization-ready strings from <app dir>/i18n/en/strings.xml
-	var label = Ti.UI.createLabel({
+	var time = Ti.UI.createLabel({
 		color:'#000000',
-		text:String.format(L('welcome'),'Titanium'),
+		text: '00:00:00',
 		height:'auto',
 		width:'auto'
 	});
-	self.add(label);
+	self.add(time);
+	
+	var btnStartStop = Ti.UI.createButton({
+		title: 'Start'
+	});
+	var btnNextLap = Ti.UI.createButton({
+		title: 'Next Lap'
+	});
+	var btnReset = Ti.UI.createButton({
+		title: 'Reset'
+	});
+
+	self.add(btnStartStop);
+	self.add(btnNextLap);
+	self.add(btnReset);
 	
 	//Add behavior for UI
 	label.addEventListener('click', function(e) {
