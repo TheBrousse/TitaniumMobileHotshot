@@ -47,7 +47,12 @@ function FirstView() {
 	
 	btnNextLap.addEventListener('click', function(e) {
 		if (init > 0) {
-			label = readout;
+			var row = Ti.UI.createTableViewRow({
+				title: readout
+			});
+			
+			tableLaps.appendRow(row);
+			
 			if (ii == 9) {
 				ii = 0;
 			} else {
