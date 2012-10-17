@@ -1,44 +1,138 @@
-/*
- * Single Window Application Template:
- * A basic starting point for your application.  Mostly a blank canvas.
- * 
- * In app.js, we generally take care of a few things:
- * - Bootstrap the application with any data we need
- * - Check for dependencies like device type, platform version or network connection
- * - Require and open our top-level UI component
- *  
- */
-
-//bootstrap and check dependencies
 if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
 }
 
-// This is a single context application with mutliple windows in a stack
-(function() {
-	//determine platform and form factor and render approproate components
-	var osname = Ti.Platform.osname,
-		version = Ti.Platform.version,
-		height = Ti.Platform.displayCaps.platformHeight,
-		width = Ti.Platform.displayCaps.platformWidth;
-	
-	//considering tablet to have one dimension over 900px - this is imperfect, so you should feel free to decide
-	//yourself what you consider a tablet form factor for android
-	var isTablet = osname === 'ipad' || (osname === 'android' && (width > 899 || height > 899));
-	
-	var Window;
-	if (isTablet) {
-		Window = require('ui/tablet/ApplicationWindow');
+var Stopwatch = require('stopwatch');
+var sw = new Stopwatch(stopwatchListener, 1);
+
+var win = Ti.UI.createWindow({
+	backgroundColor:'#000000'
+});
+
+var mainView = Ti.UI.createView({
+	layout: 'vertical'
+});
+
+// Création de la vue du timer
+var timeView = Ti.UI.createView({
+	top:0,
+	width: '100%',
+	height: '30%',
+	backgroundColor: '#1C1C1C'
+});
+
+label = Ti.UI.createLabel({
+//	color: '#404040',
+	text: 'READY?',
+	height: 'auto',
+	textAlign: 'center',
+	verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
+	font:{
+		fontSize: '55dp',
+		fontWeight: 'bold'
 	}
-	else {
-		// Android uses platform-specific properties to create windows.
-		// All other platforms follow a similar UI pattern.
-		if (osname === 'android') {
-			Window = require('ui/handheld/android/ApplicationWindow');
-		}
-		else {
-			Window = require('ui/handheld/ApplicationWindow');
-		}
+});
+
+timeView.add(label);
+mainView.add(timeView);
+
+// Container view for buttons
+var buttonsView = Ti.UI.createView({
+	width: '100%',
+	height: '10%',
+	layout: 'horizontal'
+});
+
+// First button : stop / reset
+var buttonStopReset = Ti.UI.createButton({
+	title: 'STOP',
+	color: '#C0BFBF',
+	width: '50%',
+	height: Ti.UI.FILL,
+	backgroundColor: '#404040',
+	font: {
+		fontSize: '25dp',
+		fontWeight: 'bold'
 	}
-	new Window().open();
-})();
+});
+
+buttonsView.add(buttonStopReset);
+
+// Second button : go / lap
+var buttonStartLap = Ti.UI.createButton({
+    title: 'GO!',
+    color: '#C0BFBF',
+	width: '50%',
+	height: Ti.UI.FILL,
+	backgroundColor: '#727F7F',
+    font: {
+        fontSize: '25dp',
+        fontWeight: 'bold'
+    }
+});
+
+buttonsView.add(buttonStartLap);
+
+mainView.add(buttonsView);
+
+// Enfin on rajoute la TableView qui va contenir les différents laps
+var table = Ti.UI.createTableView({
+	width: '100%',
+	height:Ti.UI.FILL,
+	backgroundColor: '#C0BFBF',
+});
+
+mainView.add(table);
+
+var running = false;
+
+buttonStartLap.addEventListener('click', function(e) {
+	// Si ca tourne, on enregistre un nouveau lap
+	if (running){
+		var data = table.getData();
+
+		// Ajout du nouveau lap dans la liste
+		var row = Ti.UI.createTableViewRow({
+		    title: sw.toString(),
+		    color: '#404040',
+		    className: 'lap',
+		    leftImage: '/images/lap.png',
+		    font:{
+                fontSize: '24dp',
+                fontWeight: 'bold'
+            }
+		});			
+		
+	    table.appendRow(row);
+	} else {
+		// If the clock is not ticking, then we start it
+		running = true;
+		buttonStartLap.title = 'LAP!';
+		buttonStopReset.title = 'STOP';
+		sw.start();
+	}
+});
+
+buttonStopReset.addEventListener('click', function(e) {
+	// Si ca tourne, on éteint le chrono
+	if (running) {
+		buttonStartLap.title = 'GO!';
+		buttonStopReset.title = 'RESET';
+		label.text = 'READY?';
+        sw.stop();
+        running = false;
+	} else {
+		// Si ca tourne pas, on fait le reset des laps
+		table.setData([]);
+		sw.reset();
+	}
+});
+
+function stopwatchListener(watch) {
+	var elapsed = watch.getElapsed();
+	label.text = watch.toString(); 
+}
+
+win.add(mainView);
+
+win.open();
