@@ -6,14 +6,11 @@ var Stopwatch = require('stopwatch');
 var sw = new Stopwatch(stopwatchListener, 1);
 
 var win = Ti.UI.createWindow({
-	backgroundColor:'#000000'
-});
-
-var mainView = Ti.UI.createView({
+	backgroundColor: '#000000',
 	layout: 'vertical'
 });
 
-// Création de la vue du timer
+// Timer View
 var timeView = Ti.UI.createView({
 	top:0,
 	width: '100%',
@@ -22,7 +19,7 @@ var timeView = Ti.UI.createView({
 });
 
 label = Ti.UI.createLabel({
-//	color: '#404040',
+	color: '#404040',
 	text: 'READY?',
 	height: 'auto',
 	textAlign: 'center',
@@ -34,7 +31,7 @@ label = Ti.UI.createLabel({
 });
 
 timeView.add(label);
-mainView.add(timeView);
+win.add(timeView);
 
 // Container view for buttons
 var buttonsView = Ti.UI.createView({
@@ -73,7 +70,7 @@ var buttonStartLap = Ti.UI.createButton({
 
 buttonsView.add(buttonStartLap);
 
-mainView.add(buttonsView);
+win.add(buttonsView);
 
 // Enfin on rajoute la TableView qui va contenir les différents laps
 var table = Ti.UI.createTableView({
@@ -82,7 +79,7 @@ var table = Ti.UI.createTableView({
 	backgroundColor: '#C0BFBF',
 });
 
-mainView.add(table);
+win.add(table);
 
 var running = false;
 
@@ -132,7 +129,5 @@ function stopwatchListener(watch) {
 	var elapsed = watch.getElapsed();
 	label.text = watch.toString(); 
 }
-
-win.add(mainView);
 
 win.open();
