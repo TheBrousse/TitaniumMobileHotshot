@@ -32,7 +32,7 @@ win.add(timeView);
 
 // Stopwatch specific code
 var Stopwatch = require('stopwatch');
-var stopWatch = new Stopwatch(stopwatchListener, 1);
+var stopWatch = new Stopwatch(stopwatchListener, 10);
 
 function stopwatchListener(watch) {
 	label.text = watch.toString(); 
@@ -81,16 +81,15 @@ win.add(buttonsView);
 var table = Ti.UI.createTableView({
 	width: '100%',
 	height:Ti.UI.FILL,
-	backgroundColor: '#C0BFBF',
+	backgroundColor: '#C0BFBF'
 });
+win.add(table);
 
 var isRunning = false;
 
 buttonStartLap.addEventListener('click', function(e) {
 	// If the timer is running, we add a new lap
-	if (isRunning){
-		var data = table.getData();
-
+	if (isRunning) {
 		// Append a new lap in the list
 		var row = Ti.UI.createTableViewRow({
 			title: stopWatch.toString(),
@@ -98,7 +97,7 @@ buttonStartLap.addEventListener('click', function(e) {
 			className: 'lap',
 			leftImage: '/images/lap.png',
 			font:{
-				fontSize: '24dp',
+				fontSize: '24sp',
 				fontWeight: 'bold'
 			}
 		});			
@@ -118,16 +117,14 @@ buttonStopReset.addEventListener('click', function(e) {
 	if (isRunning) {
 		buttonStartLap.title = 'GO!';
 		buttonStopReset.title = 'RESET';
-		label.text = 'READY?';
 		stopWatch.stop();
 		isRunning = false;
 	} else {
 		// If the timer is not running, we reset everything
 		table.setData([]);
 		stopWatch.reset();
+		label.text = 'READY?';
 	}
 });
-
-win.add(table);
 
 win.open();
