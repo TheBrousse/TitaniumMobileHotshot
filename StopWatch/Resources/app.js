@@ -2,11 +2,8 @@ if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
 }
 
-var Stopwatch = require('stopwatch');
-var sw = new Stopwatch(stopwatchListener, 1);
-
 var win = Ti.UI.createWindow({
-	backgroundColor: '#000000',
+	backgroundColor: '#ffffff',
 	layout: 'vertical'
 });
 
@@ -18,20 +15,28 @@ var timeView = Ti.UI.createView({
 	backgroundColor: '#1C1C1C'
 });
 
-label = Ti.UI.createLabel({
+var label = Ti.UI.createLabel({
 	color: '#404040',
 	text: 'READY?',
-	height: 'auto',
+	height: Ti.UI.SIZE,
 	textAlign: 'center',
 	verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
 	font:{
-		fontSize: '55dp',
+		fontSize: '55sp',
 		fontWeight: 'bold'
 	}
 });
 
 timeView.add(label);
 win.add(timeView);
+
+// Stopwatch specific code
+var Stopwatch = require('stopwatch');
+var stopWatch = new Stopwatch(stopwatchListener, 1);
+
+function stopwatchListener(watch) {
+	label.text = watch.toString(); 
+}
 
 // Container view for buttons
 var buttonsView = Ti.UI.createView({
@@ -48,7 +53,7 @@ var buttonStopReset = Ti.UI.createButton({
 	height: Ti.UI.FILL,
 	backgroundColor: '#404040',
 	font: {
-		fontSize: '25dp',
+		fontSize: '25sp',
 		fontWeight: 'bold'
 	}
 });
@@ -57,77 +62,72 @@ buttonsView.add(buttonStopReset);
 
 // Second button : go / lap
 var buttonStartLap = Ti.UI.createButton({
-    title: 'GO!',
-    color: '#C0BFBF',
+	title: 'GO!',
+	color: '#C0BFBF',
 	width: '50%',
 	height: Ti.UI.FILL,
 	backgroundColor: '#727F7F',
-    font: {
-        fontSize: '25dp',
-        fontWeight: 'bold'
-    }
+	font: {
+		fontSize: '25sp',
+		fontWeight: 'bold'
+	}
 });
 
 buttonsView.add(buttonStartLap);
 
 win.add(buttonsView);
 
-// Enfin on rajoute la TableView qui va contenir les différents laps
+// Table View that contains previous laps
 var table = Ti.UI.createTableView({
 	width: '100%',
 	height:Ti.UI.FILL,
 	backgroundColor: '#C0BFBF',
 });
 
-win.add(table);
-
-var running = false;
+var isRunning = false;
 
 buttonStartLap.addEventListener('click', function(e) {
-	// Si ca tourne, on enregistre un nouveau lap
-	if (running){
+	// If the timer is running, we add a new lap
+	if (isRunning){
 		var data = table.getData();
 
-		// Ajout du nouveau lap dans la liste
+		// Append a new lap in the list
 		var row = Ti.UI.createTableViewRow({
-		    title: sw.toString(),
-		    color: '#404040',
-		    className: 'lap',
-		    leftImage: '/images/lap.png',
-		    font:{
-                fontSize: '24dp',
-                fontWeight: 'bold'
-            }
+			title: stopWatch.toString(),
+			color: '#404040',
+			className: 'lap',
+			leftImage: '/images/lap.png',
+			font:{
+				fontSize: '24dp',
+				fontWeight: 'bold'
+			}
 		});			
 		
-	    table.appendRow(row);
+		table.appendRow(row);
 	} else {
 		// If the clock is not ticking, then we start it
-		running = true;
+		isRunning = true;
 		buttonStartLap.title = 'LAP!';
 		buttonStopReset.title = 'STOP';
-		sw.start();
+		stopWatch.start();
 	}
 });
 
 buttonStopReset.addEventListener('click', function(e) {
-	// Si ca tourne, on éteint le chrono
-	if (running) {
+	// If the timer is running, we stop it
+	if (isRunning) {
 		buttonStartLap.title = 'GO!';
 		buttonStopReset.title = 'RESET';
 		label.text = 'READY?';
-        sw.stop();
-        running = false;
+		stopWatch.stop();
+		isRunning = false;
 	} else {
-		// Si ca tourne pas, on fait le reset des laps
+		// If the timer is not running, we reset everything
 		table.setData([]);
-		sw.reset();
+		stopWatch.reset();
 	}
 });
 
-function stopwatchListener(watch) {
-	var elapsed = watch.getElapsed();
-	label.text = watch.toString(); 
-}
+win.add(table);
 
 win.open();
