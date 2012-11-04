@@ -1,11 +1,5 @@
-//
-// create base UI tab and root window
-//
-var win = Titanium.UI.createWindow({  
-    title:'Tab 1',
-    backgroundColor:'#fff'
-});
-
+var win = Titanium.UI.createWindow();
+var currentSessionMode = Titanium.Media.audioSessionMode;
 Titanium.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAY_AND_RECORD;
 var recording = Ti.Media.createAudioRecorder();
 
@@ -24,6 +18,10 @@ Ti.Media.addEventListener('recordinginput', function(e) {
 	if (!e.available && recording.recording) {
 		b1.fireEvent('click', {});
 	}
+});
+
+win.addEventListener('close',function(e) {
+	Titanium.Media.audioSessionMode = currentSessionMode;
 });
 
 var file;
@@ -192,7 +190,7 @@ b2.addEventListener('click', function()
 	else
 	{
 		Ti.API.info("recording file size: "+file.size);
-		sound = Titanium.Media.createSound({sound:file});
+		sound = Titanium.Media.createSound({url:file});
 		sound.addEventListener('complete', function()
 		{
 			b2.title = 'Playback Recording';
