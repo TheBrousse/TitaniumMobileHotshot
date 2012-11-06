@@ -1,8 +1,14 @@
 var win = Titanium.UI.createWindow();
 var currentSessionMode = Titanium.Media.audioSessionMode;
 Titanium.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAY_AND_RECORD;
-var recording = Ti.Media.createAudioRecorder();
+var recorder = Ti.Media.createAudioRecorder();
 
+
+function log() {
+	Ti.API.info('recording ' + recorder.recording);
+	Ti.API.info('stopped ' + recorder.stopped);
+	Ti.API.info('paused ' + recorder.paused);
+}
 // default compression is Ti.Media.AUDIO_FORMAT_LINEAR_PCM
 // default format is Ti.Media.AUDIO_FILEFORMAT_CAF
 
@@ -10,8 +16,8 @@ var recording = Ti.Media.createAudioRecorder();
 // is a generally small size and suitable for telephony recording
 // for high end quality, you'll want LINEAR PCM - however, that
 // will result in uncompressed audio and will be very large in size
-recording.compression = Ti.Media.AUDIO_FORMAT_ULAW;
-recording.format = Ti.Media.AUDIO_FILEFORMAT_WAVE;
+recorder.compression = Ti.Media.AUDIO_FORMAT_ULAW;
+recorder.format = Ti.Media.AUDIO_FILEFORMAT_WAVE;
 
 Ti.Media.addEventListener('recordinginput', function(e) {
 	Ti.API.info('Input availability changed: '+e.available);
@@ -104,6 +110,7 @@ var duration = 0;
 
 function showLevels()
 {
+	log();
 	var peak = Ti.Media.peakMicrophonePower;
 	var avg = Ti.Media.averageMicrophonePower;
 	duration++;
@@ -118,7 +125,7 @@ var b1 = Titanium.UI.createButton({
 });
 b1.addEventListener('click', function()
 {
-	if (recording.recording)
+	if (recorder.recording)
 	{
 		file = recording.stop();
 		b1.title = "Start Recording";
@@ -137,7 +144,7 @@ b1.addEventListener('click', function()
 			return;
 		}
 		b1.title = "Stop Recording";
-		recording.start();
+		recorder.start();
 		b2.hide();
 		pause.show();
 		Ti.Media.startMicrophoneMonitor();
@@ -157,14 +164,14 @@ win.add(pause);
 pause.hide();
 
 pause.addEventListener('click', function() {
-	if (recording.paused) {
+	if (recorder.paused) {
 		pause.title = 'Pause recording';
-		recording.resume();
+		recorder.resume();
 		timer = setInterval(showLevels,1000);
 	}
 	else {
 		pause.title = 'Unpause recording';
-		recording.pause();
+		recorder.pause();
 		clearInterval(timer);
 	}
 });
@@ -217,11 +224,11 @@ switcher.addEventListener('change',function(e)
 {
 	if (!switcher.value)
 	{
-		recording.compression = Ti.Media.AUDIO_FORMAT_ULAW;
+		recorder.compression = Ti.Media.AUDIO_FORMAT_ULAW;
 	}
 	else
 	{
-		recording.compression = Ti.Media.AUDIO_FORMAT_LINEAR_PCM;
+		recorder.compression = Ti.Media.AUDIO_FORMAT_LINEAR_PCM;
 	}
 });
 win.add(switchLabel);
