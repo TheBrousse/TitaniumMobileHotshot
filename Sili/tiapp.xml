@@ -8,7 +8,7 @@
         <target device="blackberry">false</target>
     </deployment-targets>
     <sdk-version>2.1.3.GA</sdk-version>
-    <id>om.packtpub.hotshot.sili</id>
+    <id>com.packtpub.hotshot.sili</id>
     <name>Sili</name>
     <version>1.0</version>
     <publisher>Christian Brousseau</publisher>
