@@ -178,7 +178,7 @@ function loadExixtingAudioFiles() {
 			title: rowLabel,
 			leftImage: '/images/tape.png',
 			color: '#404040',
-			className: 'lap',
+			className: 'recording',
 			font:{
 				fontSize: '24sp',
 				fontWeight: 'bold'
