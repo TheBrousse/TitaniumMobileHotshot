@@ -1,4 +1,30 @@
-var win = Titanium.UI.createWindow();
+if (Ti.version < 1.8 ) {
+	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
+}
+
+var win = Ti.UI.createWindow({
+	backgroundColor: '#ffffff',
+	layout: 'vertical'
+});
+
+var buttonView = Ti.UI.createView({
+	width: '100%',
+	height: '300',
+	backgroundColor: 'blue',
+	bottom: 0
+});
+
+var recordButton = Ti.UI.createImageView({
+	image: 'mike.png',
+	width: '90%',
+	height: '90%'
+});
+
+buttonView.add(recordButton);
+
+win.add(buttonView);
+
+/*
 var currentSessionMode = Titanium.Media.audioSessionMode;
 Titanium.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAY_AND_RECORD;
 var recorder = Ti.Media.createAudioRecorder();
@@ -233,5 +259,6 @@ switcher.addEventListener('change',function(e)
 });
 win.add(switchLabel);
 win.add(switcher);
+*/
 
 win.open();
