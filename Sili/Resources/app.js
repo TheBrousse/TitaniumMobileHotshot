@@ -1,32 +1,124 @@
+// Write dummy files
+/*
+for (i=0; i<6; i++) {
+    var f = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, 'jambon'+i+'.wav');
+    f.write('something inside jambon file');
+}
+
+*/
+
+// mock recorder for android
+var VR_MOCK = {
+    recording: false,
+    start: function() { 
+		this.recording=true; 
+		Ti.API.info('recorder.START');
+	},
+    stop: function() { 
+    	this.recording=false; 
+    	Ti.API.info('recorder.STOP'); 
+    	var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, 'jambon1.wav');
+
+    	return file;
+    },
+    compression: Ti.Media.AUDIO_FORMAT_ULAW,
+    format: Ti.Media.AUDIO_FILEFORMAT_WAVE
+};
+////////////////////
+
+
+
 if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
 }
 
 var win = Ti.UI.createWindow({
 	backgroundColor: '#ffffff',
-	layout: 'vertical'
+	title: 'Sili'
 });
 
 var buttonView = Ti.UI.createView({
 	width: '100%',
-	height: '300',
-	backgroundColor: 'blue',
+	height: '25%',
+	backgroundColor: '#404040',
 	bottom: 0
 });
 
 var recordButton = Ti.UI.createImageView({
-	image: 'mike.png',
-	width: '90%',
-	height: '90%'
+	image: '/images/recording_off.png',
+	height: '95%'
 });
 
 buttonView.add(recordButton);
 
 win.add(buttonView);
 
+var recordingsView = Ti.UI.createView({
+	width: '100%',
+	height: '75%',
+	top: 0
+});
+
+var table = Ti.UI.createTableView({
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL,
+	editable: true
+});
+
+// Read the audio files from device
+var f = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory);
+var files = f.getDirectoryListing();
+var tableData = []
+
+for (var i=0; i<files.length; i++) {
+	var recording = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, files[i]);
+	var recordingTimestamp = new Date(recording.createTimestamp());
+	var rowLabel = String.formatDate(recordingTimestamp, 'medium') + ' - ' + String.formatTime(recordingTimestamp);
+
+	var row = Ti.UI.createTableViewRow({ 
+		title: rowLabel,
+		leftImage: '/images/tape.png',
+		color: '#404040',
+		className: 'lap',
+		font:{
+			fontSize: '24sp',
+			fontWeight: 'bold'
+		},
+		fileName: ''
+	});
+	tableData.push(row);	
+}
+
+table.setData(tableData);
+recordingsView.add(table);
+win.add(recordingsView);
+
+table.setData(tableData);
+
+var recorder = VR_MOCK;
+
+recordButton.addEventListener('click', function(e) {
+	if (recorder.recording) {
+		var buffer = recorder.stop();
+		var newFile =Titanium.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, buffer.createTimestamp() + '.wav');
+		
+		newFile.write(buffer);
+
+		e.source.image = '/images/recording_off.png';
+	} else {
+		recorder.start();
+		e.source.image = '/images/recording_on.png';
+	}
+});
+
+win.open();
+
+
+
+
 /*
-var currentSessionMode = Titanium.Media.audioSessionMode;
-Titanium.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAY_AND_RECORD;
+var currentSessionMode = Ti.Media.audioSessionMode;
+Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAY_AND_RECORD;
 var recorder = Ti.Media.createAudioRecorder();
 
 
@@ -53,7 +145,7 @@ Ti.Media.addEventListener('recordinginput', function(e) {
 });
 
 win.addEventListener('close',function(e) {
-	Titanium.Media.audioSessionMode = currentSessionMode;
+	Ti.Media.audioSessionMode = currentSessionMode;
 });
 
 var file;
@@ -61,7 +153,7 @@ var timer;
 var sound;
 
 
-var label = Titanium.UI.createLabel({
+var label = Ti.UI.createLabel({
 	text:'',
 	top:150,
 	color:'#999',
@@ -72,83 +164,6 @@ var label = Titanium.UI.createLabel({
 
 win.add(label);
 
-function lineTypeToStr()
-{
-	var type = Ti.Media.audioLineType;
-	switch(type)
-	{
-		case Ti.Media.AUDIO_HEADSET_INOUT:
-			return "headset";
-		case Ti.Media.AUDIO_RECEIVER_AND_MIC:
-			return "receiver/mic";
-		case Ti.Media.AUDIO_HEADPHONES_AND_MIC:
-			return "headphones/mic";
-		case Ti.Media.AUDIO_HEADPHONES:
-			return "headphones";
-		case Ti.Media.AUDIO_LINEOUT:
-			return "lineout";
-		case Ti.Media.AUDIO_SPEAKER:
-			return "speaker";
-		case Ti.Media.AUDIO_MICROPHONE:
-			return "microphone";
-		case Ti.Media.AUDIO_MUTED:
-			return "silence switch on";
-		case Ti.Media.AUDIO_UNAVAILABLE:
-			return "unavailable";
-		case Ti.Media.AUDIO_UNKNOWN:
-			return "unknown";
-	}
-}
-
-var linetype = Titanium.UI.createLabel({
-	text: "audio line type: "+lineTypeToStr(),
-	bottom:20,
-	color:'#999',
-	textAlign:'center',
-	width:'auto',
-	height:'auto'
-});
-
-win.add(linetype);
-
-var volume = Titanium.UI.createLabel({
-	text: "volume: "+Ti.Media.volume,
-	bottom:50,
-	color:'#999',
-	textAlign:'center',
-	width:'auto',
-	height:'auto'
-});
-
-win.add(volume);
-
-Ti.Media.addEventListener('linechange',function(e)
-{
-	linetype.text = "audio line type: "+lineTypeToStr();
-});
-
-Ti.Media.addEventListener('volume',function(e)
-{
-	volume.text = "volume: "+e.volume;
-});
-
-var duration = 0;
-
-function showLevels()
-{
-	log();
-	var peak = Ti.Media.peakMicrophonePower;
-	var avg = Ti.Media.averageMicrophonePower;
-	duration++;
-	label.text = 'duration: '+duration+' seconds\npeak power: '+peak+'\navg power: '+avg;
-}
-
-var b1 = Titanium.UI.createButton({
-	title:'Start Recording',
-	width:200,
-	height:40,
-	top:20
-});
 b1.addEventListener('click', function()
 {
 	if (recorder.recording)
@@ -180,7 +195,7 @@ b1.addEventListener('click', function()
 });
 win.add(b1);
 
-var pause = Titanium.UI.createButton({
+var pause = Ti.UI.createButton({
 	title:'Pause recording',
 	width:200,
 	height:40,
@@ -202,7 +217,7 @@ pause.addEventListener('click', function() {
 	}
 });
 
-var b2 = Titanium.UI.createButton({
+var b2 = Ti.UI.createButton({
 	title:'Playback Recording',
 	width:200,
 	height:40,
@@ -223,7 +238,7 @@ b2.addEventListener('click', function()
 	else
 	{
 		Ti.API.info("recording file size: "+file.size);
-		sound = Titanium.Media.createSound({url:file});
+		sound = Ti.Media.createSound({url:file});
 		sound.addEventListener('complete', function()
 		{
 			b2.title = 'Playback Recording';
@@ -233,7 +248,7 @@ b2.addEventListener('click', function()
 	}
 });
 
-var switchLabel = Titanium.UI.createLabel({
+var switchLabel = Ti.UI.createLabel({
 	text:'Hi-fidelity:',
 	width:'auto',
 	height:'auto',
@@ -241,7 +256,7 @@ var switchLabel = Titanium.UI.createLabel({
 	color:'#999',
 	bottom:115
 });
-var switcher = Titanium.UI.createSwitch({
+var switcher = Ti.UI.createSwitch({
 	value:false,
 	bottom:80
 });
@@ -261,4 +276,3 @@ win.add(switchLabel);
 win.add(switcher);
 */
 
-win.open();
