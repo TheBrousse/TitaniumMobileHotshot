@@ -65,36 +65,45 @@ var table = Ti.UI.createTableView({
 	editable: true
 });
 
-// Read the audio files from device
-var f = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory);
-var files = f.getDirectoryListing();
-var tableData = []
+// Make Table view editable to allow file deletion.
+var edit = Titanium.UI.createButton({
+	title: 'Edit'
+});
 
-for (var i=0; i<files.length; i++) {
-	var recording = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, files[i]);
-	var recordingTimestamp = new Date(recording.createTimestamp());
-	var rowLabel = String.formatDate(recordingTimestamp, 'medium') + ' - ' + String.formatTime(recordingTimestamp);
+edit.addEventListener('click', function() {
+	win.setRightNavButton(cancel);
+	table.editing = true;
+});
 
-	var row = Ti.UI.createTableViewRow({ 
-		title: rowLabel,
-		leftImage: '/images/tape.png',
-		color: '#404040',
-		className: 'lap',
-		font:{
-			fontSize: '24sp',
-			fontWeight: 'bold'
-		},
-		fileName: ''
-	});
-	tableData.push(row);	
-}
+var cancel = Titanium.UI.createButton({
+	title:'Cancel',
+	style:Titanium.UI.iPhone.SystemButtonStyle.DONE
+});
 
-table.setData(tableData);
+cancel.addEventListener('click', function() {
+	win.setRightNavButton(edit);
+	table.editing = false;
+});
+
+win.setRightNavButton(edit);
+
+// Table view events
+table.addEventListener('click', function(e) {
+	sound = Ti.Media.createSound({url:file});
+	sound.play();
+});
+
+table.addEventListener('delete', function(e) {
+	Titanium.API.info("deleted - row=" +  e.rowData.fileName);
+});
+
 recordingsView.add(table);
 win.add(recordingsView);
 
-table.setData(tableData);
+// Load the table view with previously recorded audio files
+loadExixtingAudioFiles();
 
+// Record audio file
 var recorder = VR_MOCK;
 
 recordButton.addEventListener('click', function(e) {
@@ -113,6 +122,33 @@ recordButton.addEventListener('click', function(e) {
 
 win.open();
 
+function loadExixtingAudioFiles() {
+	// Read the audio files from device
+	var f = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory);
+	var files = f.getDirectoryListing();
+	var tableData = []
+
+	for (var i=0; i<files.length; i++) {
+		var recording = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, files[i]);
+		var recordingTimestamp = new Date(recording.createTimestamp());
+		var rowLabel = String.formatDate(recordingTimestamp, 'medium') + ' - ' + String.formatTime(recordingTimestamp);
+
+		var row = Ti.UI.createTableViewRow({ 
+			title: rowLabel,
+			leftImage: '/images/tape.png',
+			color: '#404040',
+			className: 'lap',
+			font:{
+				fontSize: '24sp',
+				fontWeight: 'bold'
+			},
+			fileName: Ti.Filesystem.applicationDataDirectory + '/' + recording.name
+		});
+		tableData.push(row);	
+	}
+
+	table.setData(tableData);
+}
 
 
 
