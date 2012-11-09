@@ -46,7 +46,7 @@ var headerView = Ti.UI.createView({
 });
 
 headerView.add(Ti.UI.createLabel({ 
-	text: 'Sili',
+	text: win.title,
 	left: 7,
 	color: '#ffffff',
     height: Ti.UI.FILL,
