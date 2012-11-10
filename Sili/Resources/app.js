@@ -1,7 +1,7 @@
 // Write dummy files
 /*
 for (i=0; i<6; i++) {
-	var f = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, 'jambon'+i+'.wav');
+	var f = Ti.Filesystem.getFile(APP_DATA_DIR, 'jambon'+i+'.wav');
 	f.write('something inside jambon file');
 }
 */
@@ -17,7 +17,7 @@ var VR_MOCK = {
 	stop: function() { 
 		this.recording=false; 
 		Ti.API.info('recorder.STOP'); 
-		var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, '/jambon1.wav');
+		var file = Ti.Filesystem.getFile(APP_DATA_DIR, '/jambon1.wav');
 
 		return file;
 	},
@@ -137,6 +137,7 @@ loadExistingAudioFiles();
 // Record audio file
 Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAY_AND_RECORD;
 
+var APP_DATA_DIR = Ti.Filesystem.applicationDataDirectory;
 var recorder = Ti.Media.createAudioRecorder(); // For on device testing
 //var recorder = VR_MOCK; // For Simulator testing (won't work, but allows to test UI)
 recorder.compression = Ti.Media.AUDIO_FORMAT_ULAW;
@@ -145,7 +146,7 @@ recorder.format = Ti.Media.AUDIO_FILEFORMAT_WAVE;
 recordButton.addEventListener('click', function(e) {
 	if (recorder.recording) {
 		var buffer = recorder.stop();
-		var newFile =Titanium.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, new Date().getTime() + '.wav');
+		var newFile =Titanium.Filesystem.getFile(APP_DATA_DIR, new Date().getTime() + '.wav');
 		
 		newFile.write(buffer);
 		
@@ -161,12 +162,12 @@ recordButton.addEventListener('click', function(e) {
 
 function loadExistingAudioFiles() {
 	// Read the audio files from device
-	var f = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory);
+	var f = Ti.Filesystem.getFile(APP_DATA_DIR);
 	var files = f.getDirectoryListing();
 	var tableData = []
 
 	for (var i = 0; i < files.length; i++) {
-		var recording = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, files[i]);
+		var recording = Ti.Filesystem.getFile(APP_DATA_DIR, files[i]);
 		var recordingTimestamp = new Date(recording.createTimestamp());
 		var rowLabel = String.formatDate(recordingTimestamp, 'medium') + ' - ' + String.formatTime(recordingTimestamp);
 
@@ -179,7 +180,7 @@ function loadExistingAudioFiles() {
 				fontSize: '24sp',
 				fontWeight: 'bold'
 			},
-			fileName: Ti.Filesystem.applicationDataDirectory + '/' + recording.name
+			fileName: APP_DATA_DIR + '/' + recording.name
 		});
 		tableData.push(row);	
 	}
