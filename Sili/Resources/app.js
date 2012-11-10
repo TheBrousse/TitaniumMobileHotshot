@@ -91,8 +91,7 @@ win.add(recordingsView);
 var buttonView = Ti.UI.createView({
 	width: '100%',
 	height: '25%',
-	backgroundColor: '#404040',
-	bottom: 0
+	backgroundColor: '#404040'
 });
 
 var recordButton = Ti.UI.createImageView({
