@@ -132,7 +132,7 @@ table.addEventListener('delete', function(e) {
 });
 
 // Load the table view with previously recorded audio files
-loadExixtingAudioFiles();
+loadExistingAudioFiles();
 
 // Record audio file
 Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAY_AND_RECORD;
@@ -150,7 +150,7 @@ recordButton.addEventListener('click', function(e) {
 		newFile.write(buffer);
 		
 		table.setData([]);
-		loadExixtingAudioFiles();
+		loadExistingAudioFiles();
 
 		e.source.image = '/images/recording_off.png';
 	} else {
@@ -159,7 +159,7 @@ recordButton.addEventListener('click', function(e) {
 	}
 });
 
-function loadExixtingAudioFiles() {
+function loadExistingAudioFiles() {
 	// Read the audio files from device
 	var f = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory);
 	var files = f.getDirectoryListing();
