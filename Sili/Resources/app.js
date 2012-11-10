@@ -1,28 +1,28 @@
 // Write dummy files
 /*
 for (i=0; i<6; i++) {
-    var f = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, 'jambon'+i+'.wav');
-    f.write('something inside jambon file');
+	var f = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, 'jambon'+i+'.wav');
+	f.write('something inside jambon file');
 }
 */
 
 
 // mock recorder made for testing on simulator
 var VR_MOCK = {
-    recording: false,
-    start: function() { 
+	recording: false,
+	start: function() { 
 		this.recording=true; 
 		Ti.API.info('recorder.START');
 	},
-    stop: function() { 
-    	this.recording=false; 
-    	Ti.API.info('recorder.STOP'); 
-    	var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, '/jambon1.wav');
+	stop: function() { 
+		this.recording=false; 
+		Ti.API.info('recorder.STOP'); 
+		var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, '/jambon1.wav');
 
-    	return file;
-    },
-    compression: Ti.Media.AUDIO_FORMAT_ULAW,
-    format: Ti.Media.AUDIO_FILEFORMAT_WAVE
+		return file;
+	},
+	compression: Ti.Media.AUDIO_FORMAT_ULAW,
+	format: Ti.Media.AUDIO_FILEFORMAT_WAVE
 };
 ////////////////////
 
@@ -49,9 +49,9 @@ headerView.add(Ti.UI.createLabel({
 	text: win.title,
 	left: 7,
 	color: '#ffffff',
-    height: Ti.UI.FILL,
-    verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
-    font:{
+	height: Ti.UI.FILL,
+	verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
+	font:{
 		fontSize: '22sp',
 		fontWeight: 'bold'
 	}
@@ -160,8 +160,6 @@ recordButton.addEventListener('click', function(e) {
 	}
 });
 
-win.open();
-
 function loadExixtingAudioFiles() {
 	// Read the audio files from device
 	var f = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory);
@@ -189,3 +187,5 @@ function loadExixtingAudioFiles() {
 
 	table.setData(tableData);
 }
+
+win.open();
