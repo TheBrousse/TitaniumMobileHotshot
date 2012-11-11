@@ -1,33 +1,3 @@
-// Write dummy files
-/*
-for (i=0; i<6; i++) {
-	var f = Ti.Filesystem.getFile(APP_DATA_DIR, 'jambon'+i+'.wav');
-	f.write('something inside jambon file');
-}
-*/
-
-
-// mock recorder made for testing on simulator
-var VR_MOCK = {
-	recording: false,
-	start: function() { 
-		this.recording=true; 
-		Ti.API.info('recorder.START');
-	},
-	stop: function() { 
-		this.recording=false; 
-		Ti.API.info('recorder.STOP'); 
-		var file = Ti.Filesystem.getFile(APP_DATA_DIR, '/jambon1.wav');
-
-		return file;
-	},
-	compression: Ti.Media.AUDIO_FORMAT_ULAW,
-	format: Ti.Media.AUDIO_FILEFORMAT_WAVE
-};
-////////////////////
-
-
-
 if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
 }
@@ -162,14 +132,14 @@ recordButton.addEventListener('click', function(e) {
 
 function loadExistingAudioFiles() {
 	// Read the audio files from device
-	var f = Ti.Filesystem.getFile(APP_DATA_DIR);
-	var files = f.getDirectoryListing();
+	var dir = Ti.Filesystem.getFile(APP_DATA_DIR);
+	var files = dir.getDirectoryListing();
 	var tableData = []
 
 	for (var i = 0; i < files.length; i++) {
 		var recording = Ti.Filesystem.getFile(APP_DATA_DIR, files[i]);
-		var recordingTimestamp = new Date(recording.createTimestamp());
-		var rowLabel = String.formatDate(recordingTimestamp, 'medium') + ' - ' + String.formatTime(recordingTimestamp);
+		var ts = new Date(recording.createTimestamp());
+		var rowLabel = String.formatDate(ts, 'medium') + ' - ' + String.formatTime(ts);
 
 		var row = Ti.UI.createTableViewRow({ 
 			title: rowLabel,
