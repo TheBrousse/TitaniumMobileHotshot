@@ -90,7 +90,7 @@ function toggleEditMode() {
 
 // Table view events
 table.addEventListener('click', function(e) {
-	sound = Ti.Media.createSound({ url: e.rowData.fileName });
+	var sound = Ti.Media.createSound({ url: e.rowData.fileName });
 	sound.play();
 });
 
