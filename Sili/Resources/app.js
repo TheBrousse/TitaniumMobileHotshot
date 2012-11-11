@@ -70,7 +70,6 @@ var recordButton = Ti.UI.createImageView({
 });
 
 buttonView.add(recordButton);
-
 win.add(buttonView);
 
 // Make Table view editable to allow file deletion.
@@ -90,7 +89,9 @@ function toggleEditMode() {
 
 // Table view events
 table.addEventListener('click', function(e) {
-	var sound = Ti.Media.createSound({ url: e.rowData.fileName });
+	var sound = Ti.Media.createSound({ 
+		url: e.rowData.fileName 
+	});
 	sound.play();
 });
 
@@ -108,8 +109,7 @@ loadExistingAudioFiles();
 Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAY_AND_RECORD;
 
 var APP_DATA_DIR = Ti.Filesystem.applicationDataDirectory;
-var recorder = Ti.Media.createAudioRecorder(); // For on device testing
-//var recorder = VR_MOCK; // For Simulator testing (won't work, but allows to test UI)
+var recorder = Ti.Media.createAudioRecorder(); 
 recorder.compression = Ti.Media.AUDIO_FORMAT_ULAW;
 recorder.format = Ti.Media.AUDIO_FILEFORMAT_WAVE;
 
