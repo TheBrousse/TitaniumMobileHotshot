@@ -105,10 +105,6 @@ table.addEventListener('delete', function(e) {
 // Load the table view with previously recorded audio files
 loadExistingAudioFiles();
 
-// Record audio file
-Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAY_AND_RECORD;
-
-var APP_DATA_DIR = Ti.Filesystem.applicationDataDirectory;
 var recorder = Ti.Media.createAudioRecorder(); 
 recorder.compression = Ti.Media.AUDIO_FORMAT_ULAW;
 recorder.format = Ti.Media.AUDIO_FILEFORMAT_WAVE;
@@ -116,15 +112,19 @@ recorder.format = Ti.Media.AUDIO_FILEFORMAT_WAVE;
 recordButton.addEventListener('click', function(e) {
 	if (recorder.recording) {
 		var buffer = recorder.stop();
-		var newFile =Titanium.Filesystem.getFile(APP_DATA_DIR, new Date().getTime() + '.wav');
+		var newFile =Titanium.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, new Date().getTime() + '.wav');
 		
 		newFile.write(buffer);
 		
 		table.setData([]);
 		loadExistingAudioFiles();
+		// Switch to bottom speaker
+		Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAYBACK;
 
 		e.source.image = '/images/recording_off.png';
 	} else {
+		// Record audio file
+		Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAY_AND_RECORD;
 		recorder.start();
 		e.source.image = '/images/recording_on.png';
 	}
@@ -132,12 +132,12 @@ recordButton.addEventListener('click', function(e) {
 
 function loadExistingAudioFiles() {
 	// Read the audio files from device
-	var dir = Ti.Filesystem.getFile(APP_DATA_DIR);
+	var dir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory);
 	var files = dir.getDirectoryListing();
 	var tableData = []
 
 	for (var i = 0; i < files.length; i++) {
-		var recording = Ti.Filesystem.getFile(APP_DATA_DIR, files[i]);
+		var recording = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, files[i]);
 		var ts = new Date(recording.createTimestamp());
 		var rowLabel = String.formatDate(ts, 'medium') + ' - ' + String.formatTime(ts);
 
@@ -150,7 +150,7 @@ function loadExistingAudioFiles() {
 				fontSize: '24sp',
 				fontWeight: 'bold'
 			},
-			fileName: APP_DATA_DIR + '/' + recording.name
+			fileName: Ti.Filesystem.applicationDataDirectory + '/' + recording.name
 		});
 		tableData.push(row);	
 	}
