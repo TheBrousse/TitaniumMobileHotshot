@@ -1,64 +1,108 @@
-// this sets the background color of the master UIView (when there are no windows/tab groups on it)
-Titanium.UI.setBackgroundColor('#000');
-
-// create tab group
-var tabGroup = Titanium.UI.createTabGroup();
-
-
-//
-// create base UI tab and root window
-//
-var win1 = Titanium.UI.createWindow({  
-    title:'Tab 1',
-    backgroundColor:'#fff'
-});
-var tab1 = Titanium.UI.createTab({  
-    icon:'KS_nav_views.png',
-    title:'Tab 1',
-    window:win1
+// User interface (UI) construction
+var win = Ti.UI.createWindow({
+    backgroundColor: '#ffffff',
+	title: 'Sili',
+	layout: 'vertical'
 });
 
-var label1 = Titanium.UI.createLabel({
-	color:'#999',
-	text:'I am Window 1',
-	font:{fontSize:20,fontFamily:'Helvetica Neue'},
-	textAlign:'center',
-	width:'auto'
+var headerView = Ti.UI.createView({
+	height: '10%',
+	width: '100%',
+	backgroundColor: '#002EB8',
+	layout: 'horizontal'
 });
 
-win1.add(label1);
-
-//
-// create controls tab and root window
-//
-var win2 = Titanium.UI.createWindow({  
-    title:'Tab 2',
-    backgroundColor:'#fff'
+var taskText = Ti.UI.createTextField({
+	width: '80%',
+	hintText: 'Enter New Task Name',
+	borderColor: '#000000',
+	backgroundColor: '#ffffff'
 });
-var tab2 = Titanium.UI.createTab({  
-    icon:'KS_nav_ui.png',
-    title:'Tab 2',
-    window:win2
+headerView.add(taskText);
+
+taskText.addEventListener('return', function() {
+	addButton.fireEvent('click');	
 });
 
-var label2 = Titanium.UI.createLabel({
-	color:'#999',
-	text:'I am Window 2',
-	font:{fontSize:20,fontFamily:'Helvetica Neue'},
-	textAlign:'center',
-	width:'auto'
+var addButton = Ti.UI.createButton({
+	title: 'Add'
 });
 
-win2.add(label2);
+function addTask(name) {
+	var row = Ti.UI.createTableViewRow({
+		title: name
+	});
+	
+	taskList.appendRow(row);
+	taskText.value = '';
+	taskText.blur();
+}
 
+addButton.addEventListener('click', function(e) {
+	addTask(taskText.value);
+});
 
+headerView.add(addButton);
 
-//
-//  add tabs
-//
-tabGroup.addTab(tab1);  
-tabGroup.addTab(tab2);  
+win.add(headerView);
 
+var taskView = Ti.UI.createView({
+	height: '80%',
+	width: '100%'
+});
 
-// open tab group
-tabGroup.open();
+var data = [
+	{ title: 'Task 1', hasCheck: 1 },
+	{ title: 'Task 2', hasCheck: 0 },
+	{ title: 'Task 3', hasCheck: 1 },
+	{ title: 'Task 4', hasCheck: 0 },
+	{ title: 'Task 5', hasCheck: 1 }
+];
+
+var taskList = Ti.UI.createTableView({
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL,
+	data: data
+});
+
+taskList.addEventListener('click', function(e) {
+	e.rowData.hasCheck = !e.rowData.hasCheck;
+});
+
+taskView.add(taskList);
+win.add(taskView);
+
+var buttonBar = Ti.UI.createView({
+	height: '10%',
+	width: '100%',
+	layout: 'horizontal',
+	backgroundColor: 'green'
+});
+
+var deleteButton = Ti.UI.createButton({
+	title: 'Delete'
+});
+var doneButton = Ti.UI.createButton({
+	title: 'Done'
+});
+
+deleteButton.addEventListener('click', function(e) {
+	var sections = taskList.data;
+	 
+	for (var i = 0; i < sections.length; i++) {
+	    var section = sections[i];
+	 
+	    for (var j = 0; j < section.rowCount; j++) {
+	        var row = section.rows[j];
+	        // do something useful with the row object here, e.g.
+	        Ti.API.info('Row ' + j + ': ' + row.title + ' checked: ' + row.hasCheck);
+	    }
+	}
+});
+
+buttonBar.add(deleteButton);
+buttonBar.add(doneButton);
+
+win.add(buttonBar);
+
+win.open();
