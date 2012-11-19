@@ -89,15 +89,15 @@ var doneButton = Ti.UI.createButton({
 deleteButton.addEventListener('click', function(e) {
 	var sections = taskList.data;
 	 
-	for (var i = 0; i < sections.length; i++) {
-	    var section = sections[i];
+//	for (var i = 0; i < sections.length; i++) {
+	    var section = sections[0];
 	 
 	    for (var j = 0; j < section.rowCount; j++) {
 	        var row = section.rows[j];
 	        // do something useful with the row object here, e.g.
 	        Ti.API.info('Row ' + j + ': ' + row.title + ' checked: ' + row.hasCheck);
 	    }
-	}
+//	}
 });
 
 buttonBar.add(deleteButton);
