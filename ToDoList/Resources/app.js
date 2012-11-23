@@ -32,7 +32,9 @@ var headerView = Ti.UI.createView({
 });
 
 var txtTaskName = Ti.UI.createTextField({
-	width: '80%',
+	left: 15,
+	width: '75%',
+	height: Ti.UI.FILL,
 	hintText: 'Enter New Task Name',
 	borderColor: '#000000',
 	backgroundColor: '#ffffff'
@@ -61,7 +63,7 @@ var taskView = Ti.UI.createView({
 });
 
 var data = [
-	{ title: 'Task 1', hasCheck: 1 },
+	{ title: 'Task 1', hasCheck: true },
 	{ title: 'Task 2', hasCheck: 0 },
 	{ title: 'Task 3', hasCheck: 1 },
 	{ title: 'Task 4', hasCheck: 0 },
@@ -88,6 +90,7 @@ var buttonBar = Ti.UI.createView({
 });
 
 var basicSwitch = Ti.UI.createSwitch({
+	value: true,
 	left: 5,
 	titleOn: 'All',
 	titleOff: 'Active'
@@ -95,7 +98,7 @@ var basicSwitch = Ti.UI.createSwitch({
 
 basicSwitch.addEventListener('change', function(e) {
 	Ti.API.info(e.value); 
-	var section = taskList.data.sections[0];
+	var section = taskList.data[0];
 	
 	for (var i = 0; i < section.rowCount; i++) {
 		var row = section.rows[i];
@@ -117,13 +120,25 @@ var btnClearComplete = Ti.UI.createButton({
 });
 
 btnClearComplete.addEventListener('click', function(e) {
-	var section = taskList.data.sections[0];
+	var section = taskList.data[0];
  
 	for (var j = 0; j < section.rowCount; j++) {
 		var row = section.rows[j];
 		// do something useful with the row object here, e.g.
 		Ti.API.info('Row ' + j + ': ' + row.title + ' checked: ' + row.hasCheck);
 	}
+/*
+	var sections = taskList.data;
+	 
+	for (var i = 0; i < sections.length; i++) {
+	    var section = sections[i];
+	 
+	    for(var j = 0; j < section.rowCount; j++) {
+	        var row = section.rows[j];
+	        // do something useful with the row object here, e.g.
+	        Ti.API.info('Section ' + i + ' row ' + j + ': ' + row.title);
+	    }
+	}*/
 });
 
 buttonBar.add(btnClearComplete);
