@@ -1,34 +1,20 @@
 // Open the database and create schema (if needed)
 var db = Ti.Database.open('todo.sqlite','todo');
 
-db.execute('CREATE TABLE IF NOT EXISTS TODO_ITEMS  (ID INTEGER, NAME TEXT, IS_DONE INTEGER)');
-
-var rows = db.execute('SELECT * FROM TODO_ITEMS');
-var data = [];
-
-while (rows.isValidRow()) {
-	data.push({
-		title: '' + rows.fieldByName('CATEGORY') + '',
-		type: '' + rows.fieldByName('TYPE') + '',
-		count: Math.floor(Math.random()*11),
-		url: 'entries.js',
-		hasChild: true
-	});
-	rows.next();
-};
+db.execute('CREATE TABLE IF NOT EXISTS TODO_ITEMS  (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, IS_COMPLETE INTEGER)');
 
 // User interface (UI) construction
 var win = Ti.UI.createWindow({
-	backgroundColor: '#ffffff',
-	title: 'Sili',
-	layout: 'vertical'
+    backgroundColor: '#ffffff',
+	title: 'Sili'
 });
 
 var headerView = Ti.UI.createView({
-	height: '10%',
+    height: '50dp',
 	width: '100%',
-	backgroundColor: '#002EB8',
-	layout: 'horizontal'
+	backgroundColor: '#885511',
+	layout: 'horizontal',
+    top: 0
 });
 
 var txtTaskName = Ti.UI.createTextField({
@@ -41,10 +27,6 @@ var txtTaskName = Ti.UI.createTextField({
 });
 headerView.add(txtTaskName);
 
-txtTaskName.addEventListener('return', function() {
-	btnAdd.fireEvent('click');	
-});
-
 var btnAdd = Ti.UI.createButton({
 	title: 'Add'
 });
@@ -53,41 +35,44 @@ btnAdd.addEventListener('click', function(e) {
 	addTask(txtTaskName.value);
 });
 
-headerView.add(btnAdd);
+txtTaskName.addEventListener('return', function() {
+    btnAdd.fireEvent('click');  
+});
 
+headerView.add(btnAdd);
 win.add(headerView);
 
 var taskView = Ti.UI.createView({
-	height: '80%',
-	width: '100%'
+    top: '50dp',
+	width: '100%',
+    backgroundColor: '#eeeeee'
 });
-
-var data = [
-	{ title: 'Task 1', hasCheck: true },
-	{ title: 'Task 2', hasCheck: 0 },
-	{ title: 'Task 3', hasCheck: 1 },
-	{ title: 'Task 4', hasCheck: 0 },
-	{ title: 'Task 5', hasCheck: 1 }
-];
 
 var taskList = Ti.UI.createTableView({
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
-	data: data
+	separatorColor: '#bb8888',
+	backgroundFocusedColor: '#eedddd'
 });
 
 taskList.addEventListener('click', function(e) {
-	e.rowData.hasCheck = !e.rowData.hasCheck;
+    var todoItem = e.rowData;
+
+   	db.execute('UPDATE TODO_ITEMS SET IS_COMPLETE = ? WHERE ID = ?', 
+   	            (todoItem.hasCheck ? 0 : 1), todoItem.id);
+	refreshTaskList();
 });
 
 taskView.add(taskList);
 win.add(taskView);
 
 var buttonBar = Ti.UI.createView({
-	height: '10%',
+    height: '50dp',
 	width: '100%',
-	backgroundColor: 'green'
+	backgroundColor: '#885511',
+    bottom: 0
 });
+
 
 var basicSwitch = Ti.UI.createSwitch({
 	value: true,
@@ -97,62 +82,69 @@ var basicSwitch = Ti.UI.createSwitch({
 });
 
 basicSwitch.addEventListener('change', function(e) {
-	Ti.API.info(e.value); 
-	var section = taskList.data[0];
-	
-	for (var i = 0; i < section.rowCount; i++) {
-		var row = section.rows[i];
-		Ti.API.info('Row ' + i + ': ' + row.title + ' checked: ' + row.hasCheck);
-		if (row.hasCheck) {
-			taskList.deleteRow(i);
-		} else {
-			taskList.setData(data);
-		}
-	}
+	if (e.value == true) {
+	    refreshTaskList();
+	} else {
+    	var section = taskList.data[0];
+    	
+    	for (var i = 0; i < section.rowCount; i++) {
+    		var row = section.rows[i];
+    		
+    		if (row.hasCheck) {
+    			taskList.deleteRow(i);
+    		}
+    	}
+    }
 });
 
 buttonBar.add(basicSwitch);
 
 var btnClearComplete = Ti.UI.createButton({
 	title: 'Clear Complete',
-	right: 5,
-	height: 42
+	right: 5
 });
 
 btnClearComplete.addEventListener('click', function(e) {
-	var section = taskList.data[0];
- 
-	for (var j = 0; j < section.rowCount; j++) {
-		var row = section.rows[j];
-		// do something useful with the row object here, e.g.
-		Ti.API.info('Row ' + j + ': ' + row.title + ' checked: ' + row.hasCheck);
-	}
-/*
-	var sections = taskList.data;
-	 
-	for (var i = 0; i < sections.length; i++) {
-	    var section = sections[i];
-	 
-	    for(var j = 0; j < section.rowCount; j++) {
-	        var row = section.rows[j];
-	        // do something useful with the row object here, e.g.
-	        Ti.API.info('Section ' + i + ' row ' + j + ': ' + row.title);
-	    }
-	}*/
+    db.execute('DELETE FROM TODO_ITEMS WHERE IS_COMPLETE = 1;');
+    refreshTaskList();
 });
 
 buttonBar.add(btnClearComplete);
 
 win.add(buttonBar);
 
+// Make sure the dababase is closed when the app exits
+win.addEventListener('close', function() {
+   db.close(); 
+});
+
+refreshTaskList();
 win.open();
 
+function refreshTaskList() {
+	var rows = db.execute('SELECT * FROM TODO_ITEMS');
+	var data = [];
+
+	while (rows.isValidRow()) {
+		var isComplete = rows.fieldByName('IS_COMPLETE');
+		
+		data.push({
+			title: '' + rows.fieldByName('NAME') + '',
+			hasCheck: (isComplete==1) ? true : false,
+			id: rows.fieldByName('ID'),
+			color: '#bbaaaa'
+		});
+		
+		rows.next();
+	};
+
+	taskList.setData(data);
+}
+
 function addTask(name) {
-	var row = Ti.UI.createTableViewRow({
-		title: name
-	});
-	
-	taskList.appendRow(row);
+	db.execute('INSERT INTO TODO_ITEMS (NAME, IS_COMPLETE) VALUES (?, 0)', name);
+
 	txtTaskName.value = '';
 	txtTaskName.blur();
+	refreshTaskList();
 }
