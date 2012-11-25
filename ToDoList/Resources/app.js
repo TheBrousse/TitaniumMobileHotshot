@@ -1,7 +1,7 @@
 // Open the database and create schema (if needed)
 var db = Ti.Database.open('todo.sqlite','todo');
 
-db.execute('CREATE TABLE IF NOT EXISTS TODO_ITEMS  (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, IS_COMPLETE INTEGER)');
+db.execute('CREATE TABLE IF NOT EXISTS TODO_ITEMS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, IS_COMPLETE INTEGER)');
 
 // User interface (UI) construction
 var win = Ti.UI.createWindow({
