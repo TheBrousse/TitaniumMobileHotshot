@@ -73,7 +73,41 @@ var buttonBar = Ti.UI.createView({
 	bottom: 0
 });
 
+var basicSwitch = Ti.UI.iOS.createTabbedBar({
+	labels: ['All', 'Active'],
+	left: 5,
+	backgroundColor: buttonBar.backgroundColor,
+	style: Titanium.UI.iPhone.SystemButtonStyle.BAR,
+	index: 0
+});
 
+basicSwitch.addEventListener('click', function(e) {
+	if (e.index == 0) {
+		toggleAllTasks(true);
+	} else {
+		toggleAllTasks(false);
+	}
+});
+
+buttonBar.add(basicSwitch);
+
+function toggleAllTasks(showAll) {
+	if (showAll) {
+		refreshTaskList();
+	} else {
+		var section = taskList.data[0];
+		
+		for (var i = 0; i < section.rowCount; i++) {
+			var row = section.rows[i];
+			
+			if (row.hasCheck) {
+				taskList.deleteRow(i);
+			}
+		}
+	}
+}
+
+/*
 var basicSwitch = Ti.UI.createSwitch({
 	value: true,
 	left: 5,
@@ -98,7 +132,7 @@ basicSwitch.addEventListener('change', function(e) {
 });
 
 buttonBar.add(basicSwitch);
-
+*/
 var btnClearComplete = Ti.UI.createButton({
 	title: 'Clear Complete',
 	right: 5
