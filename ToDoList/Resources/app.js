@@ -28,7 +28,10 @@ var txtTaskName = Ti.UI.createTextField({
 headerView.add(txtTaskName);
 
 var btnAdd = Ti.UI.createButton({
-	title: 'Add'
+	backgroundImage: 'add_button.png',
+	left: 15,
+	height: '45dp',
+	width: '45dp'
 });
 
 btnAdd.addEventListener('click', function(e) {
@@ -73,66 +76,35 @@ var buttonBar = Ti.UI.createView({
 	bottom: 0
 });
 
-var basicSwitch = Ti.UI.iOS.createTabbedBar({
-	labels: ['All', 'Active'],
-	left: 5,
-	backgroundColor: buttonBar.backgroundColor,
-	style: Titanium.UI.iPhone.SystemButtonStyle.BAR,
-	index: 0
-});
+var basicSwitch;
 
-basicSwitch.addEventListener('click', function(e) {
-	if (e.index == 0) {
-		toggleAllTasks(true);
-	} else {
-		toggleAllTasks(false);
-	}
-});
-
-buttonBar.add(basicSwitch);
-
-function toggleAllTasks(showAll) {
-	if (showAll) {
-		refreshTaskList();
-	} else {
-		var section = taskList.data[0];
-		
-		for (var i = 0; i < section.rowCount; i++) {
-			var row = section.rows[i];
-			
-			if (row.hasCheck) {
-				taskList.deleteRow(i);
-			}
-		}
-	}
+if (Ti.Platform.name === ' iPhone OS') {
+    basicSwitch = Ti.UI.iOS.createTabbedBar({
+    	labels: ['All', 'Active'],
+    	left: 5,
+    	backgroundColor: buttonBar.backgroundColor,
+    	style: Titanium.UI.iPhone.SystemButtonStyle.BAR,
+    	index: 0
+    });
+    
+    basicSwitch.addEventListener('click', function(e) {
+   		toggleAllTasks(e.index === 0);
+    });
+} else {
+    basicSwitch = Ti.UI.createSwitch({
+    	value: true,
+    	left: 5,
+    	titleOn: 'All',
+    	titleOff: 'Active'
+    });
+    
+    basicSwitch.addEventListener('change', function(e) {
+        toggleAllTasks(e.value === true);
+    });
 }
 
-/*
-var basicSwitch = Ti.UI.createSwitch({
-	value: true,
-	left: 5,
-	titleOn: 'All',
-	titleOff: 'Active'
-});
-
-basicSwitch.addEventListener('change', function(e) {
-	if (e.value == true) {
-		refreshTaskList();
-	} else {
-		var section = taskList.data[0];
-		
-		for (var i = 0; i < section.rowCount; i++) {
-			var row = section.rows[i];
-			
-			if (row.hasCheck) {
-				taskList.deleteRow(i);
-			}
-		}
-	}
-});
-
 buttonBar.add(basicSwitch);
-*/
+
 var btnClearComplete = Ti.UI.createButton({
 	title: 'Clear Complete',
 	right: 5
@@ -155,6 +127,14 @@ win.addEventListener('close', function() {
 refreshTaskList();
 win.open();
 
+function addTask(name) {
+    db.execute('INSERT INTO TODO_ITEMS (NAME, IS_COMPLETE) VALUES (?, 0)', name);
+
+    txtTaskName.value = '';
+    txtTaskName.blur();
+    refreshTaskList();
+}
+
 function refreshTaskList() {
 	var rows = db.execute('SELECT * FROM TODO_ITEMS');
 	var data = [];
@@ -164,9 +144,10 @@ function refreshTaskList() {
 		
 		data.push({
 			title: '' + rows.fieldByName('NAME') + '',
-			hasCheck: (isComplete==1) ? true : false,
+			hasCheck: (isComplete===1) ? true : false,
 			id: rows.fieldByName('ID'),
-			color: '#bbaaaa'
+			color: '#bbaaaa',
+			className: 'task'
 		});
 		
 		rows.next();
@@ -175,10 +156,18 @@ function refreshTaskList() {
 	taskList.setData(data);
 }
 
-function addTask(name) {
-	db.execute('INSERT INTO TODO_ITEMS (NAME, IS_COMPLETE) VALUES (?, 0)', name);
-
-	txtTaskName.value = '';
-	txtTaskName.blur();
-	refreshTaskList();
+function toggleAllTasks(showAll) {
+    if (showAll) {
+        refreshTaskList();
+    } else {
+        var section = taskList.data[0];
+        
+        for (var i = 0; i < section.rowCount; i++) {
+            var row = section.rows[i];
+            
+            if (row.hasCheck) {
+                taskList.deleteRow(i);
+            }
+        }
+    }
 }
