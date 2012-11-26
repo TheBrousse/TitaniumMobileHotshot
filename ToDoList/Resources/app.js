@@ -77,7 +77,7 @@ var buttonBar = Ti.UI.createView({
 
 var basicSwitch;
 
-if (Ti.Platform.name === ' iPhone OS') {
+if (Ti.Platform.name === 'iPhone OS') {
     basicSwitch = Ti.UI.iOS.createTabbedBar({
     	labels: ['All', 'Active'],
     	left: 5,
