@@ -79,28 +79,28 @@ var buttonBar = Ti.UI.createView({
 var basicSwitch;
 
 if (Ti.Platform.name === 'iPhone OS') {
-    basicSwitch = Ti.UI.iOS.createTabbedBar({
-    	labels: ['All', 'Active'],
-    	left: 5,
-    	backgroundColor: buttonBar.backgroundColor,
-    	style: Titanium.UI.iPhone.SystemButtonStyle.BAR,
-    	index: 0
-    });
-    
-    basicSwitch.addEventListener('click', function(e) {
-   		toggleAllTasks(e.index === 0);
-    });
+	basicSwitch = Ti.UI.iOS.createTabbedBar({
+		labels: ['All', 'Active'],
+		left: 5,
+		backgroundColor: buttonBar.backgroundColor,
+		style: Titanium.UI.iPhone.SystemButtonStyle.BAR,
+		index: 0
+	});
+	
+	basicSwitch.addEventListener('click', function(e) {
+		toggleAllTasks(e.index === 0);
+	});
 } else {
-    basicSwitch = Ti.UI.createSwitch({
-    	value: true,
-    	left: 5,
-    	titleOn: 'All',
-    	titleOff: 'Active'
-    });
-    
-    basicSwitch.addEventListener('change', function(e) {
-        toggleAllTasks(e.value === true);
-    });
+	basicSwitch = Ti.UI.createSwitch({
+		value: true,
+		left: 5,
+		titleOn: 'All',
+		titleOff: 'Active'
+	});
+	
+	basicSwitch.addEventListener('change', function(e) {
+		toggleAllTasks(e.value === true);
+	});
 }
 
 buttonBar.add(basicSwitch);
@@ -128,11 +128,11 @@ refreshTaskList();
 win.open();
 
 function addTask(name) {
-    db.execute('INSERT INTO TODO_ITEMS (NAME, IS_COMPLETE) VALUES (?, 0)', name);
+	db.execute('INSERT INTO TODO_ITEMS (NAME, IS_COMPLETE) VALUES (?, 0)', name);
 
-    txtTaskName.value = '';
-    txtTaskName.blur();
-    refreshTaskList();
+	txtTaskName.value = '';
+	txtTaskName.blur();
+	refreshTaskList();
 }
 
 function refreshTaskList() {
@@ -157,17 +157,17 @@ function refreshTaskList() {
 }
 
 function toggleAllTasks(showAll) {
-    if (showAll) {
-        refreshTaskList();
-    } else {
-        var section = taskList.data[0];
-        
-        for (var i = 0; i < section.rowCount; i++) {
-            var row = section.rows[i];
-            
-            if (row.hasCheck) {
-                taskList.deleteRow(i);
-            }
-        }
-    }
+	if (showAll) {
+		refreshTaskList();
+	} else {
+		var section = taskList.data[0];
+		
+		for (var i = 0; i < section.rowCount; i++) {
+			var row = section.rows[i];
+			
+			if (row.hasCheck) {
+				taskList.deleteRow(i);
+			}
+		}
+	}
 }
