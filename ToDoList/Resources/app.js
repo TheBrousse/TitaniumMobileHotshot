@@ -54,8 +54,7 @@ var taskView = Ti.UI.createView({
 var taskList = Ti.UI.createTableView({
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
-	separatorColor: '#bb8888',
-	backgroundFocusedColor: '#eedddd'
+	separatorColor: '#bb8888'
 });
 
 taskList.addEventListener('click', function(e) {
