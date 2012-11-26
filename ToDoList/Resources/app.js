@@ -59,9 +59,10 @@ var taskList = Ti.UI.createTableView({
 
 taskList.addEventListener('click', function(e) {
 	var todoItem = e.rowData;
+	var isComplete = (todoItem.hasCheck ? 0 : 1);
 
 	db.execute('UPDATE TODO_ITEMS SET IS_COMPLETE = ? WHERE ID = ?', 
-				(todoItem.hasCheck ? 0 : 1), todoItem.id);
+				isComplete, todoItem.id);
 	refreshTaskList();
 });
 
