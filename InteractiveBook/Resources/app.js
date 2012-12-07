@@ -1,8 +1,12 @@
-var sh = require('com.infinery.pageflip');
+// Load the native PageFlip Module
+var book = require('com.infinery.pageflip');
+
 var win = Titanium.UI.createWindow({
     //fullscreen: true,
+    title: 'Interactive eBook for iPad'
     backgroundColor: 'black'
 });
+/*
 var goNext = function(pg) {
     //var cp = sh.GetActivePageIndex();
     //var np = 1 + parseInt(cp);
@@ -50,5 +54,7 @@ b1.addEventListener('click', function() {
     sh.SetActivePage(0);
 });
 v3.add(b1);
+*/
 win.open();
-sh.PageView(win, [v4, v1, v3, v2, v5, v6, v7]);
+
+book.PageView(win, [require('webpage', require('mappage'), require('videopage'))]);
