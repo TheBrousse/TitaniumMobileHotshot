@@ -8,94 +8,94 @@
 <p>The pageflip variable is a reference to the Module object.<br />
 </p>
 <h2>Reference</h2>
-<p>pageflip.PageView(win, [ <array of views> ]);</p>
+<pre>pageflip.PageView(win, [ <array of views> ]);</pre>
 <p>where:</p>
-<p>-- win: Ti.UI.Windows where PageFlip will be shown;</p>
-<p>-- array of Ti.UI.View-based objects, such as Ti.UI.View, Ti.Map.View, Ti.UI.WebView and so on.</p>
-<p>pageflip.SetActivePage(pageNumber);</p>
+<ul>
+    <li>win: Ti.UI.Windows where PageFlip will be shown;</li>
+    <li>array of Ti.UI.View-based objects, such as Ti.UI.View, Ti.Map.View, Ti.UI.WebView and so on.</li>
+</ul>
+<pre>pageflip.SetActivePage(pageNumber);</pre>
 <p>where:</p>
-<p>-- pageNumber - index of the view in the array of views you've passed to the PageView method  which you want to make an active page</p>
+<li> pageNumber - index of the view in the array of views you've passed to the PageView method  which you want to make an active page</li>
 <p>var activePageIndex = pageflip.GetActivePageIndex()</p>
-<p>-- returns index of the currently active page</p>
+<li>returns index of the currently active page</li>
 <p>PageFlip fires 1 event - "ready".
 This event is fired when the PageView is fully constructed and ready to be displayed</p>
-<p>IMPORTANT:</p>
+<h3>IMPORTANT:</h3>
 <p>Due to a bug in current version of the Titanium SDK, window should be opened before the call to the PageView method, otherwise your will experience some delay in the opening the PageFlip controller.
 So, the suggester sequence is the following:</p>
-<p>var pf = require('com.infinery.pageflip');</p>
-<p>// create main window
-var win = Ti.UI.createWindow();</p>
-<p>// create content views:
+<pre>var pf = require('com.infinery.pageflip');</p>
+// create main window
+var win = Ti.UI.createWindow();
+// create content views:
 var v1 = Ti.UI.createView({});
 var v2 = Ti.UI.createView({});
-var v3 = Ti.UI.createView({});</p>
-<p>// open the window
-win.open();</p>
-<p>// create controller
-pf.PageView(win, v1, v2, v3);</p>
-<p>IMPORTANT:</p>
+var v3 = Ti.UI.createView({});
+// open the window
+win.open();
+
+// create controller
+pf.PageView(win, v1, v2, v3);
+</pre>
+<h3>IMPORTANT:</h3>
 <p>Free version of the PageFlip Navigation controller is limited to 3 pages.
 If more than 3 views are passed to the PageView method, the controller will not be instantiated.
 If your application requires more than 3 views, please purchase the commercial version of the controller from the Titanium Marketplace.</p>
 <h2>Usage</h2>
 <p>Here is a sample code:</p>
-<p>var sh = require('com.infinery.pageflip');</p>
-<p>var win = Titanium.UI.createWindow({
+<pre>
+var sh = require('com.infinery.pageflip');
+var win = Titanium.UI.createWindow({
     //fullscreen: true,
     backgroundColor: 'black'
-});</p>
-<p>var goNext = function(pg)
-{
+});
+var goNext = function(pg) {
     //var cp = sh.GetActivePageIndex();
-    //var np = 1 + parseInt(cp);</p>
-<pre><code>sh.SetActivePage(pg);
-</code></pre>
-<p>}</p>
-<p>sh.addEventListener('ready', function(e)
-{
+    //var np = 1 + parseInt(cp);
+    sh.SetActivePage(pg);
+}
+sh.addEventListener('ready', function(e){
     alert('PageFlip is ready');
-});</p>
-<p>var v1 = Ti.UI.createWebView({
+});
+var v1 = Ti.UI.createWebView({
     url: 'http://mrdoob.github.com/three.js/examples/canvas_particles_sprites.html'
-});</p>
-<p>var v2 = Ti.UI.createView({
+});
+var v2 = Ti.UI.createView({
     backgroundColor: '#4390f3'
-});</p>
-<p>var v3 = Ti.UI.createView({
+});
+var v3 = Ti.UI.createView({
     backgroundColor: '#2b4771'
-});</p>
-<p>var v4 = Ti.Map.createView({
+});
+var v4 = Ti.Map.createView({
     mapType: Ti.Map.STANDARD_TYPE,
     animate: true,
     regionFit: true,
     userLocation: true
-});</p>
-<p>v4.addEventListener('longpress', function()
-{
+});
+v4.addEventListener('longpress', function() {
     goNext(1);
-});</p>
-<p>v1.addEventListener('longpress', function()
-{
+});
+v1.addEventListener('longpress', function() {
     goNext(2);
-});</p>
-<p>var v5 = Ti.UI.createView({
+});
+var v5 = Ti.UI.createView({
     backgroundColor: 'pink'
-});</p>
-<p>var v6 = Ti.UI.createView({
+});
+var v6 = Ti.UI.createView({
     backgroundColor: 'yellow'
-});</p>
-<p>var v7 = Ti.UI.createView({
+});
+var v7 = Ti.UI.createView({
     backgroundColor: 'green'
-});</p>
-<p>var b1 = Ti.UI.createButton({
+});
+var b1 = Ti.UI.createButton({
     title: 'go back to page 1...',
     width: 444,
     height: 123
-});</p>
-<p>b1.addEventListener('click', function()
-{
+});
+b1.addEventListener('click', function() {
     sh.SetActivePage(0);
-});</p>
-<p>v3.add(b1);</p>
-<p>win.open();</p>
-<p>sh.PageView(win, [v4, v1, v3, v2, v5, v6, v7]);</p>
+});
+v3.add(b1);
+win.open();
+sh.PageView(win, [v4, v1, v3, v2, v5, v6, v7]);
+</pre>
