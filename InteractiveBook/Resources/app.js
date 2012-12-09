@@ -7,31 +7,26 @@ var win = Titanium.UI.createWindow({
 });
 
 var v1 = Ti.UI.createView({ backgroundColor: 'red' });
-var v2 = Ti.UI.createView({ backgroundColor: 'white' });
+var v2 = require('videopage')();
 var v3 = Ti.UI.createView({ backgroundColor: 'blue' });
 var v4 = require('mappage')();
+var v5 = require('webpage')();
 
-var lblBottom = Ti.UI.createLabel({
-		text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',
-		left: 10,
-		top: 10,
-		width: '95%',
-		height: Ti.UI.SIZE
-	});
-v1.add(lblBottom);
+var pages = [v1, v2, v3, v4, v5];
 
-var pages = [v1, v2, v3, v4];
+v2.add(Ti.UI.createButton({ title: 'button 1'}));
 
 var pageflip = PageFlip.createView({
     /* All Options: TRANSITION_FLIP [default], TRANSITION_SLIDE, TRANSITION_FADE, TRANSITION_CURL */
     transition: PageFlip.TRANSITION_CURL,
     transitionDuration: 0.3,
-    landscapeShowsTwoPages: true,
+    landscapeShowsTwoPages: false,
     pages: pages
 });
 
 win.add(pageflip);
-//win.add(v4);
+
+
 
 win.open();
 

@@ -9,3 +9,5 @@ function WebContentPage() {
 
 	return self;
 }
+
+module.exports = WebContentPage;
