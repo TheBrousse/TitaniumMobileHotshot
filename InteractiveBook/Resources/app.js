@@ -2,32 +2,21 @@
 var PageFlip = require('ti.pageflip');
 
 var win = Titanium.UI.createWindow({
-    title: 'Interactive eBook for iPad',
-    backgroundColor: 'black'
+    title: 'Interactive eBook for iPad'
 });
 
-var v1 = Ti.UI.createView({ backgroundColor: 'red' });
-var v2 = require('videopage')();
-var v3 = Ti.UI.createView({ backgroundColor: 'blue' });
-var v4 = require('mappage')();
-var v5 = require('webpage')();
-
-var pages = [v1, v2, v3, v4, v5];
-
-v2.add(Ti.UI.createButton({ title: 'button 1'}));
+var page1 = require('webpage')();
+var page2 = require('videopage')();
+var page3 = require('mappage')();
 
 var pageflip = PageFlip.createView({
     /* All Options: TRANSITION_FLIP [default], TRANSITION_SLIDE, TRANSITION_FADE, TRANSITION_CURL */
     transition: PageFlip.TRANSITION_CURL,
     transitionDuration: 0.3,
     landscapeShowsTwoPages: false,
-    pages: pages
+    pages: [ page1, page3, page2 ]
 });
 
 win.add(pageflip);
 
-
-
 win.open();
-
-//book.PageView(win, [require('webpage', require('mappage'), require('videopage'))]);
