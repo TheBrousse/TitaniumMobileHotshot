@@ -46,6 +46,6 @@
         <theme>default</theme>
     </mobileweb>
     <modules>
-    	<module platform="iphone" version="1.0">com.infinery.pageflip</module>
+        <module platform="iphone" version="1.8.2">ti.pageflip</module>
     </modules>
 </ti:app>

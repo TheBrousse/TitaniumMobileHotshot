@@ -1,0 +1,113 @@
+<h1>Ti.PageFlip.View</h1>
+
+<h2>Description</h2>
+
+<p>Displays flippable pages to the user. The user can turn pages by sliding their finger across the screen, or by taping on the
+far left or right to go back or advance, respectively.</p>
+
+<h2>Properties</h2>
+
+<h3>pdf [string]</h3>
+
+<p>A URL to a PDF document. If this property is specified, the module will automatically determine the page counts and views. If you want more control over what is visible, utilize the "pageCount" and "loadPage" properties.</p>
+
+<h3>transition [int]</h3>
+
+<p>Controls how the pages look when they flip. Defaults to <em>TRANSITION_FLIP</em> Use the TRANSITION_ constants in <em><a href="index.html">Ti.PageFlip</a></em>.</p>
+
+<h3>transitionDuration [float]</h3>
+
+<p>The number of seconds a complete transition should take. Defaults to 0.5. Note that the CURL transition does NOT support this property.</p>
+
+<h3>pagingMarginWidth [int]</h3>
+
+<p>The width of the area around the edge where the user can change pages. This includes both tap-to-advance and grabbing the edge of the page. Defaults to 10%. To disable this feature, set it to 0. Note that the CURL transition does NOT support this property.</p>
+
+<h3>landscapeShowsTwoPages [bool]</h3>
+
+<p>Indicates if two pages should be shown when the device is in its landscape orientation. Note that this does not influence the page numbering or counts.</p>
+
+<h3>enableBuiltInGestures [bool]</h3>
+
+<p>Controls whether or not the built in gestures are enabled (tap, pan, or swipe to change pages).</p>
+
+<h3>pages [array]</h3>
+
+<p>Contains all of the views that you want the user to be able to flip through. Can be any combination of visible elements, such as Ti.UI.View or Ti.UI.Label, etc.</p>
+
+<h3>currentPage [int, readonly]</h3>
+
+<p>The currently visible page. Use the "changeCurrentPage" method to move the user to another page. This uses a 0-based index.</p>
+
+<h3>pageCount [int, readonly]</h3>
+
+<p>Returns the total number of pages.</p>
+
+<h2>Methods</h2>
+
+<h3>changeCurrentPage(index, animate)</h3>
+
+<p>Moves the user to the specified page at the 0-based index, optionally animating them there.</p>
+
+<ul>
+<li>index [int] The index to the page.</li>
+<li>animate [bool, optional] Whether or not to animate the transition.</li>
+</ul>
+
+<h3>insertPageBefore(index, page)</h3>
+
+<p>Inserts a page in to the view hierarchy before the specified 0-based index. The pages after this index will be renumbered to make room for the new page.</p>
+
+<ul>
+<li>index [int] The index <em>before</em> which the page should be inserted.</li>
+<li>page [view] Any combination of visible elements, such as Ti.UI.View or Ti.UI.Label, etc.</li>
+</ul>
+
+<h3>insertPageAfter(index, page)</h3>
+
+<p>Inserts a page in to the view hierarchy after the specified 0-based index. The pages after this index will be renumbered to make room for the new page.</p>
+
+<ul>
+<li>index [int] The index <em>before</em> which the page should be inserted.</li>
+<li>page [view] Any combination of visible elements, such as Ti.UI.View or Ti.UI.Label, etc.</li>
+</ul>
+
+<h3>appendPage(page)</h3>
+
+<p>Appends a page to the end of the pages.</p>
+
+<ul>
+<li>page [view] Any combination of visible elements, such as Ti.UI.View or Ti.UI.Label, etc.</li>
+</ul>
+
+<h3>deletePage(index)</h3>
+
+<p>Removes the page at the specified 0-based index. The pages after the specified index will be renumbered to take up the space left by the removed page.</p>
+
+<ul>
+<li>index [int] The index <em>before</em> which the page should be inserted.</li>
+</ul>
+
+<h2>Events</h2>
+
+<h3>change</h3>
+
+<p>Fired when the user moves to another page or the device reorients. Handlers will receive one dictionary as their first argument. The following
+properties will be available:</p>
+
+<ul>
+<li>currentPage [int]: The 0-based index of the visible page.</li>
+<li>pageCount [int]: The total number of pages.</li>
+</ul>
+
+<h3>flipStarted</h3>
+
+<p>Fired when a user starts to move to another page.</p>
+
+<h3>tap</h3>
+
+<p>Fired when the user taps inside of the pagingMarginWidth. This does not prevent other views inside the page flip from receiving touches.</p>
+
+<ul>
+<li>currentPage [int]: The 0-based index of the clicked page.</li>
+</ul>
