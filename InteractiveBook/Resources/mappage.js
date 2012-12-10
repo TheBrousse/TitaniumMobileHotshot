@@ -7,8 +7,8 @@ function MapContentPage() {
 	    region: { 
 	    	latitude: 48.8587011132514,
 	    	longitude: 2.2942328453063965,
-	    	latitudeDelta:0.01, 
-	    	longitudeDelta:0.01
+	    	latitudeDelta: 0.01, 
+	    	longitudeDelta: 0.01
 	    },
 	    touchEnabled: false
 	});
