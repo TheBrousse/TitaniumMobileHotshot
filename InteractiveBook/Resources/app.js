@@ -2,8 +2,8 @@
 var PageFlip = require('ti.pageflip');
 
 var win = Titanium.UI.createWindow({
-    title: 'Interactive eBook for iPad',
-    orientationModes: [ Ti.UI.LANDSCAPE_LEFT, Ti.UI.LANDSCAPE_RIGHT ]
+    title: 'Interactive eBook for iPad'/*,
+    orientationModes: [ Ti.UI.LANDSCAPE_LEFT, Ti.UI.LANDSCAPE_RIGHT ]*/
 });
 
 var page1 = require('webpage')();
