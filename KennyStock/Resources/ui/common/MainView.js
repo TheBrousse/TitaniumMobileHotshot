@@ -17,6 +17,18 @@ function FirstView() {
 		alert(e.source.text);
 	});
 	
+	
+	var QuotesService = require('service/QuotesService');
+	var qs = new QuotesService();
+	
+	Ti.API.info('==================QUOTES');
+    Ti.API.info(JSON.stringify(qs.getQuotes()));
+	
+	qs.saveQuotes();
+	
+	Ti.API.info('==================QUOTES2');
+	Ti.API.info(JSON.stringify(qs.getQuotes()));
+	
 	return self;
 }
 
