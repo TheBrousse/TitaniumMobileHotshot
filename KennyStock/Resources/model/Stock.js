@@ -1,6 +1,7 @@
-function Stock(symbol, quote) {
+function Stock(symbol, quantity) {
     this.symbol = symbol;
-    this.quote = quote;
+    this.quantity = quantity;
+    this.price = 0.00;
 }
 
 module.exports = Stock;

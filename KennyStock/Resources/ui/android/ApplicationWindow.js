@@ -17,5 +17,13 @@ function ApplicationWindow() {
 	return self;
 }
 
+var activity = Ti.Android.currentActivity;
+
+activity.addEventListener('pause', function() {
+	var qs = require('service/QuotesService');
+		
+	qs.saveQuotes();
+});
+
 //make constructor function the public component interface
 module.exports = ApplicationWindow;

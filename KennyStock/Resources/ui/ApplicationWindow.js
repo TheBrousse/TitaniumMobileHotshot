@@ -5,7 +5,8 @@ function ApplicationWindow() {
 		
 	//create component instance
 	var self = Ti.UI.createWindow({
-		backgroundColor:'#ffffff'
+		backgroundColor:'#ffffff',
+		title: 'Kenny Stock'
 	});
 		
 	//construct UI
@@ -14,6 +15,12 @@ function ApplicationWindow() {
 	
 	return self;
 }
+
+Ti.App.addEventListener('pause', function() {
+	var qs = require('service/QuotesService');
+		
+	qs.saveQuotes();
+});
 
 //make constructor function the public component interface
 module.exports = ApplicationWindow;

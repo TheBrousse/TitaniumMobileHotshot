@@ -17,17 +17,48 @@ function FirstView() {
 		alert(e.source.text);
 	});
 	
+	var qs = require('service/QuotesService');
 	
-	var QuotesService = require('service/QuotesService');
-	var qs = new QuotesService();
+	qs.loadSavedQuotes();
 	
-	Ti.API.info('==================QUOTES');
-    Ti.API.info(JSON.stringify(qs.getQuotes()));
+	var count = 0;
+	var timer = setInterval(function(){
+		qs.fetchValues(qs.getQuotes()[count]);
+		Ti.API.info(JSON.stringify(qs.getQuotes()[count]));
+	    count++;
+	    
+	    if (count == qs.getQuotes().length) {
+	        clearInterval(timer);
+	    }
+	    
+	}, 10000);
 	
-	qs.saveQuotes();
+	var btn = Ti.UI.createButton({
+		backgroundImage:'images/info.png',
+		height:19,
+		width:19,
+		bottom:8,
+		right:8
+	});
 	
-	Ti.API.info('==================QUOTES2');
-	Ti.API.info(JSON.stringify(qs.getQuotes()));
+	btn.addEventListener('click', function(e) {
+		var SettingsWindow = require('ui/SettingsWindow');
+		
+		new SettingsWindow().open({
+			transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
+		});
+	});
+	
+	var btnList = Ti.UI.createButton({
+		title: 'List Stocks',
+		bottom: 17
+	});
+	
+	btnList.addEventListener('click', function(e) {
+		Ti.API.info(JSON.stringify(qs.getQuotes()));
+	});
+	
+	self.add(btn);
 	
 	return self;
 }

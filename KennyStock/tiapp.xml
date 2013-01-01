@@ -7,7 +7,7 @@
         <target device="android">true</target>
         <target device="blackberry">false</target>
     </deployment-targets>
-    <sdk-version>2.1.4.GA</sdk-version>
+    <sdk-version>3.0.0.GA</sdk-version>
     <id>com.packtpub.hotshot</id>
     <name>KennyStock</name>
     <version>1.0</version>
@@ -22,7 +22,7 @@
     <statusbar-hidden>false</statusbar-hidden>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
-    <analytics>true</analytics>
+    <analytics>false</analytics>
     <guid>79ee70f2-c833-4184-8d19-cf8f2fb76dfb</guid>
     <property name="ti.ui.defaultunit">system</property>
     <iphone>
