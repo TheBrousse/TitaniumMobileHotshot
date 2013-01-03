@@ -7,8 +7,8 @@ function FirstView() {
 	var label = Ti.UI.createLabel({
 		color:'#000000',
 		text:String.format(L('welcome'),'Titanium'),
-		height:'auto',
-		width:'auto'
+		height: Ti.UI.SIZE,
+		width: Ti.UI.SIZE
 	});
 	self.add(label);
 	
