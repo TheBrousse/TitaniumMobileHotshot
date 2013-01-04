@@ -16,23 +16,7 @@ function FirstView() {
 	label.addEventListener('click', function(e) {
 		alert(e.source.text);
 	});
-	
-	var qs = require('service/QuotesService');
-	
-	qs.loadSavedQuotes();
-	
-	var count = 0;
-	var timer = setInterval(function(){
-		qs.fetchValues(qs.getQuotes()[count]);
-		Ti.API.info(JSON.stringify(qs.getQuotes()[count]));
-	    count++;
-	    
-	    if (count == qs.getQuotes().length) {
-	        clearInterval(timer);
-	    }
-	    
-	}, 10000);
-	
+		
 	var btn = Ti.UI.createButton({
 		backgroundImage:'images/info.png',
 		height:19,

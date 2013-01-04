@@ -17,7 +17,7 @@ function ApplicationWindow() {
 }
 
 Ti.App.addEventListener('pause', function() {
-	var qs = require('service/QuotesService');
+	var qs = require('service/OnlineQuotesService');
 		
 	qs.saveQuotes();
 });

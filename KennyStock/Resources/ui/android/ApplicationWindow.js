@@ -20,7 +20,7 @@ function ApplicationWindow() {
 var activity = Ti.Android.currentActivity;
 
 activity.addEventListener('pause', function() {
-	var qs = require('service/QuotesService');
+	var qs = require('service/OnlineQuotesService');
 		
 	qs.saveQuotes();
 });

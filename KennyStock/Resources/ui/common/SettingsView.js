@@ -6,29 +6,33 @@ function SettingsView() {
     
 	//create object instance, a parasitic subclass of Observable
 	var self = Ti.UI.createView({
-		backgroundColor: 'blue'
+		backgroundColor: 'blue',
+		width: '100%',
+		height: '100%'
 	});
 	
 	self.add(Ti.UI.createLabel({
-	    left: 10,
 	    top: 15,
 	    width: Ti.UI.SIZE,
 	    height: Ti.UI.SIZE,
-	    text: 'How much money are you planning to make?'
+	    text: 'Your money objective:'
 	}));
 	
 	var txtObjective = Ti.UI.createTextField({
 	    left: 10,
-        top: 25,
+        top: 45,
         width: '90%',
         height: Ti.UI.SIZE,
+        backgroundColor: '#ffffff',
         hintText: 'Enter Amount',
         keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
 	});
 
+    self.add(txtObjective);
+
     self.add(Ti.UI.createLabel({
         left: 10,
-        top: 35,
+        top: 75,
         width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
         text: 'Symbol'
@@ -36,66 +40,71 @@ function SettingsView() {
     
     var txtSymbol = Ti.UI.createTextField({
         left: 10,
-        top: 35,
+        top: 75,
         width: 30,
-        height: Ti.UI.SIZE
+        height: Ti.UI.SIZE,
+        backgroundColor: '#ffffff'
     });
     
     self.add(txtSymbol);
     
     self.add(Ti.UI.createLabel({
         left: 100,
-        top: 35,
+        top: 75,
         width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
         text: 'Quantity'
     }));
 
     var txtQuantity = Ti.UI.createTextField({
-        left: 145,
-        top: 35,
+        left: 175,
+        top: 75,
         width: 30,
         height: Ti.UI.SIZE,
-        keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
+        keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
+        backgroundColor: '#ffffff',
     });
     
     self.add(txtQuantity);
     
-    var btnAddStock = Ti.U.createButton({
-        left: 180,
-        top: 35
+    var btnAddStock = Ti.UI.createButton({
+        left: 200,
+        top: 75,
+        title: 'Add'
     });
     
+    self.add(btnAddStock);
+    
+   var stockList = Ti.UI.createTableView({
+        left: 0,
+        top: 120,
+        width: Ti.UI.FILL,
+        height: '65%',
+        data: [{ title: 'item1' }]
+    }); 
+    
+    self.add(stockList);
+    
 	var btnSave = Ti.UI.createButton({
-	    botton: 10,
+	    bottom: 10,
 	    title: 'Save Settings'
 	});
 
-    var stockList = Ti.UI.createTableView({
-        left: 0,
-        top: 50,
-        width: Ti.UI.FILL,
-        height: '50%'
-    });	
+    self.add(btnSave);
 	
 	btnAddStock.addEventListener('click', function() {
         var stock = new Stock(txtSymbol.value.toUpperCase(), txtQuantity.value);
         
     });
 	
-	
 	btnSave.addEventListener('click', function() {
 	    ps.saveObjective(txtObjective.value);
-	    ps.saveQuotes(quites);	    
+	    ps.saveQuotes(quotes);	    
 	    
 	    self.fireEvent('settings:close');
 	});
 	
-	self.add(btnSave);
-	
 	return self;
 }
-
-function
 
 module.exports = SettingsView;

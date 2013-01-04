@@ -23,7 +23,7 @@ if (Ti.version < 1.8 ) {
 	}
 	
 	// CBR DELETE
-	var Stock = require('model/Stock');
+/*	var Stock = require('model/Stock');
     var a = [ 
         new Stock('IBM', 10),
         new Stock('AAPL', 5),
@@ -31,6 +31,6 @@ if (Ti.version < 1.8 ) {
     ];
     
     Ti.App.Properties.setList('quotes', a);            
-
+*/
 	new Window().open();
 })();
