@@ -1,31 +1,55 @@
-//FirstView Component Constructor
+var ps = require('service/PreferenceService');
+
 function FirstView() {
 	//create object instance, a parasitic subclass of Observable
 	var self = Ti.UI.createView();
-	
-	//label using localization-ready strings from <app dir>/i18n/en/strings.xml
-	var label = Ti.UI.createLabel({
-		color:'#000000',
-		text:String.format(L('welcome'),'Titanium'),
-		height: Ti.UI.SIZE,
-		width: Ti.UI.SIZE
+
+    var progress = Ti.UI.createProgressBar({
+        top: 55,
+        width: '95%',
+        height: 50,
+        max: ps.getObjective()
+    });
+    
+    self.add(progress);
+    
+    self.add(Ti.UI.createLabel({
+       left: 1,
+       top: 110,
+       width: Ti.UI.SIZE,
+       height: Ti.UI.SIZE,
+       text: '0$' 
+    }));
+    
+    self.add(Ti.UI.createLabel({
+       right: 1,
+       top: 110,
+       width: Ti.UI.SIZE,
+       height: Ti.UI.SIZE,
+       text: ps.getObjective() + '$' 
+    }));
+    			
+	var btnSettings = Ti.UI.createButton({
+		backgroundImage: 'images/info.png',
+		height: 19,
+		width: 19,
+		bottom: 8,
+		right: 8
 	});
-	self.add(label);
 	
-	//Add behavior for UI
-	label.addEventListener('click', function(e) {
-		alert(e.source.text);
-	});
-		
-	var btn = Ti.UI.createButton({
-		backgroundImage:'images/info.png',
-		height:19,
-		width:19,
-		bottom:8,
-		right:8
-	});
+	self.add(btnSettings);
 	
-	btn.addEventListener('click', function(e) {
+	var btnRefresh = Ti.UI.createButton({
+        backgroundImage: 'images/info.png',
+        height: 19,
+        width: 19,
+        bottom: 8,
+        left: 8
+    });
+
+    self.add(btnRefresh)    
+	
+	btnSettings.addEventListener('click', function(e) {
 		var SettingsWindow = require('ui/SettingsWindow');
 		
 		new SettingsWindow().open({
@@ -33,17 +57,12 @@ function FirstView() {
 		});
 	});
 	
-	var btnList = Ti.UI.createButton({
-		title: 'List Stocks',
-		bottom: 17
-	});
-	
 	btnList.addEventListener('click', function(e) {
 		Ti.API.info(JSON.stringify(qs.getQuotes()));
 	});
 	
-	self.add(btn);
-	
+	progress.setValue(30);
+
 	return self;
 }
 
