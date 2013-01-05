@@ -19,7 +19,7 @@ function ApplicationWindow() {
 Ti.App.addEventListener('pause', function() {
 	var qs = require('service/OnlineQuotesService');
 		
-	qs.saveQuotes();
+	//qs.saveQuotes();
 });
 
 //make constructor function the public component interface

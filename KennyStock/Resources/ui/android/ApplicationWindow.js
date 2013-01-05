@@ -22,7 +22,7 @@ var activity = Ti.Android.currentActivity;
 activity.addEventListener('pause', function() {
 	var qs = require('service/OnlineQuotesService');
 		
-	qs.saveQuotes();
+	//qs.saveQuotes();
 });
 
 //make constructor function the public component interface
