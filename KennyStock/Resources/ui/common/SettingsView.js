@@ -30,7 +30,8 @@ function SettingsView() {
         height: Ti.UI.SIZE,
         backgroundColor: '#ffffff',
         hintText: 'Amount',
-        keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
+        keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
+        value: ps.getObjective()
 	});
 
     self.add(txtObjective);
@@ -58,7 +59,7 @@ function SettingsView() {
     self.add(txtSymbol);
     
     self.add(Ti.UI.createLabel({
-        left: 200,
+        left: 210,
         top: 100,
         width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
@@ -93,11 +94,7 @@ function SettingsView() {
         left: 0,
         top: 170,
         width: Ti.UI.FILL,
-        height: '60%',
-        data: [{ title: 'item1' },
-            { title: 'item2' },
-            { title: 'item17' }
-       ]
+        height: '60%'
     }); 
     
     self.add(stockList);
