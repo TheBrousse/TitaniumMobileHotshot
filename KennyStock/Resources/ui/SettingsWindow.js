@@ -1,7 +1,7 @@
 //Application Window Component Constructor
 function SettingsWindow() {
 	//load component dependencies
-	var SettingsView = require('ui/common/SettingsView');
+	var SettingsView = require('ui/common/PortfolioView');
 		
 	//create component instance
 	var self = Ti.UI.createWindow({

@@ -2,8 +2,6 @@ var Stock = require('model/Stock');
 var ps = require('service/PreferenceService');
 
 function SettingsView() {
-    var quotes = [];
-    
 	//create object instance, a parasitic subclass of Observable
 	var self = Ti.UI.createView({
 		backgroundColor: '#006600',
@@ -115,18 +113,28 @@ function SettingsView() {
     });
 	
 	btnSave.addEventListener('click', function() {
+	    var stocks = [];
+	    
 	    ps.saveObjective(parseInt(txtObjective.value) || 0);
-	    //ps.saveQuotes(quotes);	    
+	    
+        var section = stockList.data[0];
+        
+        for (var i = 0; i < section.rowCount; i++) {
+            var row = section.rows[i];
+            
+            stocks.push(row.stock);
+        }
+	    
+	    ps.saveStocks(stocks);	    
 	    
 	    self.fireEvent('settings:close');
 	});
 	
-	var stock = new Stock('IBM', 55);
-        
-    addRow(stockList, stock);
-    addRow(stockList, stock);
-    addRow(stockList, stock);
+	var stocks = ps.getStocks();
 	
+	for (var i=0; i < stocks.length; i++) {
+	    addRow(stockList, stocks[i]);
+	}
 	
 	return self;
 }
@@ -163,6 +171,9 @@ function addRow(table, stock) {
         }
     }));
     
+    // Used to keep reference to the ioriginal object
+    // Used when saving Portfolio
+    row.stock = stock;
     
     table.appendRow(row);
 }
