@@ -14,14 +14,14 @@ function FirstView() {
 	self.add(progress);
 	
 	self.add(Ti.UI.createLabel({
-				left: 5,
-				top: 110,
-				width: Ti.UI.SIZE,
-				height: Ti.UI.SIZE,
-				text: '0$',
-				font: {
-						fontSize: '16sp',
-				}
+		left: 5,
+		top: 110,
+		width: Ti.UI.SIZE,
+		height: Ti.UI.SIZE,
+		text: '0$',
+		font: {
+				fontSize: '16sp',
+		}
 	}));
 	
 	self.add(Ti.UI.createLabel({
@@ -36,16 +36,16 @@ function FirstView() {
 	}));
 	
 	var lblWhatToDo = Ti.UI.createLabel({
-			text: 'HOLD',
-			left: 5, 
-			top: 200,
-			width: '100%',
-			height: Ti.UI.SIZE,
-			textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-			font: {
-				fontSize: '65sp',
-				fontWeight: 'bold'
-			}
+    	text: 'HOLD',
+    	left: 5, 
+    	top: 200,
+    	width: '100%',
+    	height: Ti.UI.SIZE,
+    	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+    	font: {
+    		fontSize: '65sp',
+    		fontWeight: 'bold'
+    	}
 	})
 	
 	self.add(lblWhatToDo);
@@ -60,20 +60,20 @@ function FirstView() {
 	
 	self.add(btnPortfolio);
 	
-		var btnRefresh = Ti.UI.createButton({
-				backgroundImage: '/images/refresh.png',
-				height: 26,
-				width: 26,
-				bottom: 8,
-				right: 8
-		});
+	var btnRefresh = Ti.UI.createButton({
+    	backgroundImage: '/images/refresh.png',
+    	height: 26,
+    	width: 26,
+    	bottom: 8,
+    	right: 8
+	});
 
-		self.add(btnRefresh);
+	self.add(btnRefresh);
 	
 	btnPortfolio.addEventListener('click', function(e) {
-		var SettingsWindow = require('ui/SettingsWindow');
+		var PortfolioWindow = require('ui/SettingsWindow');
 		
-		new SettingsWindow().open({
+		new PortfolioWindow().open({
 			transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
 		});
 	});
@@ -81,16 +81,18 @@ function FirstView() {
 	btnRefresh.addEventListener('click', function(e) {
 		var oqs = require('service/OnlineQuotesService');
 		
-		Ti.API.info('Refresh online quotes');
-		
-		var stocks = ps.getStocks();
-		
-		oqs.fetchValues(stocks);
-
-			var timer = setInterval(function() {
-					Ti.API.info(JSON.stringify(stocks));
-				}, 
-				10000);
+		oqs.fetchValues();
+	});
+	
+	Ti.App.addEventListener('oqs:stockUpdated', function(stock) {
+	    ps.updateStock(stock);
+	    Ti.API.info('-- ' + stock.symbol + ' has been updated: ' + stock.price);
+	    
+	    progress.value = ps.getPortfolioValue();
+	    
+	    if (progress.value >= progress.max) {
+	        lblWhatToDo = '!!! SELL !!!';
+	    }
 	});
 	
 	progress.setValue(ps.getPortfolioValue());
