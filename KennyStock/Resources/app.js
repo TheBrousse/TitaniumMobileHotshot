@@ -22,15 +22,5 @@ if (Ti.version < 1.8 ) {
 		Window = require('ui/ApplicationWindow');
 	}
 	
-	// CBR DELETE
-/*	var Stock = require('model/Stock');
-    var a = [ 
-        new Stock('IBM', 10),
-        new Stock('AAPL', 5),
-        new Stock('GOOG', 3)
-    ];
-    
-    Ti.App.Properties.setList('quotes', a);            
-*/
 	new Window().open();
 })();

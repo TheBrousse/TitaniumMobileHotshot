@@ -1,4 +1,3 @@
-
 exports.saveObjective = function(objective) {
     Ti.App.Properties.setInt('objective', objective);
 }
@@ -15,7 +14,9 @@ exports.saveStocks = function(stocks) {
     var totalValue = 0.00;
     
     for (var i=0; i < stocks.length; i++) {
-        totalValue += stocks[i].price;
+        var s = stocks[i];
+        
+        totalValue += (s.price * s.quantity);
     }
     
     Ti.App.Properties.setInt('portfolioValue', totalValue);
