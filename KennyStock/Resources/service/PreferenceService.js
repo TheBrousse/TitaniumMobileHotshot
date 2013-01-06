@@ -1,3 +1,19 @@
+var getStocks = function() {
+    Ti.API.info(JSON.stringify(Ti.App.Properties.getList('stocks', [])));
+        
+    return Ti.App.Properties.getList('stocks', []);
+};
+
+var saveStocks = function(stocks) {
+    Ti.API.info('Stocks saved');            
+    
+    Ti.App.Properties.setList('stocks', stocks);
+    updatePortfolioValue(stocks);
+};
+
+exports.saveStocks = saveStocks;
+exports.getStocks = getStocks;
+
 exports.saveObjective = function(objective) {
     Ti.App.Properties.setInt('objective', objective);
 }
@@ -6,21 +22,8 @@ exports.getObjective = function() {
     return Ti.App.Properties.getInt('objective', 1);
 }
 
-exports.saveStocks = function(stocks) {
-    Ti.API.info('Stocks saved');            
-    
-    Ti.App.Properties.setList('stocks', stocks);
-    updatePortfolioValue(stocks);
-}
-
-exports.getStocks = function() {
-    Ti.API.info(JSON.stringify(Ti.App.Properties.getList('stocks', [])));
-        
-    return Ti.App.Properties.getList('stocks', []);
-}
-
 exports.updateStock = function(stock) {
-    var allStocks = Ti.App.Properties.getList('stocks', []);
+    var allStocks = getStocks();
     
     // We loop through all stocks in order to find the one to update 
     for (var i=0; i < allStocks.length; i++) {
@@ -29,8 +32,7 @@ exports.updateStock = function(stock) {
             allStocks[i] = stock;
         } 
     }
-    Ti.App.Properties.setList('stocks', allStocks);
-    updatePortfolioValue(allStocks);
+    saveStocks(allStocks);
 }
 
 exports.getPortfolioValue = function() {
