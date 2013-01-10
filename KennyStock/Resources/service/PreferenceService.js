@@ -1,3 +1,10 @@
+var PreferenceService = function() {
+}
+
+PreferenceService.prototype.getObjective = function(objective) {
+    return Ti.App.Properties.getInt('objective', 1);
+}
+
 var getStocks = function() {
     Ti.API.info(JSON.stringify(Ti.App.Properties.getList('stocks', [])));
         
@@ -11,18 +18,18 @@ var saveStocks = function(stocks) {
     updatePortfolioValue(stocks);
 };
 
-exports.saveStocks = saveStocks;
-exports.getStocks = getStocks;
+PreferenceService.prototype.saveStocks = saveStocks;
+PreferenceService.prototype.getStocks = getStocks;
 
-exports.saveObjective = function(objective) {
+PreferenceService.prototype.saveObjective = function(objective) {
     Ti.App.Properties.setInt('objective', objective);
 }
 
-exports.getObjective = function() {
+PreferenceService.prototype.getObjective = function() {
     return Ti.App.Properties.getInt('objective', 1);
 }
 
-exports.updateStock = function(stock) {
+PreferenceService.prototype.updateStock = function(stock) {
     var allStocks = getStocks();
     
     // We loop through all stocks in order to find the one to update 
@@ -35,7 +42,7 @@ exports.updateStock = function(stock) {
     saveStocks(allStocks);
 }
 
-exports.getPortfolioValue = function() {
+PreferenceService.prototype.getPortfolioValue = function() {
     return Ti.App.Properties.getInt('portfolioValue', 0);
 } 
 
@@ -51,3 +58,6 @@ function updatePortfolioValue(stocks) {
     
     Ti.App.Properties.setInt('portfolioValue', totalValue);
 }
+
+var pref = new PreferenceService();
+module.exports = pref;

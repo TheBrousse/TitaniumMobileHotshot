@@ -1,6 +1,11 @@
 var ps = require('service/PreferenceService');
 
-exports.fetchValues = function() {
+function OnlineQuotesService() {
+}
+
+
+
+OnlineQuotesService.prototype.fetchValues = function() {
     var stockList = ps.getStocks();
     
     for (var i=0; i < stockList.length; i++) {
@@ -31,3 +36,7 @@ function getLastPrice(stock) {
     xhr.open("GET", url);
     xhr.send();  // request is actually sent with this statement
 }
+
+var service = new OnlineQuotesService();
+
+module.exports = service;
