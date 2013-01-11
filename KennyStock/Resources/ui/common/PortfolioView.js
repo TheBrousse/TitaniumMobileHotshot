@@ -2,7 +2,6 @@ var Stock = require('model/Stock');
 var ps = require('service/PreferenceService');
 
 function SettingsView() {
-	//create object instance, a parasitic subclass of Observable
 	var self = Ti.UI.createView({
 		backgroundColor: '#006600',
 		width: '100%',
@@ -109,7 +108,7 @@ function SettingsView() {
 		
 		Ti.API.info(JSON.stringify(stock));
 		
-		addRow(stockList, stock);
+		addCustomRow(stockList, stock);
 	});
 	
 	btnSave.addEventListener('click', function() {
@@ -133,13 +132,13 @@ function SettingsView() {
 	var stocks = ps.getStocks();
 	
 	for (var i=0; i < stocks.length; i++) {
-		addRow(stockList, stocks[i]);
+		addCustomRow(stockList, stocks[i]);
 	}
 	
 	return self;
 }
 
-function addRow(table, stock) {
+function addCustomRow(table, stock) {
 	var row = Ti.UI.createTableViewRow();
 	
 	row.add(Ti.UI.createLabel({

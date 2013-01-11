@@ -3,8 +3,6 @@ var ps = require('service/PreferenceService');
 function OnlineQuotesService() {
 }
 
-
-
 OnlineQuotesService.prototype.fetchValues = function() {
     var stockList = ps.getStocks();
     
@@ -22,7 +20,9 @@ function getLastPrice(stock) {
         onload: function(e) {
             // this function is called when data is returned from the server and available for use
             var quote = JSON.parse(this.responseText).Data;
-            stock.price = quote.LastPrice;
+            
+            var newPrice = quote.LastPrice; 
+            stock.price = Math.round(newPrice * 100) / 100;
             
             Ti.App.fireEvent('oqs:stockUpdated', stock);
         },

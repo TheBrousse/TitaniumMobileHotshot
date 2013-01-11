@@ -1,6 +1,6 @@
 var ps = require('service/PreferenceService');
 
-function FirstView() {
+function MainView() {
 	//create object instance, a parasitic subclass of Observable
 	var self = Ti.UI.createView();
 
@@ -71,7 +71,7 @@ function FirstView() {
 	self.add(btnRefresh);
 	
 	btnPortfolio.addEventListener('click', function(e) {
-		var PortfolioWindow = require('ui/SettingsWindow');
+		var PortfolioWindow = require('ui/PortfolioWindow');
 		
 		new PortfolioWindow().open({
 			transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
@@ -100,4 +100,4 @@ function FirstView() {
 	return self;
 }
 
-module.exports = FirstView;
+module.exports = MainView;

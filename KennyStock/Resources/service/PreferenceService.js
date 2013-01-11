@@ -5,22 +5,6 @@ PreferenceService.prototype.getObjective = function(objective) {
     return Ti.App.Properties.getInt('objective', 1);
 }
 
-var getStocks = function() {
-    Ti.API.info(JSON.stringify(Ti.App.Properties.getList('stocks', [])));
-        
-    return Ti.App.Properties.getList('stocks', []);
-};
-
-var saveStocks = function(stocks) {
-    Ti.API.info('Stocks saved');            
-    
-    Ti.App.Properties.setList('stocks', stocks);
-    updatePortfolioValue(stocks);
-};
-
-PreferenceService.prototype.saveStocks = saveStocks;
-PreferenceService.prototype.getStocks = getStocks;
-
 PreferenceService.prototype.saveObjective = function(objective) {
     Ti.App.Properties.setInt('objective', objective);
 }
@@ -45,6 +29,22 @@ PreferenceService.prototype.updateStock = function(stock) {
 PreferenceService.prototype.getPortfolioValue = function() {
     return Ti.App.Properties.getInt('portfolioValue', 0);
 } 
+
+PreferenceService.prototype.saveStocks = saveStocks;
+PreferenceService.prototype.getStocks = getStocks;
+
+var getStocks = function() {
+    Ti.API.info(JSON.stringify(Ti.App.Properties.getList('stocks', [])));
+        
+    return Ti.App.Properties.getList('stocks', []);
+};
+
+var saveStocks = function(stocks) {
+    Ti.API.info('Stocks saved');            
+    
+    Ti.App.Properties.setList('stocks', stocks);
+    updatePortfolioValue(stocks);
+};
 
 // Calculate and store Portfolio Value
 function updatePortfolioValue(stocks) {
