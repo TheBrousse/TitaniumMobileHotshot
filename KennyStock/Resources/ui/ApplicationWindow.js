@@ -105,11 +105,12 @@ function ApplicationWindow() {
 	    
 	    progress.value = ps.getPortfolioValue();
 	    progress.max = ps.getObjective();
+	    progress.show();
 	    
 	    if (progress.value < progress.max) {
 	        lblWhatToDo.text = 'HOLD';
 	    } else {
-	    	lblWhatToDo.text = '!!! SELL !!!';
+	    	lblWhatToDo.text = '! SELL !';
 	    }
 	});
 

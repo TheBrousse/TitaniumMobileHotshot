@@ -32,8 +32,10 @@ function PortfolioWindow() {
 		width: 100,
 		height: Ti.UI.SIZE,
 		backgroundColor: '#ffffff',
+        borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
 		hintText: 'Amount',
 		keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
+		returnKeyType: Titanium.UI.RETURNKEY_DONE,
 		value: ps.getObjective()
 	});
 
@@ -56,7 +58,9 @@ function PortfolioWindow() {
 		top: 85,
 		width: 70,
 		height: Ti.UI.SIZE,
-		backgroundColor: '#ffffff'
+		backgroundColor: '#ffffff',
+		borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+		returnKeyType: Titanium.UI.RETURNKEY_DONE
 	});
 	
 	self.add(txtSymbol);
@@ -79,7 +83,9 @@ function PortfolioWindow() {
 		width: 75,
 		height: Ti.UI.SIZE,
 		keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
-		backgroundColor: '#ffffff'
+		backgroundColor: '#ffffff',
+		borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+		returnKeyType: Titanium.UI.RETURNKEY_DONE
 	});
 	
 	self.add(txtQuantity);
@@ -96,7 +102,7 @@ function PortfolioWindow() {
 		left: 0,
 		top: 170,
 		width: Ti.UI.FILL,
-		height: '60%'
+		height: '50%'
 	}); 
 	
 	self.add(stockList);
@@ -108,13 +114,16 @@ function PortfolioWindow() {
 	});
 
 	self.add(btnSave);
-	
+
 	btnAddStock.addEventListener('click', function() {
-		var stock = new Stock(txtSymbol.value.toUpperCase(), txtQuantity.value);
-		
-		Ti.API.info(JSON.stringify(stock));
-		
-		addCustomRow(stockList, stock);
+	    if (txtSymbol.text != '' && txtQuantity.text != '') {
+    		var stock = new Stock(txtSymbol.value.toUpperCase(), txtQuantity.value);
+    		
+    		txtSymbol.value = '';
+    		txtQuantity.value = '';
+    		
+    		addCustomRow(stockList, stock);
+		}
 	});
 	
 	btnSave.addEventListener('click', function() {
@@ -134,7 +143,7 @@ function PortfolioWindow() {
 		Ti.App.fireEvent('app:portfolioChanged');
 		
 		self.close({
-           transition: Ti.UI.iPhone.AnimationStyle.CURL_UP
+           transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
         });
 	});
 	
