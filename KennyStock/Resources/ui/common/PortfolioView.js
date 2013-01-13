@@ -23,7 +23,7 @@ function SettingsView() {
 	var txtObjective = Ti.UI.createTextField({
 		right: 15,
 		top: 15,
-		width: 190,
+		width: 100,
 		height: Ti.UI.SIZE,
 		backgroundColor: '#ffffff',
 		hintText: 'Amount',
@@ -34,7 +34,7 @@ function SettingsView() {
 	self.add(txtObjective);
 
 	self.add(Ti.UI.createLabel({
-		left: 10,
+		left: 5,
 		top: 100,
 		width: Ti.UI.SIZE,
 		height: Ti.UI.SIZE,
@@ -46,9 +46,9 @@ function SettingsView() {
 	}));
 	
 	var txtSymbol = Ti.UI.createTextField({
-		left: 97,
+		left: 63,
 		top: 85,
-		width: 100,
+		width: 70,
 		height: Ti.UI.SIZE,
 		backgroundColor: '#ffffff'
 	});
@@ -56,7 +56,7 @@ function SettingsView() {
 	self.add(txtSymbol);
 	
 	self.add(Ti.UI.createLabel({
-		left: 210,
+		left: 140,
 		top: 100,
 		width: Ti.UI.SIZE,
 		height: Ti.UI.SIZE,
@@ -68,7 +68,7 @@ function SettingsView() {
 	}));
 
 	var txtQuantity = Ti.UI.createTextField({
-		left: 310,
+		left: 205,
 		top: 85,
 		width: 75,
 		height: Ti.UI.SIZE,
@@ -79,9 +79,8 @@ function SettingsView() {
 	self.add(txtQuantity);
 	
 	var btnAddStock = Ti.UI.createButton({
-		right: 15,
+		right: 2,
 		top: 85,
-		width: 75,
 		title: 'Add'
 	});
 	
@@ -98,6 +97,7 @@ function SettingsView() {
 	
 	var btnSave = Ti.UI.createButton({
 		bottom: 10,
+		width: '80%',
 		title: 'Save Settings'
 	});
 

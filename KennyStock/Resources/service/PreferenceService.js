@@ -30,9 +30,6 @@ PreferenceService.prototype.getPortfolioValue = function() {
     return Ti.App.Properties.getInt('portfolioValue', 0);
 } 
 
-PreferenceService.prototype.saveStocks = saveStocks;
-PreferenceService.prototype.getStocks = getStocks;
-
 var getStocks = function() {
     Ti.API.info(JSON.stringify(Ti.App.Properties.getList('stocks', [])));
         
@@ -45,6 +42,9 @@ var saveStocks = function(stocks) {
     Ti.App.Properties.setList('stocks', stocks);
     updatePortfolioValue(stocks);
 };
+
+PreferenceService.prototype.saveStocks = saveStocks;
+PreferenceService.prototype.getStocks = getStocks;
 
 // Calculate and store Portfolio Value
 function updatePortfolioValue(stocks) {
