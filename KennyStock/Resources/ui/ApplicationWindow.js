@@ -46,6 +46,7 @@ function ApplicationWindow() {
 	self.add(lblObjective);
 	
 	var lblWhatToDo = Ti.UI.createLabel({
+		text: 'HOLD',
     	left: 5, 
     	top: 200,
     	width: '100%',

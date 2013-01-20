@@ -11,10 +11,10 @@
     <id>com.packtpub.hotshot.todo</id>
     <name>To Do List</name>
     <version>1.0</version>
-    <publisher>thebrousse</publisher>
+    <publisher>Christian Brousseau</publisher>
     <url>http://www.packtpub.com</url>
     <description>not specified</description>
-    <copyright>2012 by thebrousse</copyright>
+    <copyright>2012 by Christian Brousseau</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
