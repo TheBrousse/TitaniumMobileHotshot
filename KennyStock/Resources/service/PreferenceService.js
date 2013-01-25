@@ -9,10 +9,6 @@ PreferenceService.prototype.saveObjective = function(objective) {
 	Ti.App.Properties.setInt('objective', objective);
 }
 
-PreferenceService.prototype.getObjective = function() {
-	return Ti.App.Properties.getInt('objective', 1);
-}
-
 PreferenceService.prototype.updateStock = function(stock) {
 	var allStocks = getStocks();
 	
