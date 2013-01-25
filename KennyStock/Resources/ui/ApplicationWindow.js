@@ -5,11 +5,11 @@ function ApplicationWindow() {
 	var self = Ti.UI.createWindow({
 		title: 'Kenny Stock',
 		backgroundGradient: {
-            type: 'linear',
-            startPoint: { x: '0%', y: '0%' },
-            endPoint: { x: '100%', y: '100%' },
-          	colors: [ { color: '#002400'}, { color: '#b4ddb4' } ]
-        }
+			type: 'linear',
+			startPoint: { x: '0%', y: '0%' },
+			endPoint: { x: '100%', y: '100%' },
+			colors: [ { color: '#002400'}, { color: '#b4ddb4' } ]
+		}
 	});
 
 	var progress = Ti.UI.createProgressBar({
@@ -33,30 +33,30 @@ function ApplicationWindow() {
 	}));
 	
 	var lblObjective = Ti.UI.createLabel({
-        right: 5,
-        top: 110,
-        width: Ti.UI.SIZE,
-        height: Ti.UI.SIZE,
-        text: ps.getObjective() + '$',
-        font: {
-            fontSize: '16sp',
-        }
-    });
-    
+		right: 5,
+		top: 110,
+		width: Ti.UI.SIZE,
+		height: Ti.UI.SIZE,
+		text: ps.getObjective() + '$',
+		font: {
+			fontSize: '16sp',
+		}
+	});
+	
 	self.add(lblObjective);
 	
 	var lblWhatToDo = Ti.UI.createLabel({
 		text: 'HOLD',
-    	left: 5, 
-    	top: 200,
-    	width: '100%',
-    	height: Ti.UI.SIZE,
-    	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-    	font: {
-    		fontSize: '65sp',
-    		fontWeight: 'bold'
-    	},
-    	color: '#ffffff'
+		left: 5, 
+		top: 200,
+		width: '100%',
+		height: Ti.UI.SIZE,
+		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+		font: {
+			fontSize: '65sp',
+			fontWeight: 'bold'
+		},
+		color: '#ffffff'
 	})
 	
 	self.add(lblWhatToDo);
@@ -72,11 +72,11 @@ function ApplicationWindow() {
 	self.add(btnPortfolio);
 	
 	var btnRefresh = Ti.UI.createButton({
-    	backgroundImage: '/images/refresh.png',
-    	height: 26,
-    	width: 26,
-    	bottom: 8,
-    	right: 8
+		backgroundImage: '/images/refresh.png',
+		height: 26,
+		width: 26,
+		bottom: 8,
+		right: 8
 	});
 
 	self.add(btnRefresh);
@@ -98,27 +98,27 @@ function ApplicationWindow() {
 	});
 	
 	Ti.App.addEventListener('app:portfolioChanged', function() {
-	    btnRefresh.fireEvent('click');
+		btnRefresh.fireEvent('click');
 	});
 	
 	Ti.App.addEventListener('oqs:stockUpdated', function(stock) {
-	    ps.updateStock(stock);
-	    
-	    progress.value = ps.getPortfolioValue();
-	    progress.max = ps.getObjective();
-	    progress.show();
-	    
-	    if (progress.value < progress.max) {
-	        lblWhatToDo.text = 'HOLD';
-	    } else {
-	    	lblWhatToDo.text = '! SELL !';
-	    }
+		ps.updateStock(stock);
+		
+		progress.value = ps.getPortfolioValue();
+		progress.max = ps.getObjective();
+		progress.show();
+		
+		if (progress.value < progress.max) {
+			lblWhatToDo.text = 'HOLD';
+		} else {
+			lblWhatToDo.text = '! SELL !';
+		}
 	});
 
-    self.addEventListener('open', function() {
-        btnRefresh.fireEvent('click');
-    });
-    
+	self.addEventListener('open', function() {
+		btnRefresh.fireEvent('click');
+	});
+	
 	return self;
 }
 

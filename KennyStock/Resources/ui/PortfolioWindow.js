@@ -5,13 +5,14 @@ function PortfolioWindow() {
 		
 	//create component instance
 	var self = Ti.UI.createWindow({
-	   title: 'Settings',
-	   backgroundGradient: {
-        type: 'linear',
-        startPoint: { x: '0%', y: '0%' },
-        endPoint: { x: '100%', y: '100%' },
-        colors: [ { color: '#752201'}, { color: '#bf6e4e' } ]
-       }
+		title: 'Portfolio',
+		backgroundGradient: {
+			type: 'linear',
+			startPoint: { x: '0%', y: '0%' },
+			endPoint: { x: '100%', y: '100%' },
+			colors: [ { color: '#752201'}, 
+					  { color: '#bf6e4e' } ]
+		}
 	});
 		
 	self.add(Ti.UI.createLabel({
@@ -32,7 +33,7 @@ function PortfolioWindow() {
 		width: 100,
 		height: Ti.UI.SIZE,
 		backgroundColor: '#ffffff',
-        borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+		borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
 		hintText: 'Amount',
 		keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
 		returnKeyType: Titanium.UI.RETURNKEY_DONE,
@@ -116,13 +117,13 @@ function PortfolioWindow() {
 	self.add(btnSave);
 
 	btnAddStock.addEventListener('click', function() {
-	    if (txtSymbol.text != '' && txtQuantity.text != '') {
-    		var stock = new Stock(txtSymbol.value.toUpperCase(), txtQuantity.value);
-    		
-    		txtSymbol.value = '';
-    		txtQuantity.value = '';
-    		
-    		addCustomRow(stockList, stock);
+		if (txtSymbol.text != '' && txtQuantity.text != '') {
+			var stock = new Stock(txtSymbol.value.toUpperCase(), txtQuantity.value);
+			
+			txtSymbol.value = '';
+			txtQuantity.value = '';
+			
+			addCustomRow(stockList, stock);
 		}
 	});
 	
@@ -143,8 +144,8 @@ function PortfolioWindow() {
 		Ti.App.fireEvent('app:portfolioChanged');
 		
 		self.close({
-           transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
-        });
+		   transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
+		});
 	});
 	
 	var stocks = ps.getStocks();
