@@ -32,10 +32,10 @@ var getStocks = function() {
 	return Ti.App.Properties.getList('stocks', []);
 };
 
-var saveStocks = function(stocks) {
+var saveStocks = function(list) {
 	Ti.API.info('Stocks saved');            
 	
-	Ti.App.Properties.setList('stocks', stocks);
+	Ti.App.Properties.setList('stocks', list);
 	updatePortfolioValue(stocks);
 };
 
