@@ -144,7 +144,7 @@ function PortfolioWindow() {
 		Ti.App.fireEvent('app:portfolioChanged');
 		
 		self.close({
-		   transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
+			transition: Ti.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT
 		});
 	});
 	
@@ -189,7 +189,7 @@ function addCustomRow(table, stock) {
 		}
 	}));
 	
-	// Used to keep reference to the ioriginal object
+	// Used to keep reference to the original object
 	// Used when saving Portfolio
 	row.stock = stock;
 	
