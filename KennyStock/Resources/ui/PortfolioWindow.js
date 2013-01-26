@@ -180,7 +180,7 @@ function addCustomRow(table, stock) {
 	}));
 	
 	row.add(Ti.UI.createLabel({
-		text: 'x' + stock.quantity,
+		text: 'x ' + stock.quantity,
 		right: 5, 
 		top: 20,
 		font: {
