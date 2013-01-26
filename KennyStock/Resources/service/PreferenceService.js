@@ -1,12 +1,12 @@
 var PreferenceService = function() {
 }
 
-PreferenceService.prototype.getObjective = function(objective) {
+PreferenceService.prototype.getObjective = function() {
 	return Ti.App.Properties.getInt('objective', 1);
 }
 
-PreferenceService.prototype.saveObjective = function(objective) {
-	Ti.App.Properties.setInt('objective', objective);
+PreferenceService.prototype.saveObjective = function(value) {
+	Ti.App.Properties.setInt('objective', value);
 }
 
 PreferenceService.prototype.updateStock = function(stock) {
