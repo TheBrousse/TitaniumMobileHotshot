@@ -9,14 +9,14 @@ PreferenceService.prototype.saveObjective = function(value) {
 	Ti.App.Properties.setInt('objective', value);
 }
 
-PreferenceService.prototype.updateStock = function(stock) {
+PreferenceService.prototype.updateStock = function(updatedStock) {
 	var allStocks = getStocks();
 	
 	// We loop through all stocks in order to find the one to update 
 	for (var i=0; i < allStocks.length; i++) {
-		if (allStocks[i].symbol === stock.symbol) {
+		if (allStocks[i].symbol === updatedStock.symbol) {
 			// We found it!
-			allStocks[i] = stock;
+			allStocks[i] = updatedStock;
 		} 
 	}
 	saveStocks(allStocks);
@@ -36,7 +36,7 @@ var saveStocks = function(list) {
 	Ti.API.info('Stocks saved');            
 	
 	Ti.App.Properties.setList('stocks', list);
-	updatePortfolioValue(stocks);
+	updatePortfolioValue(list);
 };
 
 PreferenceService.prototype.saveStocks = saveStocks;

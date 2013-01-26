@@ -36,8 +36,7 @@ function PortfolioWindow() {
 		borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
 		hintText: 'Amount',
 		keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD,
-		returnKeyType: Titanium.UI.RETURNKEY_DONE,
-		value: ps.getObjective()
+		returnKeyType: Titanium.UI.RETURNKEY_DONE
 	});
 
 	self.add(txtObjective);
@@ -153,6 +152,8 @@ function PortfolioWindow() {
 	for (var i=0; i < stocks.length; i++) {
 		addCustomRow(stockList, stocks[i]);
 	}
+
+	txtObjective.value = ps.getObjective();
 	
 	return self;
 }
