@@ -1,9 +1,9 @@
-#appname: SecondToLastFantasy
-#appid: com.packtpub.hotshot.secondtolastfantasy
-#type: mobile
-#guid: 4c9b6b2c-01bb-4b5f-a17e-3ae36f9c0352
-#version: 1.0
-#publisher: not specified
-#url: not specified
-#image: appicon.png
-#desc: not specified
+#appname:SecondToLastFantasy
+#appid:com.packtpub.hotshot.secondtolastfantasy
+#type:ipad
+#guid:4c9b6b2c-01bb-4b5f-a17e-3ae36f9c0352
+#version:1.0
+#publisher:Christian Brousseau
+#url:http://www.packtpub.com
+#image:appicon.png
+#desc:not specified
