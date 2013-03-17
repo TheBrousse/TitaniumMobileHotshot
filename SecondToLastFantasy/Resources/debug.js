@@ -12,6 +12,4 @@ game.addEventListener('onfps', function(e) {
 
 quicktigame2d.addEventListener('onlowmemory', function(e) {
     Ti.API.warn("Low Memory");
-});
-
-lblFrame.text = knight.frame;
+})
