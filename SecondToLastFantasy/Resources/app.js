@@ -18,14 +18,10 @@ game.debug = false;
 // Create game scene
 var scene = quicktigame2d.createScene();
 
+var Character = require('character');
+
 // create sprites
-var knight = quicktigame2d.createSpriteSheet({ 
-    image: 'assets/knight_m.png',
-    width: 32,
-    height: 48,
-    border: 0,
-    margin: 1
-});
+var knight = new Character();
 
 // on-screen controller and its guides
 var vpad = quicktigame2d.createSprite({ image:'assets/control_base.png' });
@@ -93,33 +89,29 @@ var updateVpadTimerID = 0;
 game.addEventListener('onload', function(e) {
     // set screen size for your game (non-retina size)
     var screenScale = game.size.width / 320;
-    game.screen = { 
-        width: game.size.width / screenScale, 
+    game.screen = {
+        width: game.size.width / screenScale,
         height: game.size.height / screenScale
     };
-    
+
     // Your game screen size is set here if you did not specifiy game width and height using screen property.
     // Note: game.size.width and height may be changed due to the parent layout so check them here.
     Ti.API.info("view size: " + game.size.width + "x" + game.size.height);
     Ti.API.info("game screen size: " + game.screen.width + "x" + game.screen.height);
     Ti.API.info("map: " + map.width + "x" + map.height);
-    
+
     WINDOW_SCALE_FACTOR_X = game.screen.width  / game.size.width;
     WINDOW_SCALE_FACTOR_Y = game.screen.height / game.size.height;
-    
+
     vpad.x = (game.screen.width * 0.5) - (vpad.width * 0.5);
     vpad.y = game.screen.height - vpad.height;
 
     knight.x = (game.screen.width * 0.5) - (knight.width * 0.5);
     knight.y = (game.screen.height * 0.5) - (knight.height * 0.5);
-    
+
     // Start the game
     game.start();
 
-    // default direction is "RIGHT"    
-    knight.direction = "RIGHT";
-    knight.animate(8, 4, 250, -1);
-    
     updateVpadTimerID = setInterval(function(e) {
         updateVpad();
     }, 66);
@@ -128,7 +120,7 @@ game.addEventListener('onload', function(e) {
 /// Stop update timer before app is closed
 window.addEventListener('android:back', function(e) {
     clearInterval(updateVpadTimerID);
-    
+
     window.close();
 });
 
@@ -137,52 +129,30 @@ function updateVpad() {
         // Is the character moving fast or slow?
         var powerX = (touchX - (vpad.x + (vpad.width  * 0.5))) * 0.2;
         var powerY = (touchY - (vpad.y + (vpad.height * 0.5))) * 0.2;
-    
+
         vpad.color(0.78, 0.78, 0.78);
         vpad_nav.x = touchX - (vpad_nav.width  * 0.5);
         vpad_nav.y = touchY - (vpad_nav.height * 0.5);
         vpad_nav.show();
-        
-        // Change animation of the knight's sprite
-        
-        // In which direction the character was going?
-        var oldDirection = knight.direction;
 
+        // Change animation of the knight's sprite
         // Is the wanted direction more vertical or horizontal
         if (Math.abs(powerX) > Math.abs(powerY)) { // Horizontal
-            knight.direction = (powerX < 0) ? "LEFT" : "RIGHT"; 
+            newDirection = (powerX < 0) ? "LEFT" : "RIGHT";
         } else { // Vertical
-            knight.direction = (powerY < 0) ? "UP" : "DOWN"; 
+            newDirection = (powerY < 0) ? "UP" : "DOWN";
         }
-       
-        if (oldDirection !== knight.direction) {
-            switch (knight.direction) {
-            case "UP":
-                knight.animate(13, 4, 250, -1);
-                break;
-            case "DOWN":
-                knight.animate(0, 4, 250, -1);
-                break;
-            case "LEFT":
-                knight.animate(4, 4, 250, -1);
-                break;
-            case "RIGHT":
-                knight.animate(8, 4, 250, -1);
-                break;
-            default:
-                knight.animate(0, 4, 250, -1);
-            }
-        }
-        Ti.API.info(knight.direction);
-                
+
+        knight.turnTowards(newDirection);
+
         var nextKnightX = knight.x + powerX;
         var nextKnightY = knight.y + powerY;
-        
+
         var nextMapX = map.x - powerX;
         var nextMapY = map.y - powerY;
-        
+
         // move knight and map layers
-        
+
         if (nextKnightX > 0 && nextKnightX < game.screen.width  - knight.width) {
             knight.x = nextKnightX;
         } else if (nextMapX <= 0 && nextMapX > -map.width + game.screen.width){
@@ -200,37 +170,22 @@ function updateVpad() {
     } else {
         vpad.color(1, 1, 1);
         vpad_nav.hide();
-      
-        switch (knight.direction) {
-        case "UP":
-            knight.pauseAt(13);
-            break;
-        case "DOWN":
-            knight.pauseAt(0);
-            break;
-        case "LEFT":
-            knight.pauseAt(4);
-            break;
-        case "RIGHT":
-            knight.pauseAt(8);
-            break;
-        default:
-            knight.pauseAt(0);
-        }
+
+        knight.halt();
     }
 }
 
 game.addEventListener('touchstart', function(e) {
     touchX = (e.x * WINDOW_SCALE_FACTOR_X);
     touchY = (e.y * WINDOW_SCALE_FACTOR_Y);
-    
+
     isVpadActive = vpad.contains(touchX, touchY);
 });
 
 game.addEventListener('touchmove', function(e) {
     touchX = (e.x * WINDOW_SCALE_FACTOR_X);
     touchY = (e.y * WINDOW_SCALE_FACTOR_Y);
-    
+
     isVpadActive = vpad.contains(touchX, touchY);
 });
 
