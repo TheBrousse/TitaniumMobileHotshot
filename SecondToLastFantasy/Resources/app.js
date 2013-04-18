@@ -21,7 +21,7 @@ var scene = quicktigame2d.createScene();
 var Character = require('character');
 
 // create sprites
-var knight = new Character();
+var hero = new Character();
 
 // on-screen controller and its guides
 var vpad = quicktigame2d.createSprite({ image:'assets/control_base.png' });
@@ -62,12 +62,12 @@ map_items.tiles = mapjson.layers[1].data;
 // set z-order
 map.z  = 0;
 map_items.z = 1;
-knight.z  = 2;
+hero.z  = 2;
 vpad.z = 3;
 vpad_nav.z = 4;
 
 // add your shape to the scene
-scene.add(knight);
+scene.add(hero);
 scene.add(vpad);
 scene.add(vpad_nav);
 scene.add(map);
@@ -106,8 +106,8 @@ game.addEventListener('onload', function(e) {
     vpad.x = (game.screen.width * 0.5) - (vpad.width * 0.5);
     vpad.y = game.screen.height - vpad.height;
 
-    knight.x = (game.screen.width * 0.5) - (knight.width * 0.5);
-    knight.y = (game.screen.height * 0.5) - (knight.height * 0.5);
+    hero.x = (game.screen.width * 0.5) - (hero.width * 0.5);
+    hero.y = (game.screen.height * 0.5) - (hero.height * 0.5);
 
     // Start the game
     game.start();
@@ -135,7 +135,7 @@ function updateVpad() {
         vpad_nav.y = touchY - (vpad_nav.height * 0.5);
         vpad_nav.show();
 
-        // Change animation of the knight's sprite
+        // Change animation of the hero's sprite
         // Is the wanted direction more vertical or horizontal
         if (Math.abs(powerX) > Math.abs(powerY)) { // Horizontal
             newDirection = (powerX < 0) ? "LEFT" : "RIGHT";
@@ -143,35 +143,35 @@ function updateVpad() {
             newDirection = (powerY < 0) ? "UP" : "DOWN";
         }
 
-        knight.turnTowards(newDirection);
+        hero.turnTowards(newDirection);
 
-        var nextKnightX = knight.x + powerX;
-        var nextKnightY = knight.y + powerY;
+        var nextHeroX = hero.x + powerX;
+        var nextHeroY = hero.y + powerY;
 
         var nextMapX = map.x - powerX;
         var nextMapY = map.y - powerY;
 
-        // move knight and map layers
+        // move hero and map layers
 
-        if (nextKnightX > 0 && nextKnightX < game.screen.width  - knight.width) {
-            knight.x = nextKnightX;
+        if (nextHeroX > 0 && nextHeroX < game.screen.width  - hero.width) {
+            hero.x = nextHeroX;
         } else if (nextMapX <= 0 && nextMapX > -map.width + game.screen.width){
             map.x = nextMapX;
             map_items.x = map.x;
         }
-        if (nextKnightY > 0 && nextKnightY < game.screen.height - knight.height) {
-            knight.y = nextKnightY;
+        if (nextHeroY > 0 && nextHeroY < game.screen.height - hero.height) {
+            hero.y = nextHeroY;
         } else if (nextMapY <= 0 && nextMapY > -map.height + game.screen.height){
             map.y = nextMapY;
             map_items.y = map.y;
         }
 
-        Ti.API.info('x: '+knight.x + '  y: '+ knight.y );
+        Ti.API.info('x: '+hero.x + '  y: '+ hero.y );
     } else {
         vpad.color(1, 1, 1);
         vpad_nav.hide();
 
-        knight.halt();
+        hero.halt();
     }
 }
 
