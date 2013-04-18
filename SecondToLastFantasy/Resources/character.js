@@ -12,7 +12,7 @@ function Character() {
     self.animate(8, 4, 250, -1);
 
     self.halt = function() {
-        Ti.API.debug("Halt facing: " + self.direction);
+        // Ti.API.debug("Halt facing: " + self.direction);
         switch (self.direction) {
         case "UP":
             self.pauseAt(13);
@@ -32,7 +32,7 @@ function Character() {
     };
 
     self.turnTowards = function(newDirection) {
-        Ti.API.debug("Moving towards: " + newDirection);
+        // Ti.API.debug("Moving towards: " + newDirection);
 
         if (self.direction !== newDirection) {
             switch (newDirection) {
@@ -40,16 +40,16 @@ function Character() {
                 self.animate(13, 4, 250, -1);
                 break;
             case "DOWN":
-                knight.animate(0, 4, 250, -1);
+                self.animate(0, 4, 250, -1);
                 break;
             case "LEFT":
-                knight.animate(4, 4, 250, -1);
+                self.animate(4, 4, 250, -1);
                 break;
             case "RIGHT":
-                knight.animate(8, 4, 250, -1);
+                self.animate(8, 4, 250, -1);
                 break;
             default:
-                knight.animate(0, 4, 250, -1);
+                self.animate(0, 4, 250, -1);
             }
             self.direction = newDirection;
         }
