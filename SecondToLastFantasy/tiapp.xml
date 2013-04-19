@@ -38,6 +38,7 @@
         <theme>default</theme>
     </mobileweb>
     <deployment-targets>
+        <target device="tizen">false</target>
         <target device="iphone">true</target>
         <target device="ipad">true</target>
         <target device="blackberry">false</target>
