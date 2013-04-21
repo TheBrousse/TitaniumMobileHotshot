@@ -88,7 +88,8 @@ var updateVpadTimerID = 0;
 // The game.screen.width and game.screen.height are not yet set until this onload event.
 game.addEventListener('onload', function(e) {
     // set screen size for your game (non-retina size)
-    var screenScale = game.size.width / 320;
+    var screenScale = game.size.width / Ti.Platform.displayCaps.platformWidth;
+    
     game.screen = {
         width: game.size.width / screenScale,
         height: game.size.height / screenScale
