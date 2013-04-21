@@ -138,12 +138,12 @@ function updateVpad() {
         // Change animation of the hero's sprite
         // Is the wanted direction more vertical or horizontal
         if (Math.abs(powerX) > Math.abs(powerY)) { // Horizontal
-            newDirection = (powerX < 0) ? "LEFT" : "RIGHT";
+            heroDirection = (powerX < 0) ? "LEFT" : "RIGHT";
         } else { // Vertical
-            newDirection = (powerY < 0) ? "UP" : "DOWN";
+            heroDirection = (powerY < 0) ? "UP" : "DOWN";
         }
 
-        hero.turnTowards(newDirection);
+        hero.turnTowards(heroDirection);
 
         var nextHeroX = hero.x + powerX;
         var nextHeroY = hero.y + powerY;
