@@ -1,4 +1,4 @@
-var window = Ti.UI.createWindow({ backgroundColor: 'black' });
+var win = Ti.UI.createWindow({ backgroundColor: 'black' });
 
 // Obtain game module
 var quicktigame2d = require('com.googlecode.quicktigame2d');
@@ -119,10 +119,10 @@ game.addEventListener('onload', function(e) {
 });
 
 /// Stop update timer before app is closed
-window.addEventListener('android:back', function(e) {
+win.addEventListener('android:back', function(e) {
     clearInterval(updateVpadTimerID);
 
-    window.close();
+    win.close();
 });
 
 function updateVpad() {
@@ -198,6 +198,6 @@ game.addEventListener('touchend', function(e) {
 Ti.include("debug.js");
 
 // Add your game view
-window.add(game);
+win.add(game);
 
-window.open({ fullscreen:true, navBarHidden:true });
+win.open({ fullscreen:true, navBarHidden:true });
