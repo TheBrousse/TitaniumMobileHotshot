@@ -34,30 +34,34 @@ vpad.alpha = 0.5;
 var mapfile = Ti.Filesystem.getFile(Titanium.Filesystem.resourcesDirectory, 'assets/desert.json');
 var mapjson = JSON.parse(mapfile.read().toString());
 
+var desert_tileset = mapjson.tilesets[0];
+var ground_layer = mapjson.layers[0];
+var items_layer = mapjson.layers[1];
+
 var mapinfo = {
-    image: 'assets/' + mapjson.tilesets[0].image,
-    tileWidth: mapjson.tilesets[0].tilewidth,
-    tileHeight: mapjson.tilesets[0].tileheight,
-    border: mapjson.tilesets[0].spacing,
-    margin: mapjson.tilesets[0].margin
+    image: 'assets/' + desert_tileset.image,
+    tileWidth: desert_tileset.tilewidth,
+    tileHeight: desert_tileset.tileheight,
+    border: desert_tileset.spacing,
+    margin: desert_tileset.margin
 };
 
 // create ground map layer
 var map = quicktigame2d.createMapSprite(mapinfo);
 
-map.width  = map.tileWidth  * mapjson.layers[0].width;
-map.height = map.tileHeight * mapjson.layers[0].height;
+map.width  = map.tileWidth  * ground_layer.width;
+map.height = map.tileHeight * ground_layer.height;
 
-map.firstgid = mapjson.tilesets[0].firstgid; // tilemap id is started from 'firstgid'
-map.tiles = mapjson.layers[0].data;
+map.firstgid = desert_tileset.firstgid; // tilemap id is started from 'firstgid'
+map.tiles = ground_layer.data;
 
 // create items map layer
 var map_items = quicktigame2d.createMapSprite(mapinfo);
-map_items.width  = map_items.tileWidth  * mapjson.layers[1].width;
-map_items.height = map_items.tileHeight * mapjson.layers[1].height;
+map_items.width  = map_items.tileWidth  * items_layer.width;
+map_items.height = map_items.tileHeight * items_layer.height;
 
-map_items.firstgid = mapjson.tilesets[0].firstgid; // tilemap id is started from 'firstgid'
-map_items.tiles = mapjson.layers[1].data;
+map_items.firstgid = desert_tileset.firstgid; // tilemap id is started from 'firstgid'
+map_items.tiles = items_layer.data;
 
 // set z-order
 map.z  = 0;
