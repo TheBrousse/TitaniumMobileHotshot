@@ -7,10 +7,6 @@ function Character() {
         margin: 1
     });
 
-    // default direction is "RIGHT"
-    self.direction = "RIGHT";
-    self.animate(8, 4, 250, -1);
-
     self.halt = function() {
         // Ti.API.debug("Halt facing: " + self.direction);
         switch (self.direction) {
@@ -53,13 +49,9 @@ function Character() {
             }
             self.direction = newDirection;
         }
-
     }
 
 	return self;
 }
-
-
-
 
 module.exports = Character;
