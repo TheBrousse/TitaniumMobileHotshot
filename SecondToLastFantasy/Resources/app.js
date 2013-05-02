@@ -93,7 +93,7 @@ var updateVpadTimerID = 0;
 game.addEventListener('onload', function(e) {
     // set screen size for your game (non-retina size)
     var screenScale = game.size.width / Ti.Platform.displayCaps.platformWidth;
-    
+
     game.screen = {
         width: game.size.width / screenScale,
         height: game.size.height / screenScale
@@ -158,15 +158,15 @@ function updateVpad() {
 
         // move hero and map layers
 
-        if (nextHeroX > 0 && nextHeroX < game.screen.width  - hero.width) {
+        if (nextHeroX > 0 && nextHeroX < (game.screen.width  - hero.width)) {
             hero.x = nextHeroX;
-        } else if (nextMapX <= 0 && nextMapX > -map.width + game.screen.width){
+        } else if (nextMapX <= 0 && nextMapX > (-map.width + game.screen.width)) {
             map.x = nextMapX;
             map_items.x = map.x;
         }
-        if (nextHeroY > 0 && nextHeroY < game.screen.height - hero.height) {
+        if (nextHeroY > 0 && nextHeroY < (game.screen.height - hero.height)) {
             hero.y = nextHeroY;
-        } else if (nextMapY <= 0 && nextMapY > -map.height + game.screen.height){
+        } else if (nextMapY <= 0 && nextMapY > (-map.height + game.screen.height)) {
             map.y = nextMapY;
             map_items.y = map.y;
         }
