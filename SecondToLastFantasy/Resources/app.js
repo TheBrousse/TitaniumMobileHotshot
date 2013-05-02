@@ -87,6 +87,7 @@ var isVpadActive = false;
 var touchX, touchY;
 
 var updateVpadTimerID = 0;
+var heroDirection = "DOWN";
 
 // Onload event is called when the game is loaded.
 // The game.screen.width and game.screen.height are not yet set until this onload event.
