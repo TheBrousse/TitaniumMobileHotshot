@@ -1,9 +1,15 @@
-var http = require('http')
-	, socketio = require('socket.io');
+var http = require('http'),
+	fs = require('fs'),
+	socketio = require('socket.io');
  
-var server = http.createServer(function(req, res) {
-	res.write('My forst node');
-}).listen(8080, function() {
+var server = http.createServer();
+
+server.on('request', function(req, res) {
+	res.writeHead(200, { 'Content-type': 'text/html'});
+	res.end(fs.readFileSync(__dirname + '/index.html'));
+});
+
+server.listen(8080, function() {
 	console.log('Listening at: http://localhost:8080');
 });
  
@@ -13,3 +19,4 @@ socketio.listen(server).on('connection', function (socket) {
 		socket.broadcast.emit('message', msg);
 	});
 });
+
