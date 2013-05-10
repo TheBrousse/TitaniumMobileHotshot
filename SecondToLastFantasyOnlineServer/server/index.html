@@ -8,13 +8,21 @@
  
             iosocket.on('connect', function () {
                 $('#incomingChatMessages').append($('<li>Connected</li>'));
+                $('#incomingMovements').append($('<li>Connected</li>'));
  
                 iosocket.on('message', function(message) {
                     $('#incomingChatMessages').append($('<li></li>').text(message));
                 });
+
                 iosocket.on('disconnect', function() {
                     $('#incomingChatMessages').append('<li>Disconnected</li>');
+                     $('#incomingMovements').append('<li>Disconnected</li>');
                 });
+
+                iosocket.on('move', function(player) {
+                    $('#incomingMovements').append($('<li></li>').text('player ' + player.id + ' moves x: ' + player.x + '  y: ' + player.y));
+                });
+
             });
  
             $('#outgoingChatMessage').keypress(function(event) {
@@ -31,20 +39,41 @@
                     $('#outgoingChatMessage').val('');
                 }
             });
+
+            $('#moveForm').submit(function (event) {
+                event.preventDefault();
+
+                var player = {
+                    id: jQuery.browser.version,
+                    x: $('#x').val(),
+                    y: $('#y').val()
+                };
+
+                iosocket.emit('move', player);
+                $('#incomingMovements').append($('<li></li>').text('I ' + player.id + 'move  x: ' + player.x + '  y: ' + player.y));
+                $('#x').val('');
+                $('#y').val('');
+
+            });
         });
     </script>
 </head>
 <body>
 
 <table border="1" width="100%">
-    <tr><th>Chat</th><th>Move</th><th>Other</th></tr>
-    <tr>
+    <tr><th>Chat</th><th>Movement</th><th>Other</th></tr>
+    <tr valign="top">
     <td>
-        Incoming Chat:&nbsp;<ul id="incomingChatMessages"></ul>
+        <ul id="incomingChatMessages"></ul>
         <input type="text" id="outgoingChatMessage">
     </td>
     <td>
-        
+        <ul id="incomingMovements"></ul>
+        <form action"move.html" id="moveForm" name="" method="get" >
+        X: <input type="text" id="x"><br/>
+        Y: <input type="text" id="y"><br/>
+        <input type="submit" title="Move">
+        </form>
     </td>
     <td>
         
