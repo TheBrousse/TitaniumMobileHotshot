@@ -20,7 +20,13 @@
             $('#outgoingChatMessage').keypress(function(event) {
                 if(event.which == 13) {
                     event.preventDefault();
-                    iosocket.send($('#outgoingChatMessage').val());
+
+                    var player = {
+                        id: jQuery.browser+jQuery.browser.version,
+                        caption: $('#outgoingChatMessage').val()
+                    };
+
+                    iosocket.emit('speak', player);
                     $('#incomingChatMessages').append($('<li></li>').text($('#outgoingChatMessage').val()));
                     $('#outgoingChatMessage').val('');
                 }
