@@ -1,0 +1,52 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+
+<form action"move.html" id="moveForm" name="" method="get" >
+X: <input type="text" id="x"><br/>
+Y: <input type="text" id="y"><br/>
+<input type="submit" title="Move">
+</form>
+
+
+    <script>
+        $(function(){
+            var iosocket = io.connect();
+ 
+            iosocket.on('connect', function () {
+                $('#incomingMovements').append($('<li>Connected</li>'));
+ 
+                iosocket.on('move', function(player) {
+                    $('#incomingMovements').append($('<li></li>').text('player ' + player.id + 'moves x: ' + player.x + '  y: ' + player.y));
+                });
+                iosocket.on('disconnect', function() {
+                    $('#incomingMovements').append('<li>Disconnected</li>');
+                });
+            });
+ 
+            $('#moveForm').submit(function (event) {
+                event.preventDefault();
+
+                var player = {
+                    id: jQuery.browser.version,
+                    x: $('#x').val(),
+                    y: $('#y').val()
+                };
+
+                iosocket.emit('move', player);
+                $('#incomingMovements').append($('<li></li>').text('player ' + player.id + 'moves  x: ' + player.x + '  y: ' + player.y));
+                $('#x').val('');
+                $('#y').val('');
+
+            });
+        });
+    </script>
+
+Incoming Mpovements:&nbsp;<ul id="incomingMovements"></ul>
+
+<hr/>
+</body>
+</html>
