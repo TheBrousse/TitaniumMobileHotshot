@@ -20,21 +20,22 @@ socketio.listen(server).on('connection', function (socket) {
 	socket.on('join', function (player) {
 		console.log('Player ', player.id, ' has joined');
 
-		users.push(player);
+		players.push(player);
 
-		for (u in users) {
-			socket.broadcast('newplayer', users[u]);
+		for (p in players) {
+			socket.broadcast.emit('newplayer', players[p]);
 		}
 	});
 
 	socket.on('quit', function (player) {
-		users.remove(player.id);
+		
 
-		for (u in users) {
-			if (users[u].id === player.id) {
+		for (p in players) {
+			if (players[p].id === player.id) {
 				console.log('Player ', player.id, ' has quit');
 
-				socket.broadcast('quit', users[u]);
+				players.remove(p);
+				socket.broadcast.emit('playerquit', players[u]);
 			}
 		}
 	});

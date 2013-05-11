@@ -7,20 +7,22 @@
             var iosocket = io.connect();
  
             iosocket.on('connect', function () {
-                $('#incomingChatMessages').append($('<li>Connected</li>'));
-                $('#incomingMovements').append($('<li>Connected</li>'));
+                $('#logger').append($('<li class="event">Connected</li>'));
  
                 iosocket.on('message', function(message) {
-                    $('#incomingChatMessages').append($('<li></li>').text(message));
+                    $('#logger').append($('<li class="chat"></li>').text(message));
                 });
 
                 iosocket.on('disconnect', function() {
-                    $('#incomingChatMessages').append('<li>Disconnected</li>');
-                     $('#incomingMovements').append('<li>Disconnected</li>');
+                    $('#logger').append('<li class="event">Disconnected</li>');
                 });
 
                 iosocket.on('move', function(player) {
-                    $('#incomingMovements').append($('<li></li>').text('player ' + player.id + ' moves x: ' + player.x + '  y: ' + player.y));
+                    $('#logger').append($('<li class="move"></li>').text('player ' + player.id + ' moves x: ' + player.x + '  y: ' + player.y));
+                });
+
+                iosocket.on('newplayer', function(player) {
+                    $('#logger').append($('<li class="event"></li>').text('player ' + player.id + ' joined the game'));
                 });
 
             });
@@ -30,12 +32,12 @@
                     event.preventDefault();
 
                     var player = {
-                        id: jQuery.browser+jQuery.browser.version,
+                        id: jQuery.browser.version,
                         caption: $('#outgoingChatMessage').val()
                     };
 
                     iosocket.emit('speak', player);
-                    $('#incomingChatMessages').append($('<li></li>').text($('#outgoingChatMessage').val()));
+                    $('#logger').append($('<li class="chat"></li>').text($('#outgoingChatMessage').val()));
                     $('#outgoingChatMessage').val('');
                 }
             });
@@ -50,13 +52,50 @@
                 };
 
                 iosocket.emit('move', player);
-                $('#incomingMovements').append($('<li></li>').text('I ' + player.id + 'move  x: ' + player.x + '  y: ' + player.y));
+                $('#logger').append($('<li class="move"></li>').text('I ' + player.id + 'move  x: ' + player.x + '  y: ' + player.y));
                 $('#x').val('');
                 $('#y').val('');
+            });
 
+            $("#join").click(function () {
+                var player = {
+                    id: jQuery.browser.version
+                };
+
+                iosocket.emit('join', player);
+            });
+
+            $("#quit").click(function () {
+                var player = {
+                    id: jQuery.browser.version
+                };
+
+                iosocket.emit('quit', player);
             });
         });
     </script>
+    <style type="text/css">
+        th {
+            background: #25649F;    
+            font-size: 16px;
+            letter-spacing: 0;
+            padding: 8px 10px;
+            margin: -10px -10px 0;
+            color: #fff;
+            text-shadow: 0 1px 0 #444;
+            font-weight: 700;
+            font-family: "klavika-web", "Helvetica Neue", Helvetica, Arial, Geneva, sans-serif !important;
+        }
+        ul {
+            background-color: black
+            font-family: monospace;
+            font-size: 11px;
+            list-style-type: none;
+        }
+        .chat { color: lightblue; }
+        .event { color: gold; font-weight: bold; }
+        .move { color: grey; }
+    </style>
 </head>
 <body>
 
@@ -64,21 +103,24 @@
     <tr><th>Chat</th><th>Movement</th><th>Other</th></tr>
     <tr valign="top">
     <td>
-        <ul id="incomingChatMessages"></ul>
         <input type="text" id="outgoingChatMessage">
     </td>
     <td>
-        <ul id="incomingMovements"></ul>
         <form action"move.html" id="moveForm" name="" method="get" >
         X: <input type="text" id="x"><br/>
         Y: <input type="text" id="y"><br/>
-        <input type="submit" title="Move">
+        <input type="submit" value="Move">
         </form>
     </td>
     <td>
-        
+        <input type="button" value="Join" id="join"> <br/>
+        <input type="button" value="Quit" id="quit"> <br/>
     </td>
+    <tr><th colspan="3">Console</th></tr>
     <tr>
+        <td colspan="3">
+            <ul id="logger"></td>
+    </tr>
 </table>
 
 </body>
