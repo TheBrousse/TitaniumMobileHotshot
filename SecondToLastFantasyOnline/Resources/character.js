@@ -1,5 +1,5 @@
-function Character() {
-    var self =quicktigame2d.createSpriteSheet({
+function Character(scene) {
+    var self = quicktigame2d.createSpriteSheet({
         image: 'assets/knight_m.png',
         width: 32,
         height: 48,
@@ -7,6 +7,13 @@ function Character() {
         margin: 1
     });
 
+    var textsprite = quicktigame2d.createTextSprite({
+        text: 'Lorem ipsum dolor sit amet.', 
+        fontSize: 16, 
+        z: 50 
+    });
+    textsprite.hide();
+    
     self.halt = function() {
         // Ti.API.debug("Halt facing: " + self.direction);
         switch (self.direction) {
@@ -51,6 +58,17 @@ function Character() {
         }
     }
 
+    self.say = function(text) {
+        textsprite.textsprite = text;
+        textsprite.x = self.x -(textsprite.width / 2);
+        textsprite.y = self.y - textsprite.height - 15;
+        
+        text.show();
+    }
+
+    scene.add(self);
+    scene.add(textsprite);
+    
 	return self;
 }
 
