@@ -88,6 +88,11 @@
                 iosocket.emit('quit', player);
             });
         });
+
+        setInterval(function(e) {
+           $("#logger").animate({ scrollTop: $('#logger').prop('scrollHeight')}, 1000);
+        }, 2000);
+
     </script>
     <style type="text/css">
         th {
@@ -107,6 +112,11 @@
             font-family: Tahoma;
             font-size: 11px;
             list-style-type: none;
+        }
+        #logger {
+            display: block;
+            height: 500px;
+            overflow-y: scroll;
         }
         .chat { color: lightblue; }
         .event { color: gold; font-weight: bold; }
