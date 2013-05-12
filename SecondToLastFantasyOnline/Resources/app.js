@@ -39,7 +39,7 @@ var scene = quicktigame2d.createScene();
 var Character = require('character');
 
 // create sprites
-var hero = new Character();
+var hero = new Character(scene);
 
 // on-screen controller and its guides
 var vpad = quicktigame2d.createSprite({ image:'assets/control_base.png' });
@@ -48,6 +48,10 @@ var vpad_nav = quicktigame2d.createSprite({ image:'assets/particle.png' });
 vpad_nav.hide();
 vpad_nav.color(1, 1,  0);
 vpad.alpha = 0.5;
+
+// On Screen button to activate chat mode
+var chat_button = quicktigame2d.createSprite({ image:'assets/chat.png' });
+chat_button.alpha = 0.5;
 
 var mapfile = Ti.Filesystem.getFile(Titanium.Filesystem.resourcesDirectory, 'assets/desert.json');
 var mapjson = JSON.parse(mapfile.read().toString());
@@ -87,11 +91,13 @@ map_items.z = 1;
 hero.z  = 2;
 vpad.z = 3;
 vpad_nav.z = 4;
+chat_button.z = 5;
 
 // add your shape to the scene
-scene.add(hero);
+// CBR gone! scene.add(hero);
 scene.add(vpad);
 scene.add(vpad_nav);
+scene.add(chat_button);
 scene.add(map);
 scene.add(map_items);
 
@@ -106,6 +112,20 @@ var touchX, touchY;
 
 var updateVpadTimerID = 0;
 var heroDirection = "DOWN";
+
+////////////////////***********************
+var dragoon = quicktigame2d.createSprite({ 
+    image:'assets/dragoon_m_preview.png',
+    width: 33,
+    height: 49,
+    x: 460,
+    y: 0
+});
+
+scene.add(dragoon);
+
+
+////////////////////***********************
 
 // Onload event is called when the game is loaded.
 // The game.screen.width and game.screen.height are not yet set until this onload event.
@@ -129,6 +149,8 @@ game.addEventListener('onload', function(e) {
 
     vpad.x = (game.screen.width * 0.5) - (vpad.width * 0.5);
     vpad.y = game.screen.height - vpad.height;
+    
+    chat_button.y = game.screen.height - chat_button.height; 
 
     hero.x = (game.screen.width * 0.5) - (hero.width * 0.5);
     hero.y = (game.screen.height * 0.5) - (hero.height * 0.5);
@@ -143,12 +165,13 @@ game.addEventListener('onload', function(e) {
     updateVpadTimerID = setInterval(function(e) {
         updateVpad();
     }, 66);
+
 });
 
 /// Stop update timer before app is closed
 win.addEventListener('android:back', function(e) {
     clearInterval(updateVpadTimerID);
-
+    
     win.close();
 });
 
@@ -180,7 +203,6 @@ function updateVpad() {
         var nextMapY = map.y - powerY;
 
         // move hero and map layers
-
         if (nextHeroX > 0 && nextHeroX < (game.screen.width  - hero.width)) {
             hero.x = nextHeroX;
         } else if (nextMapX <= 0 && nextMapX > (-map.width + game.screen.width)) {
@@ -195,7 +217,7 @@ function updateVpad() {
         }
 
         socket.emit('move', hero);
-        Ti.API.info('x: '+hero.x + '  y: '+ hero.y );
+        Ti.API.debug('x: '+hero.x + '  y: '+ hero.y + ' | map-x: '+map.x + '  map-y: '+ map.y );
     } else {
         vpad.color(1, 1, 1);
         vpad_nav.hide();
@@ -209,6 +231,10 @@ game.addEventListener('touchstart', function(e) {
     touchY = (e.y * WINDOW_SCALE_FACTOR_Y);
 
     isVpadActive = vpad.contains(touchX, touchY);
+    
+    if (chat_button.contains(touchX, touchY)) {
+        view.show();
+    }
 });
 
 game.addEventListener('touchmove', function(e) {
@@ -230,7 +256,8 @@ win.add(game);
 
 
 var view = Ti.UI.createView({
-    backgroundColor: 'blue',
+    backgroundColor: 'black',
+    opacity: 0.6,
     height: '50%'
 });
 
@@ -240,11 +267,10 @@ var hero1 = Ti.UI.createImageView({
     height: 50
 });
 
-view.add(hero1);
+//view.add(hero1);
 
 view.addEventListener('click', function(e) {
     e.source.hide();
-    win.remove(e.source);
 });
 
 win.add(view);
