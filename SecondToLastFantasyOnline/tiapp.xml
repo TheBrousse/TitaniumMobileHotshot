@@ -37,9 +37,6 @@
         </splash>
         <theme>default</theme>
     </mobileweb>
-    <modules>
-        <module platform="android">net.iamyellow.tiws</module>
-    </modules>
     <deployment-targets>
         <target device="tizen">false</target>
         <target device="iphone">false</target>
@@ -49,4 +46,8 @@
         <target device="mobileweb">false</target>
     </deployment-targets>
     <sdk-version>3.0.2.GA</sdk-version>
+    <modules>
+        <module platform="iphone" version="1.2">com.googlecode.quicktigame2d</module>
+        <module platform="android" version="1.2">com.googlecode.quicktigame2d</module>
+    </modules>
 </ti:app>
