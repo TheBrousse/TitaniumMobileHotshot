@@ -2,6 +2,24 @@ var win = Ti.UI.createWindow({ backgroundColor: 'black' });
 
 // Obtain game module
 var quicktigame2d = require('com.googlecode.quicktigame2d');
+var io = require('socket.io'),
+
+SERVER_URI = 'ws://192.168.1.10:8080'; 
+    
+// Connect to the Game Server
+socket = io.connect(SERVER_URI);
+
+
+socket.on('connecting', function () { Ti.API.log('connecting'); });
+socket.on('connect', function () { Ti.API.log('connected'); });
+socket.on('connect_failed', function (e) { Ti.API.log('connect_failed' + JSON.stringify(e)); });
+socket.on('error', function (e) { Ti.API.log('error: ' + JSON.stringify(e)); });
+socket.on('reconnecting', function (num) { Ti.API.log('reconnecting attempt #' + num); });
+socket.on('reconnect', function () { Ti.API.log('reconnected'); });
+socket.on('reconnect_failed', function (e) { Ti.API.log('reconnect_failed' + JSON.stringify(e)); });
+socket.on('disconnect', function() { Ti.API.log('disconnected'); });
+    
+    
 
 // Create view for your game.
 // Note that game.screen.width and height are not yet set until the game is loaded
@@ -115,6 +133,10 @@ game.addEventListener('onload', function(e) {
     hero.x = (game.screen.width * 0.5) - (hero.width * 0.5);
     hero.y = (game.screen.height * 0.5) - (hero.height * 0.5);
 
+    // Join the game
+    hero.id = Ti.Platform.id;
+    socket.emit('join', hero);
+    
     // Start the game
     game.start();
 
@@ -172,6 +194,7 @@ function updateVpad() {
             map_items.y = map.y;
         }
 
+        socket.emit('move', hero);
         Ti.API.info('x: '+hero.x + '  y: '+ hero.y );
     } else {
         vpad.color(1, 1, 1);
@@ -204,5 +227,26 @@ Ti.include("debug.js");
 
 // Add your game view
 win.add(game);
+
+
+var view = Ti.UI.createView({
+    backgroundColor: 'blue',
+    height: '50%'
+});
+
+var hero1 = Ti.UI.createImageView({
+    image: 'assets/archer_m.png',
+    width: 30,
+    height: 50
+});
+
+view.add(hero1);
+
+view.addEventListener('click', function(e) {
+    e.source.hide();
+    win.remove(e.source);
+});
+
+win.add(view);
 
 win.open({ fullscreen:true, navBarHidden:true });
