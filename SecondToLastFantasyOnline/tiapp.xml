@@ -49,6 +49,7 @@
     <modules>
         <module platform="iphone" version="1.2">com.googlecode.quicktigame2d</module>
         <module platform="android" version="1.2">com.googlecode.quicktigame2d</module>
+        <module platform="iphone" version="0.3">net.iamyellow.tiws</module>
         <module platform="android" version="0.1">net.iamyellow.tiws</module>
     </modules>
 </ti:app>

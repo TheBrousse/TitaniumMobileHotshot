@@ -4,8 +4,8 @@ var win = Ti.UI.createWindow({ backgroundColor: 'black' });
 var quicktigame2d = require('com.googlecode.quicktigame2d');
 var io = require('socket.io'),
 
-SERVER_URI = 'ws://192.168.1.10:8080'; 
-    
+SERVER_URI = 'ws://78.251.63.13:8080';
+
 // Connect to the Game Server
 socket = io.connect(SERVER_URI);
 
@@ -18,8 +18,8 @@ socket.on('reconnecting', function (num) { Ti.API.log('reconnecting attempt #' +
 socket.on('reconnect', function () { Ti.API.log('reconnected'); });
 socket.on('reconnect_failed', function (e) { Ti.API.log('reconnect_failed' + JSON.stringify(e)); });
 socket.on('disconnect', function() { Ti.API.log('disconnected'); });
-    
-    
+
+
 
 // Create view for your game.
 // Note that game.screen.width and height are not yet set until the game is loaded
@@ -114,7 +114,7 @@ var updateVpadTimerID = 0;
 var heroDirection = "DOWN";
 
 ////////////////////***********************
-var dragoon = quicktigame2d.createSprite({ 
+var dragoon = quicktigame2d.createSprite({
     image:'assets/dragoon_m_preview.png',
     width: 33,
     height: 49,
@@ -149,8 +149,8 @@ game.addEventListener('onload', function(e) {
 
     vpad.x = (game.screen.width * 0.5) - (vpad.width * 0.5);
     vpad.y = game.screen.height - vpad.height;
-    
-    chat_button.y = game.screen.height - chat_button.height; 
+
+    chat_button.y = game.screen.height - chat_button.height;
 
     hero.x = (game.screen.width * 0.5) - (hero.width * 0.5);
     hero.y = (game.screen.height * 0.5) - (hero.height * 0.5);
@@ -158,7 +158,7 @@ game.addEventListener('onload', function(e) {
     // Join the game
     hero.id = Ti.Platform.id;
     socket.emit('join', hero);
-    
+
     // Start the game
     game.start();
 
@@ -171,7 +171,7 @@ game.addEventListener('onload', function(e) {
 /// Stop update timer before app is closed
 win.addEventListener('android:back', function(e) {
     clearInterval(updateVpadTimerID);
-    
+
     win.close();
 });
 
@@ -231,7 +231,7 @@ game.addEventListener('touchstart', function(e) {
     touchY = (e.y * WINDOW_SCALE_FACTOR_Y);
 
     isVpadActive = vpad.contains(touchX, touchY);
-    
+
     if (chat_button.contains(touchX, touchY)) {
         view.show();
     }
@@ -255,24 +255,8 @@ Ti.include("debug.js");
 win.add(game);
 
 
-var view = Ti.UI.createView({
-    backgroundColor: 'black',
-    opacity: 0.6,
-    height: '50%'
-});
+var HeroSelectionView = require('hero_select');
 
-var hero1 = Ti.UI.createImageView({
-    image: 'assets/archer_m.png',
-    width: 30,
-    height: 50
-});
-
-//view.add(hero1);
-
-view.addEventListener('click', function(e) {
-    e.source.hide();
-});
-
-win.add(view);
+win.add(new HeroSelectionView());
 
 win.open({ fullscreen:true, navBarHidden:true });
