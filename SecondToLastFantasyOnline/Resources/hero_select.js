@@ -17,7 +17,7 @@ function HeroSelectionView() {
     var self = Ti.UI.createView({
         backgroundColor: 'black',
         opacity: 0.9,
-        height: '80%'
+        height: '75%'
     });
 
     var title = Ti.UI.createLabel({
@@ -42,8 +42,7 @@ function HeroSelectionView() {
         var img = Ti.UI.createImageView({
             image: 'assets/' + heroes[i],
             height: 250,
-            width: 168,
-            backgroundColor: 'blue'
+            width: 168
         });
 
         heroImages.push(img);
@@ -51,8 +50,10 @@ function HeroSelectionView() {
 
     scrollableHeroes = Ti.UI.createScrollableView({
         top: 40,
-        height: '75%',
+        height: '70%',
         showPagingControl: true,
+        pagingControlColor: 'blue',
+        pagingControlAlpha: 0.8,
         views: heroImages
     });
 
@@ -66,7 +67,7 @@ function HeroSelectionView() {
     self.add(btn);
 
     btn.addEventListener('click', function(e) {
-        self.hide();
+       self.hide();
     });
 
     return self;
