@@ -17,15 +17,16 @@ function HeroSelectionView() {
     var self = Ti.UI.createView({
         backgroundColor: 'black',
         opacity: 0.9,
-        height: '75%'
+        height: '75%',
+        zIndex: 100
     });
 
     var title = Ti.UI.createLabel({
-        text: 'Select Player',
+        text: 'Choose your hero',
         top: 0,
         width: '100%',
         height: Ti.UI.SIZE,
-        backgroundColor: 'blue',
+        backgroundColor: '#4B0082',
         color: 'white',
         font: {
             fontSize: '25sp',
@@ -52,7 +53,7 @@ function HeroSelectionView() {
         top: 40,
         height: '70%',
         showPagingControl: true,
-        pagingControlColor: 'blue',
+        pagingControlColor: '#4B0082',
         pagingControlAlpha: 0.8,
         views: heroImages
     });

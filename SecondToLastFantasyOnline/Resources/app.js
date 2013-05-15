@@ -226,6 +226,11 @@ function updateVpad() {
     }
 }
 
+var ChatView = require('chat');
+var chatView = new ChatView();
+
+win.add(chatView);
+
 game.addEventListener('touchstart', function(e) {
     touchX = (e.x * WINDOW_SCALE_FACTOR_X);
     touchY = (e.y * WINDOW_SCALE_FACTOR_Y);
@@ -233,7 +238,8 @@ game.addEventListener('touchstart', function(e) {
     isVpadActive = vpad.contains(touchX, touchY);
 
     if (chat_button.contains(touchX, touchY)) {
-        view.show();
+        Ti.API.info('shoud show chat window');
+        chatView.show();
     }
 });
 
