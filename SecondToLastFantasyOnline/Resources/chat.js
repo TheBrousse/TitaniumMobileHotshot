@@ -3,7 +3,7 @@ function ChatView(callback) {
         top: 150,
         backgroundColor: 'black',
         opacity: 0.9,
-        height: '30%',
+        height: 170,
         zIndex: 100,
         visible: false
     });
@@ -32,7 +32,7 @@ function ChatView(callback) {
         borderColor: '#fff',
         color: '#fff',
         backgroundColor: '#000',
-        maxLength: 45,
+        maxLength: 25,
         font: {
             fontSize: '22sp'
         }

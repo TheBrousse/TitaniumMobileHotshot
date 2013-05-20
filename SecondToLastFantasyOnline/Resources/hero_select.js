@@ -5,7 +5,6 @@ var heroes = [
     "knight_f_preview.png",
     "knight_m_preview.png",
     "mediator_f_preview.png",
-    "onionknight_m_preview.png",
     "pirate_f_preview.png",
     "redmage_m_preview.png",
     "squire_f_preview.png",

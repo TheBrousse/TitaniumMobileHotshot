@@ -9,8 +9,9 @@ function Character(scene, spriteSheet) {
     });
 
     var textsprite = quicktigame2d.createTextSprite({
-        text: 'Lorem ipsum dolor sit amet.', 
-        fontSize: 24, 
+        text: 'Lorem ipsum dolor sit amet', 
+        fontFamily: 'Verdana',
+        fontSize: 14, 
         textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
         z: 2
     });
@@ -63,8 +64,8 @@ function Character(scene, spriteSheet) {
 
     self.say = function(caption) {
         textsprite.text = caption;
-
-        textsprite.x = self.x -(textsprite.width / 2);
+        
+        textsprite.x = self.x -(textsprite.width * 0.5);
         textsprite.y = self.y - textsprite.height - 15;
         
         textsprite.show();
