@@ -13,7 +13,7 @@ var heroes = [
     "summoner_f_preview.png"
 ];
 
-function HeroSelectionView() {
+function HeroSelectionView(callback) {
     var self = Ti.UI.createView({
         backgroundColor: 'black',
         opacity: 0.9,
@@ -58,6 +58,12 @@ function HeroSelectionView() {
         views: heroImages
     });
 
+    scrollableHeroes.addEventListener('scrollend', function(e) {
+        var heroPreview = heroes[e.currentPage];
+
+        Ti.API.info(heroPreview.replace('_preview', ''));
+    });
+
     self.add(scrollableHeroes);
 
     var btn = Ti.UI.createButton({
@@ -68,7 +74,10 @@ function HeroSelectionView() {
     self.add(btn);
 
     btn.addEventListener('click', function(e) {
-       self.hide();
+        var heroPreview = heroes[scrollableHeroes.currentPage];
+
+        callback(heroPreview.replace('_preview', ''));
+        self.hide();
     });
 
     return self;

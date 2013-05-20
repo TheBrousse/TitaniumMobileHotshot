@@ -4,7 +4,7 @@ var win = Ti.UI.createWindow({ backgroundColor: 'black' });
 var quicktigame2d = require('com.googlecode.quicktigame2d');
 var io = require('socket.io'),
 
-SERVER_URI = 'ws://78.251.63.13:8080';
+SERVER_URI = 'ws://9.143.237.89:8080';
 
 // Connect to the Game Server
 socket = io.connect(SERVER_URI);
@@ -19,6 +19,24 @@ socket.on('reconnect', function () { Ti.API.log('reconnected'); });
 socket.on('reconnect_failed', function (e) { Ti.API.log('reconnect_failed' + JSON.stringify(e)); });
 socket.on('disconnect', function() { Ti.API.log('disconnected'); });
 
+
+socket.on('playerjoined', function(player) {
+ //   $('#activePlayers').append($('<li></li>').text(player.id));
+    Ti.API.info('player ' + player.id + ' joined the game');
+});
+
+socket.on('playersaid', function(player) {
+    Ti.API.info(player.id + ': ' + player.caption);
+});
+
+socket.on('playermoved', function(player) {
+    Ti.API.trace('player ' + player.id + ' moved x: ' + player.x + '  y: ' + player.y);
+});
+
+socket.on('playerquit', function(player) {
+  //  $.find('#activePlayers li:contains(' + player.id + ')')[0].remove()
+    Ti.API.info('player ' + player.id + ' quit the game');
+});
 
 
 // Create view for your game.
@@ -39,7 +57,7 @@ var scene = quicktigame2d.createScene();
 var Character = require('character');
 
 // create sprites
-var hero = new Character(scene);
+var hero = new Character(scene, 'knight_m.png');
 
 // on-screen controller and its guides
 var vpad = quicktigame2d.createSprite({ image:'assets/control_base.png' });
@@ -113,19 +131,6 @@ var touchX, touchY;
 var updateVpadTimerID = 0;
 var heroDirection = "DOWN";
 
-////////////////////***********************
-var dragoon = quicktigame2d.createSprite({
-    image:'assets/dragoon_m_preview.png',
-    width: 33,
-    height: 49,
-    x: 460,
-    y: 0
-});
-
-scene.add(dragoon);
-
-
-////////////////////***********************
 
 // Onload event is called when the game is loaded.
 // The game.screen.width and game.screen.height are not yet set until this onload event.
@@ -152,8 +157,7 @@ game.addEventListener('onload', function(e) {
 
     chat_button.y = game.screen.height - chat_button.height;
 
-    hero.x = (game.screen.width * 0.5) - (hero.width * 0.5);
-    hero.y = (game.screen.height * 0.5) - (hero.height * 0.5);
+    centerHero();
 
     // Join the game
     hero.id = Ti.Platform.id;
@@ -226,8 +230,15 @@ function updateVpad() {
     }
 }
 
+function centerHero() {
+    hero.x = (game.screen.width * 0.5) - (hero.width * 0.5);
+    hero.y = (game.screen.height * 0.5) - (hero.height * 0.5);
+}
+
 var ChatView = require('chat');
-var chatView = new ChatView();
+var chatView = new ChatView(function(caption) {
+    hero.say(caption);
+});
 
 win.add(chatView);
 
@@ -238,7 +249,6 @@ game.addEventListener('touchstart', function(e) {
     isVpadActive = vpad.contains(touchX, touchY);
 
     if (chat_button.contains(touchX, touchY)) {
-        Ti.API.info('shoud show chat window');
         chatView.show();
     }
 });
@@ -260,9 +270,14 @@ Ti.include("debug.js");
 // Add your game view
 win.add(game);
 
-
 var HeroSelectionView = require('hero_select');
 
-win.add(new HeroSelectionView());
+win.add(new HeroSelectionView(function(imageSheet) {
+    scene.remove(hero);
+
+    hero = new Character(scene, imageSheet);
+    centerHero();
+    hero.z  = 2;
+}));
 
 win.open({ fullscreen:true, navBarHidden:true });

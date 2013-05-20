@@ -1,5 +1,6 @@
-function ChatView() {
+function ChatView(callback) {
     var self = Ti.UI.createView({
+        top: 150,
         backgroundColor: 'black',
         opacity: 0.9,
         height: '30%',
@@ -8,7 +9,7 @@ function ChatView() {
     });
 
     var title = Ti.UI.createLabel({
-        text: 'You hero will speak!',
+        text: 'Your hero will speak!',
         top: 0,
         width: '100%',
         height: Ti.UI.SIZE,
@@ -32,7 +33,6 @@ function ChatView() {
         color: '#fff',
         backgroundColor: '#000',
         maxLength: 45,
-        hintText: 'Enter caption here',
         font: {
             fontSize: '22sp'
         }
@@ -48,7 +48,12 @@ function ChatView() {
     self.add(btnSay);
 
     btnSay.addEventListener('click', function(e) {
-       self.hide();
+        txtSay.blur();
+        callback(txtSay.value);
+        
+        txtSay.value = '';
+
+        self.hide();
     });
 
     return self;

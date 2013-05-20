@@ -1,6 +1,7 @@
-function Character(scene) {
+function Character(scene, spriteSheet) {
+
     var self = quicktigame2d.createSpriteSheet({
-        image: 'assets/knight_m.png',
+        image: 'assets/' + spriteSheet,
         width: 32,
         height: 48,
         border: 0,
@@ -10,7 +11,8 @@ function Character(scene) {
     var textsprite = quicktigame2d.createTextSprite({
         text: 'Lorem ipsum dolor sit amet.', 
         fontSize: 16, 
-        z: 50 
+        textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+        z: 2
     });
     textsprite.hide();
     
@@ -58,12 +60,15 @@ function Character(scene) {
         }
     }
 
-    self.say = function(text) {
-        textsprite.textsprite = text;
+    self.say = function(caption) {
+        textsprite.text = caption;
+
         textsprite.x = self.x -(textsprite.width / 2);
         textsprite.y = self.y - textsprite.height - 15;
         
-        text.show();
+        textsprite.show();
+        
+        setTimeout(function() { textsprite.hide() }, 5000);
     }
 
     scene.add(self);
