@@ -10,10 +10,11 @@ function Character(scene, spriteSheet) {
 
     var textsprite = quicktigame2d.createTextSprite({
         text: 'Lorem ipsum dolor sit amet.', 
-        fontSize: 16, 
+        fontSize: 24, 
         textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
         z: 2
     });
+    textsprite.color(0, 0, 1);
     textsprite.hide();
     
     self.halt = function() {
