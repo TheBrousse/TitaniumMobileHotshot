@@ -35,6 +35,7 @@ socketio.listen(server).on('connection', function (socket) {
 
 	socket.on('join', function (newPlayer) {
 		console.log('Player ', newPlayer.id, ' has joined');
+		console.log(JSON.stringify(newPlayer));
 		
 		// Retrieve players already online
 		for (var i=0, len=players.length; i < len; i++) {

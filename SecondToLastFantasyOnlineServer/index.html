@@ -58,8 +58,8 @@
 
                 var player = {
                     id: jQuery.browser.version,
-                    x: $('#x').val(),
-                    y: $('#y').val()
+                    x: parseFloat($('#x').val()),
+                    y: parseFloat($('#y').val())
                 };
 
                 iosocket.emit('move', player);
@@ -74,7 +74,8 @@
                 $('#activePlayers').append($('<li></li>').text(jQuery.browser.version));
                 
                 var player = {
-                    id: jQuery.browser.version
+                    id: jQuery.browser.version,
+                    imageSheet: 'summoner_f.png'
                 };
 
                 iosocket.emit('join', player);
