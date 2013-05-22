@@ -4,7 +4,7 @@ var win = Ti.UI.createWindow({ backgroundColor: 'black' });
 var quicktigame2d = require('com.googlecode.quicktigame2d');
 var io = require('socket.io'),
 
-SERVER_URI = 'ws://192.168.1.18:8080';
+SERVER_URI = 'ws://192.168.33.238:8080/';
 
 // Connect to the Game Server
 socket = io.connect(SERVER_URI);
@@ -34,7 +34,7 @@ socket.on('playersaid', function(player) {
 	Ti.API.info(player.id + ': ' + player.caption);
 
 	var p = getPlayer(player.id);
-			
+
 	p.say(player.caption);
 });
 
@@ -42,9 +42,9 @@ socket.on('playermoved', function(player) {
 	Ti.API.trace('player ' + player.id + ' moved x: ' + player.x + '  y: ' + player.y);
 
 	var p = getPlayer(player.id);
-	
-	p.x = player.x;
-	p.y = player.y;
+
+	p.absolute_x = player.x;
+	p.absolute_y = player.y;
 });
 
 socket.on('playerquit', function(player) {
@@ -250,9 +250,10 @@ function updateVpad() {
 		socket.emit('move', {
 			id: hero.id,
 			x: Math.round(Math.abs(hero.x + map.x)),
-			y: Math.round(Math.abs(hero.y + map.y))
+			y: Math.round(Math.abs(hero.y + map.y)),
+			direction: heroDirection
 		});
-		Ti.API.debug('x: '+hero.x + '  y: '+ hero.y + ' | map-x: '+map.x + '  map-y: '+ map.y );
+//		Ti.API.debug('x: '+hero.x + '  y: '+ hero.y + ' | map-x: '+map.x + '  map-y: '+ map.y );
 	} else {
 		vpad.color(1, 1, 1);
 		vpad_nav.hide();
@@ -262,21 +263,25 @@ function updateVpad() {
 }
 
 function drawOtherPlayers() {
-	//Il faut maintenant que tu testes si cet autre joueur est effectivement visible dans le VP. Il faut que toutes les conditions suivantes soient vraies :
-	// le bord droit du sprite est à droite du bord gauche de l'écran
 	for (p in players) {
 		var otherHero = players[p];
 
-		if (((otherHero.x + hero.width/2) >= 0) &&
-			// le bord gauche du sprite est à gauche du bord droit de l'écran
-			 ((otherHero.x - hero.width/2) <= game.screen.width) &&
-			// le bord bas du sprite est en-dessous du bord haut de l'écran
-			((otherHero.y + hero.height/2) >= 0) &&
-			// le bord haut du sprite est au-dessus du bord bas de l'écran
-			((otherHero.y - hero.height/2) <= game.screen.height)) {
-				Ti.API.info('all conditions are true');
-		}
+		if (otherHero.id !== Ti.Platform.id) {
+			otherHero.x = otherHero.absolute_x + Math.round(map.x);
+			otherHero.y = otherHero.absolute_y + Math.round(map.y);
 
+			if (((otherHero.x + otherHero.width/2) >= 0) &&
+				// le bord gauche du sprite est à gauche du bord droit de l'écran
+				 ((otherHero.x - otherHero.width/2) <= game.screen.width) &&
+				// le bord bas du sprite est en-dessous du bord haut de l'écran
+				((otherHero.y + otherHero.height/2) >= 0) &&
+				// le bord haut du sprite est au-dessus du bord bas de l'écran
+				((otherHero.y - otherHero.height/2) <= game.screen.height)) {
+					Ti.API.info('other player is in viewport');
+			} else {
+				Ti.API.info('other player isn\'t in viewport');
+			}
+		}
 	}
 }
 
@@ -286,6 +291,7 @@ function centerHero() {
 }
 
 var ChatView = require('chat');
+
 var chatView = new ChatView(function(caption) {
 	hero.say(caption);
 });
