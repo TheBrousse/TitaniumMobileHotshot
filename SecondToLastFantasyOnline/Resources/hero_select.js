@@ -1,15 +1,15 @@
 var heroes = [
-    "archer_m_preview.png",
-    "dancer_preview.png",
-    "dragoon_m_preview.png",
-    "knight_f_preview.png",
-    "knight_m_preview.png",
-    "mediator_f_preview.png",
-    "pirate_f_preview.png",
-    "redmage_m_preview.png",
-    "squire_f_preview.png",
-    "squire_m_preview.png",
-    "summoner_f_preview.png"
+    'archer_m_preview.png',
+    'dancer_preview.png',
+    'dragoon_m_preview.png',
+    'knight_f_preview.png',
+    'knight_m_preview.png',
+    'mediator_f_preview.png',
+    'pirate_f_preview.png',
+    'redmage_m_preview.png',
+    'squire_f_preview.png',
+    'squire_m_preview.png',
+    'summoner_f_preview.png'
 ];
 
 function HeroSelectionView(callback) {
@@ -55,12 +55,6 @@ function HeroSelectionView(callback) {
         pagingControlColor: '#4B0082',
         pagingControlAlpha: 0.8,
         views: heroImages
-    });
-
-    scrollableHeroes.addEventListener('scrollend', function(e) {
-        var heroPreview = heroes[e.currentPage];
-
-        Ti.API.info(heroPreview.replace('_preview', ''));
     });
 
     self.add(scrollableHeroes);
