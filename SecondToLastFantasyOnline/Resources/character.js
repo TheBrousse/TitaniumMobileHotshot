@@ -15,6 +15,7 @@ function Character(scene, spriteSheet) {
         textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
         z: 2
     });
+    
     textsprite.color(0, 0, 1);
     textsprite.hide();
     
