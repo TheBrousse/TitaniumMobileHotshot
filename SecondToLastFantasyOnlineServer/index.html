@@ -59,7 +59,8 @@
                 var player = {
                     id: jQuery.browser.version,
                     x: parseFloat($('#x').val()),
-                    y: parseFloat($('#y').val())
+                    y: parseFloat($('#y').val()),
+                    direction: 'RIGHT'
                 };
 
                 iosocket.emit('move', player);

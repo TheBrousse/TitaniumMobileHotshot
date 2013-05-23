@@ -45,6 +45,7 @@ socket.on('playermoved', function(player) {
 
 	p.absolute_x = player.x;
 	p.absolute_y = player.y;
+	p.direction = player.direction;
 });
 
 socket.on('playerquit', function(player) {
@@ -277,7 +278,7 @@ function drawOtherPlayers() {
 				((otherHero.y + otherHero.height/2) >= 0) &&
 				// le bord haut du sprite est au-dessus du bord bas de l'écran
 				((otherHero.y - otherHero.height/2) <= game.screen.height)) {
-					Ti.API.info('other player is in viewport');
+				otherHero.halt();
 			} else {
 				Ti.API.info('other player isn\'t in viewport');
 			}
