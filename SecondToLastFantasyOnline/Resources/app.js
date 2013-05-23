@@ -279,9 +279,7 @@ function drawOtherPlayers() {
 				// le bord haut du sprite est au-dessus du bord bas de l'écran
 				((otherHero.y - otherHero.height/2) <= game.screen.height)) {
 				otherHero.halt();
-			} else {
-				Ti.API.info('other player isn\'t in viewport');
-			}
+			} 
 		}
 	}
 }
