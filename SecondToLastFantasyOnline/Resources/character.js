@@ -16,11 +16,10 @@ function Character(scene, spriteSheet) {
 		z: 2
 	});
 
-	textsprite.color(0, 0, 1);
+	textsprite.color(Math.random(), 0, 0);
 	textsprite.hide();
 
 	self.halt = function() {
-		// Ti.API.debug("Halt facing: " + self.direction);
 		switch (self.direction) {
 		case "UP":
 			self.pauseAt(13);
