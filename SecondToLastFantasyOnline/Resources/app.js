@@ -4,7 +4,7 @@ var win = Ti.UI.createWindow({ backgroundColor: 'black' });
 var quicktigame2d = require('com.googlecode.quicktigame2d');
 var io = require('socket.io'),
 
-SERVER_URI = 'ws://192.168.33.238:8080/';
+SERVER_URI = 'ws://192.168.1.18:8080/';
 
 // Connect to the Game Server
 socket = io.connect(SERVER_URI);
@@ -338,5 +338,9 @@ win.add(new HeroSelectionView(function(imageSheet) {
 	hero.id = Ti.Platform.id;
 	socket.emit('join', hero);
 }));
+
+win.addEventListener('close', function() {
+	socket.emit('quit', hero);
+});
 
 win.open({ fullscreen:true, navBarHidden:true });
