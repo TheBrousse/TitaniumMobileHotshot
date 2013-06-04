@@ -26,13 +26,7 @@ socket.on('playerjoined', function(player) {
 	Ti.API.info('player ' + JSON.stringify(player) + ' joined the game');
 
 	var newPlayer = new Character(scene, player.image);
-/*
-	var newPlayer = {
-		say: function(string) {Ti.API.info(string)},
-		halt: function() { Ti.API.info('HALT'); },
-		turnTowards: function() { Ti.API.info('Turn ' + direction); }
-	};
-*/
+
 	newPlayer.id = player.id;
 	newPlayer.z = 2;
 
@@ -158,7 +152,6 @@ vpad_nav.z = 4;
 chat_button.z = 5;
 
 // add your shape to the scene
-// CBR gone! scene.add(hero);
 scene.add(vpad);
 scene.add(vpad_nav);
 scene.add(chat_button);
