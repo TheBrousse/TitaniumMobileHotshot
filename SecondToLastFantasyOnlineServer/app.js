@@ -12,7 +12,32 @@ server.on('request', function(req, res) {
 server.listen(8080, function() {
 	console.log('Listening at: http://localhost:8080');
 });
- 
+
+function leanify(p) {
+    var leanPlayer = { id: p.id };
+
+    if (p.x) {
+        leanPlayer.x = p.x;
+    }
+
+    if (p.y) {
+        leanPlayer.y = p.y;
+    }
+
+    if (p.direction) {
+        leanPlayer.direction = p.direction;
+    }
+
+    if (p.image) {
+        leanPlayer.image = p.image;
+    }
+    
+    if (p.caption) {
+        leanPlayer.caption = caption;
+    }
+
+    return leanPlayer;
+}
 
 Array.prototype.contains = function(k, callback) {
 	var self = this;
@@ -39,15 +64,15 @@ socketio.listen(server).on('connection', function (socket) {
 		
 		// Retrieve players already online
 		for (var i=0, len=players.length; i < len; i++) {
-			socket.emit('playerjoined', players[i]);
+			socket.emit('playerjoined', leanify(players[i]));
 		}
 
 		// Add new player to the servers's list (if not already there)
 		players.contains(newPlayer, function(found) {
 		    if (!found) {
-		        players.push(newPlayer);
+		        players.push(leanify(newPlayer));
 		        // Inform everyone the new player has joined
-				socket.broadcast.emit('playerjoined', newPlayer);
+				socket.broadcast.emit('playerjoined', leanify(newPlayer));
 		    }
 		});
 	});
@@ -58,7 +83,7 @@ socketio.listen(server).on('connection', function (socket) {
 				console.log('Player ', player.id, ' has quit');
 
 				players.splice(p);
-				socket.broadcast.emit('playerquit', player);
+				socket.broadcast.emit('playerquit', leanify(player));
 			}
 		}
 	});
@@ -66,12 +91,12 @@ socketio.listen(server).on('connection', function (socket) {
 	socket.on('speak', function (player) {
 		console.log('Player ', player.id, ' said: ', player.caption);
 
-		socket.broadcast.emit('playersaid', player);
+		socket.broadcast.emit('playersaid', leanify(player));
 	});
 
 	socket.on('move', function (player) {
 		console.log('Player ', player.id, ' moved to x: ', player.x, ' - y: ', player.y);
 
-		socket.broadcast.emit('playermoved', player);
+		socket.broadcast.emit('playermoved', leanify(player));
 	})
 });

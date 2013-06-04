@@ -4,11 +4,11 @@ var win = Ti.UI.createWindow({ backgroundColor: 'black' });
 var quicktigame2d = require('com.googlecode.quicktigame2d');
 var io = require('socket.io'),
 
-SERVER_URI = 'ws://192.168.1.18:8080/';
+SERVER_URI = 'ws://192.168.1.12:8080/';
+//SERVER_URI = 'ws://secondtolastfantasy-cbrousseau.rhcloud.com:8000/';
 
 // Connect to the Game Server
-socket = io.connect(SERVER_URI);
-
+var socket = io.connect(SERVER_URI);
 
 socket.on('connecting', function () { Ti.API.log('connecting'); });
 socket.on('connect', function () { Ti.API.log('connected'); });
@@ -22,12 +22,23 @@ socket.on('disconnect', function() { Ti.API.log('disconnected'); });
 var players = [];
 
 socket.on('playerjoined', function(player) {
+	Ti.API.info('player ' + player.id + ' joined the game');
 	Ti.API.info('player ' + JSON.stringify(player) + ' joined the game');
-	var newPlayer = new Character(scene, player.imageSheet);
+
+	var newPlayer = new Character(scene, player.image);
+/*
+	var newPlayer = {
+		say: function(string) {Ti.API.info(string)},
+		halt: function() { Ti.API.info('HALT'); },
+		turnTowards: function() { Ti.API.info('Turn ' + direction); }
+	};
+*/
 	newPlayer.id = player.id;
 	newPlayer.z = 2;
 
 	players.push(newPlayer);
+
+	Ti.API.debug(JSON.stringify(players));
 });
 
 socket.on('playersaid', function(player) {
@@ -43,9 +54,14 @@ socket.on('playermoved', function(player) {
 
 	var p = getPlayer(player.id);
 
-	p.absolute_x = player.x;
-	p.absolute_y = player.y;
-	p.direction = player.direction;
+	if (p) {
+		p.absolute_x = player.x;
+		p.absolute_y = player.y;
+		p.direction = player.direction;
+
+		p.x = p.absolute_x + Math.round(map.x);
+		p.y = p.absolute_y + Math.round(map.y);
+	}
 });
 
 socket.on('playerquit', function(player) {
@@ -53,6 +69,7 @@ socket.on('playerquit', function(player) {
 
 	for (p in players) {
 		if (players[p].id === player.id) {
+			players[p].say('Good Bye!');
 			scene.remove(players[p]);
 			players.splice(p);
 		}
@@ -195,6 +212,23 @@ game.addEventListener('onload', function(e) {
 		updateVpad();
 	}, 66);
 
+	var HeroSelectionView = require('hero_select');
+
+	win.add(new HeroSelectionView(function(imageSheet) {
+		scene.remove(hero);
+
+		hero = new Character(scene, imageSheet);
+		centerHero();
+		hero.z  = 2;
+
+		 // Join the game
+		hero.id = Ti.Platform.id;
+		socket.emit('join', {
+			id: hero.id,
+			image: hero.image.replace('assets/', '')
+		});
+	}));
+
 });
 
 /// Stop update timer before app is closed
@@ -245,7 +279,7 @@ function updateVpad() {
 			map_items.y = map.y;
 		}
 
-		drawOtherPlayers()
+	//	drawOtherPlayers()
 
 		// Send absolute coordinated to the server
 		socket.emit('move', {
@@ -268,9 +302,6 @@ function drawOtherPlayers() {
 		var otherHero = players[p];
 
 		if (otherHero.id !== Ti.Platform.id) {
-			otherHero.x = otherHero.absolute_x + Math.round(map.x);
-			otherHero.y = otherHero.absolute_y + Math.round(map.y);
-
 			if (((otherHero.x + otherHero.width/2) >= 0) &&
 				// le bord gauche du sprite est à gauche du bord droit de l'écran
 				 ((otherHero.x - otherHero.width/2) <= game.screen.width) &&
@@ -278,8 +309,11 @@ function drawOtherPlayers() {
 				((otherHero.y + otherHero.height/2) >= 0) &&
 				// le bord haut du sprite est au-dessus du bord bas de l'écran
 				((otherHero.y - otherHero.height/2) <= game.screen.height)) {
+
+				otherHero.x = otherHero.absolute_x + Math.round(map.x);
+				otherHero.y = otherHero.absolute_y + Math.round(map.y);
 				otherHero.halt();
-			} 
+			}
 		}
 	}
 }
@@ -324,20 +358,6 @@ Ti.include("debug.js");
 
 // Add your game view
 win.add(game);
-
-var HeroSelectionView = require('hero_select');
-
-win.add(new HeroSelectionView(function(imageSheet) {
-	scene.remove(hero);
-
-	hero = new Character(scene, imageSheet);
-	centerHero();
-	hero.z  = 2;
-
-	 // Join the game
-	hero.id = Ti.Platform.id;
-	socket.emit('join', hero);
-}));
 
 win.addEventListener('close', function() {
 	socket.emit('quit', hero);
