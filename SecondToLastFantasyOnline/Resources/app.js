@@ -279,7 +279,7 @@ function updateVpad() {
 			map_items.y = map.y;
 		}
 
-	//	drawOtherPlayers()
+		drawOtherPlayers()
 
 		// Send absolute coordinated to the server
 		socket.emit('move', {
@@ -301,6 +301,9 @@ function drawOtherPlayers() {
 	for (p in players) {
 		var otherHero = players[p];
 
+		otherHero.x = otherHero.absolute_x + Math.round(map.x);
+		otherHero.y = otherHero.absolute_y + Math.round(map.y);
+
 		if (otherHero.id !== Ti.Platform.id) {
 			if (((otherHero.x + otherHero.width/2) >= 0) &&
 				// le bord gauche du sprite est à gauche du bord droit de l'écran
@@ -310,8 +313,6 @@ function drawOtherPlayers() {
 				// le bord haut du sprite est au-dessus du bord bas de l'écran
 				((otherHero.y - otherHero.height/2) <= game.screen.height)) {
 
-				otherHero.x = otherHero.absolute_x + Math.round(map.x);
-				otherHero.y = otherHero.absolute_y + Math.round(map.y);
 				otherHero.halt();
 			}
 		}
