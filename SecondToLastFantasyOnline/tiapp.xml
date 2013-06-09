@@ -3,10 +3,10 @@
     <id>com.packtpub.hotshot.secondtolastfantasy.online</id>
     <name>SecondToLastFantasyOnline</name>
     <version>1.0</version>
-    <publisher>TheBrousse</publisher>
+    <publisher>Christian Brousseau</publisher>
     <url>http://www.packtpub.com</url>
     <description>not specified</description>
-    <copyright>2013 by TheBrousse</copyright>
+    <copyright>2013 by Christian Brousseau</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
