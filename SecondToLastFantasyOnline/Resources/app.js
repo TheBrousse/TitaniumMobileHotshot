@@ -325,6 +325,11 @@ var ChatView = require('chat');
 
 var chatView = new ChatView(function(caption) {
 	hero.say(caption);
+
+	socket.emit('speak', {
+		id: hero.id,
+		caption: caption
+	});
 });
 
 win.add(chatView);
