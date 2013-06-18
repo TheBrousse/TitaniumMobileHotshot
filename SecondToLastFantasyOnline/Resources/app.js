@@ -63,7 +63,7 @@ socket.on('playerquit', function(player) {
 
 	for (p in players) {
 		if (players[p].id === player.id) {
-			players[p].say('Good Bye!');
+			players[p].say('Goodbye!');
 			scene.remove(players[p]);
 			players.splice(p);
 		}
