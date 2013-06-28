@@ -10,14 +10,12 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Kitchen Sink</string>
+			<string>Social Networks</string>
 		</dict>
 		<dict>
-			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
 			<string>Name</string>
-			<key>Key</key>
+			<key>Type</key>
 			<string>name_preference</string>
 			<key>DefaultValue</key>
 			<string></string>
@@ -34,27 +32,21 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Enabled</string>
+			<string>Facebook</string>
 			<key>Key</key>
-			<string>enabled_preference</string>
+			<string>facebook_preference</string>
 			<key>DefaultValue</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSSliderSpecifier</string>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Twitter</string>
 			<key>Key</key>
-			<string>slider_preference</string>
+			<string>twitter_preference</string>
 			<key>DefaultValue</key>
-			<real>0.5</real>
-			<key>MinimumValue</key>
-			<integer>0</integer>
-			<key>MaximumValue</key>
-			<integer>1</integer>
-			<key>MinimumValueImage</key>
-			<string></string>
-			<key>MaximumValueImage</key>
-			<string></string>
+			<false/>
 		</dict>
 	</array>
 </dict>
