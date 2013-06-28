@@ -101,8 +101,20 @@ twitView.addEventListener('click', function() {
 
 bottomView.add(twitView);
 
-win.add(bottomView)
+win.add(bottomView);
 
+
+var activity = Ti.Android.currentActivity;
+activity.onCreateOptionsMenu = function(e) {
+    var menu = e.menu;
+    var menuItem = menu.add({ title: "Settings" });
+
+    menuItem.setIcon(Ti.Android.R.drawable.ic_menu_preferences);
+
+    menuItem.addEventListener("click", function(e) {
+        Ti.UI.Android.openPreferences();
+    });
+};
 
 function toggleFacebook(isActive) {
 	if (isActive) {
@@ -112,6 +124,8 @@ function toggleFacebook(isActive) {
 	} else {
 		fb.logout();
 	}
+
+	Ti.App.Properties.setBool('facebook_preference', isActive);
 }
 
 function toggleTwitter(isActive) {
@@ -120,11 +134,15 @@ function toggleTwitter(isActive) {
 			 twitter.authorize(function() {
 			 	twitView.image = 'images/twitter-logo.png';
 			 });
+		} else {
+			twitView.image = 'images/twitter-logo.png';
 		}
 	} else {
 		 twitter.deauthorize();
 		 twitView.image = 'images/twitter-logo-disabled.png';
 	}
+
+	Ti.App.Properties.setBool('twitter_preference', isActive);
 }
 
 function postFacebookStatus(status) {
@@ -136,7 +154,7 @@ function postFacebookStatus(status) {
 			} else {
 				if (e.error) {
 					alert(e.error);
-					Ti.API.debug(e);
+					Ti.API.error(e);
 				} else {
 					alert("Unkown result from Facebook");
 				}
@@ -157,11 +175,27 @@ function postTwitterStatus(status) {
 	});
 }
 
+function loadSettings() {
+	Ti.API.info('Facebook' + Ti.App.Properties.getBool('facebook_preference'));
+	Ti.API.info('Twitter' + Ti.App.Properties.getBool('twitter_preference'));
+
+	var enableFacebook = Ti.App.Properties.getBool('facebook_preference');
+	var enableTwitter = Ti.App.Properties.getBool('twitter_preference');
+
+	if (enableFacebook) {
+		toggleFacebook(enableFacebook);
+	}
+
+	if (enableTwitter) {
+		toggleTwitter(enableTwitter);
+	}
+}
+
 
 /////////// FACEBOOK
 fb.appid = Ti.App.Properties.getString('facebook.appid');
 fb.permissions = ['publish_actions'];
-fb.forceDialogAuth = true;
+fb.forceDialogAuth = false;
 
 fb.addEventListener('login', function(e) {
     if (e.success) {
@@ -199,5 +233,7 @@ btnPost.addEventListener('click', function() {
 	txtStatus.value = '';
 	lblCount.text = '0/140';
 });
+
+loadSettings();
 
 win.open();

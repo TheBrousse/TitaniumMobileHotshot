@@ -35,7 +35,9 @@
             <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
         </orientations>
     </iphone>
-    <android xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+        <activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity"/>
+    </android>
     <mobileweb>
         <precache/>
         <splash>
