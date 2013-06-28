@@ -103,18 +103,22 @@ bottomView.add(twitView);
 
 win.add(bottomView);
 
+if (Ti.Platform.osname == "android") {
+	var activity = Ti.Android.currentActivity;
 
-var activity = Ti.Android.currentActivity;
-activity.onCreateOptionsMenu = function(e) {
-    var menu = e.menu;
-    var menuItem = menu.add({ title: "Settings" });
+	activity.onCreateOptionsMenu = function(e) {
+		var menu = e.menu;
+		var menuItem = menu.add({
+			title : "Settings"
+		});
 
-    menuItem.setIcon(Ti.Android.R.drawable.ic_menu_preferences);
+		menuItem.setIcon(Ti.Android.R.drawable.ic_menu_preferences);
 
-    menuItem.addEventListener("click", function(e) {
-        Ti.UI.Android.openPreferences();
-    });
-};
+		menuItem.addEventListener("click", function(e) {
+			Ti.UI.Android.openPreferences();
+		});
+	};
+}
 
 function toggleFacebook(isActive) {
 	if (isActive) {
