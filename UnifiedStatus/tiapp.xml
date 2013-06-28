@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
+    <property name="twitter.consumerKey">g1ppxsGIQVor7KkcmOII9A</property>
+    <property name="twitter.consumerSecret">iL859j6cdLLajwQAvtgIIOh0LAUfcabJwgTOiE2U5k4</property>
+    <property name="facebook.appid">561673983883162</property>
+
     <id>com.packtpub.hotshot.unifiedstatus</id>
-    <name>UnifiedStatus</name>
+    <name>Unified Status</name>
     <version>1.0</version>
     <publisher>Christian Brousseau</publisher>
     <url>http://www.packtpub.com</url>
@@ -14,12 +18,15 @@
     <statusbar-hidden>false</statusbar-hidden>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
-    <analytics>true</analytics>
+    <analytics>false</analytics>
     <guid>70e81a09-1f8d-444c-a15d-7cdeef7ae475</guid>
     <property name="ti.ui.defaultunit" type="string">system</property>
     <iphone>
         <orientations device="iphone">
             <orientation>Ti.UI.PORTRAIT</orientation>
+            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
         </orientations>
         <orientations device="ipad">
             <orientation>Ti.UI.PORTRAIT</orientation>
