@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen 
+<PreferenceScreen
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:title="Preferences">
 
@@ -12,7 +12,7 @@
 		<CheckBoxPreference
 			android:title="Twitter"
 			android:defaultValue="false"
-			android:summary="Your messages will be published on you Twitter feed"
+			android:summary="Your messages will be published on your Twitter feed"
 			android:key="twitter_preference" />
 	</PreferenceCategory>
 
