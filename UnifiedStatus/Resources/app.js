@@ -188,16 +188,11 @@ function loadSettings() {
 	Ti.API.info('Facebook ' + Ti.App.Properties.getBool('facebook_preference'));
 	Ti.API.info('Twitter ' + Ti.App.Properties.getBool('twitter_preference'));
 
-	var enableFacebook = Ti.App.Properties.getBool('facebook_preference');
-	var enableTwitter = Ti.App.Properties.getBool('twitter_preference');
+	var enableFacebook = Ti.App.Properties.getBool('facebook_preference', false);
+	var enableTwitter = Ti.App.Properties.getBool('twitter_preference', false);
 
-	if (enableFacebook) {
-		toggleFacebook(enableFacebook);
-	}
-
-	if (enableTwitter) {
-		toggleTwitter(enableTwitter);
-	}
+	toggleFacebook(enableFacebook);
+	toggleTwitter(enableTwitter);
 }
 
 
