@@ -154,9 +154,9 @@ function toggleTwitter(isActive) {
 	Ti.App.Properties.setBool('twitter_preference', isActive);
 }
 
-function postFacebookStatus(status) {
+function postFacebookMessage(msg) {
 	fb.requestWithGraphPath('me/feed', {
-			message: status
+			message: msg
 		}, "POST", function(e) {
 			if (e.success) {
 				Ti.API.info("Success!  From FB: " + e.result);
@@ -172,9 +172,9 @@ function postFacebookStatus(status) {
 	);
 }
 
-function postTwitterStatus(status) {
+function postTwitterMessage(msg) {
 	twitter.share({
-		message: status,
+		message: msg,
 		success: function() {
 			alert('Tweeted!');
 		},
@@ -205,7 +205,6 @@ function loadSettings() {
 fb.appid = Ti.App.Properties.getString('ti.facebook.appid');
 //fb.appid = '561673983883162'
 fb.permissions = ['publish_actions'];
-fb.forceDialogAuth = false;
 
 fb.addEventListener('login', function(e) {
 	if (e.success) {
@@ -232,11 +231,11 @@ var twitter = social.create({
 btnPost.addEventListener('click', function() {
 
 	if (fb.loggedIn) {
-		postFacebookStatus(txtStatus.value);
+		postFacebookMessage(txtStatus.value);
 	}
 
 	if (twitter.isAuthorized()) {
-		postTwitterStatus(txtStatus.value);
+		postTwitterMessage(txtStatus.value);
 	}
 
 	txtStatus.blur();
