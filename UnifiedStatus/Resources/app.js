@@ -176,7 +176,7 @@ function postTwitterMessage(msg) {
 	twitter.share({
 		message: msg,
 		success: function() {
-			alert('Tweeted!');
+			Ti.API.info('Tweeted!');
 		},
 		error: function() {
 			alert('ERROR from Twitter Tweeter');
