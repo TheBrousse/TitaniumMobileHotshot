@@ -3,31 +3,36 @@ var social = require('social_plus');
 
 var win = Ti.UI.createWindow({
 	title: 'Unified Status',
-	backgroundColor: '#fff'
+	backgroundGradient: {
+			type: 'linear',
+			startPoint: { x: '0%', y: '0%' },
+			endPoint: { x: '0%', y: '100%' },
+			colors: [ { color: '#813eba'}, { color: '#000' } ]
+		}
 });
 
 win.add(Ti.UI.createLabel({
-	text : 'Post a message',
-	top : 4,
+	text: 'Post a message',
+	color: '#fff',
+	top: 4,
 	width: '90%',
 	textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	font: {
-	    fontSize: '22sp'
+		fontSize: '22sp'
 	}
 }));
 
 var txtStatus = Ti.UI.createTextArea({
-	top: 15,
-	maxLength: 140,
-	height: 100,
 	top: 37,
 	width: '90%',
+	height: 100,
+	color: '#000',
+	maxLength: 140,
 	borderWidth: 3,
 	borderRadius: 4,
-	borderColor: '#000',
-	color: '#000',
+	borderColor: '#401b60',
 	font: {
-	    fontSize: '16sp'
+		fontSize: '16sp'
 	}
 });
 
@@ -35,6 +40,7 @@ var lblCount = Ti.UI.createLabel({
 	text: '0/140',
 	top: 134,
 	width: '90%',
+	color: '#fff',
 	textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT
 });
 
@@ -44,7 +50,7 @@ txtStatus.addEventListener('change', function(e) {
 	if (e.value.length > 120) {
 		lblCount.color = '#ff0000';
 	} else {
-		lblCount.color = '#000'
+		lblCount.color = '#fff'
 	}
 
 	btnPost.enabled = !(e.value.length === 0);
@@ -55,8 +61,7 @@ win.add(txtStatus);
 
 var btnPost = Ti.UI.createButton({
 	title: 'Post',
-	top: 140,
-	width: 150
+	top: 140
 });
 
 win.add(btnPost);
@@ -109,7 +114,7 @@ if (Ti.Platform.osname == "android") {
 	activity.onCreateOptionsMenu = function(e) {
 		var menu = e.menu;
 		var menuItem = menu.add({
-			title : "Settings"
+			title: "Settings"
 		});
 
 		menuItem.setIcon(Ti.Android.R.drawable.ic_menu_preferences);
@@ -136,7 +141,7 @@ function toggleTwitter(isActive) {
 	if (isActive) {
 		if (!twitter.isAuthorized()) {
 			 twitter.authorize(function() {
-			 	twitView.image = 'images/twitter-logo.png';
+				twitView.image = 'images/twitter-logo.png';
 			 });
 		} else {
 			twitView.image = 'images/twitter-logo.png';
@@ -180,8 +185,8 @@ function postTwitterStatus(status) {
 }
 
 function loadSettings() {
-	Ti.API.info('Facebook' + Ti.App.Properties.getBool('facebook_preference'));
-	Ti.API.info('Twitter' + Ti.App.Properties.getBool('twitter_preference'));
+	Ti.API.info('Facebook ' + Ti.App.Properties.getBool('facebook_preference'));
+	Ti.API.info('Twitter ' + Ti.App.Properties.getBool('twitter_preference'));
 
 	var enableFacebook = Ti.App.Properties.getBool('facebook_preference');
 	var enableTwitter = Ti.App.Properties.getBool('twitter_preference');
@@ -197,30 +202,31 @@ function loadSettings() {
 
 
 /////////// FACEBOOK
-fb.appid = Ti.App.Properties.getString('facebook.appid');
+fb.appid = Ti.App.Properties.getString('ti.facebook.appid');
+//fb.appid = '561673983883162'
 fb.permissions = ['publish_actions'];
 fb.forceDialogAuth = false;
 
 fb.addEventListener('login', function(e) {
-    if (e.success) {
-      	fbView.image = 'images/fb-logo.png';
-        Ti.API.debug("http://graph.facebook.com/"+e.uid+"/picture");
-      //  Ti.API.info(e);
-    } else if (e.error) {
-        alert(e.error);
-    } else if (e.cancelled) {
-        alert("Canceled");
-    }
+	if (e.success) {
+		fbView.image = 'images/fb-logo.png';
+		Ti.API.debug("http://graph.facebook.com/"+e.uid+"/picture");
+	  //  Ti.API.info(e);
+	} else if (e.error) {
+		alert(e.error);
+	} else if (e.cancelled) {
+		alert("Canceled");
+	}
 });
 
 fb.addEventListener('logout', function(e) {
-    fbView.image = 'images/fb-logo-disabled.png';
+	fbView.image = 'images/fb-logo-disabled.png';
 });
 
 ///////////////// TWITTER
 var twitter = social.create({
-	consumerSecret : Ti.App.Properties.getString('twitter.consumerSecret'),
-	consumerKey : Ti.App.Properties.getString('twitter.consumerKey')
+	consumerSecret: Ti.App.Properties.getString('twitter.consumerSecret'),
+	consumerKey: Ti.App.Properties.getString('twitter.consumerKey')
 });
 
 btnPost.addEventListener('click', function() {
