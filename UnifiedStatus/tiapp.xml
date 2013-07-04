@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <property name="twitter.consumerKey">g1ppxsGIQVor7KkcmOII9A</property>
-    <property name="twitter.consumerSecret">iL859j6cdLLajwQAvtgIIOh0LAUfcabJwgTOiE2U5k4</property>
-    <property name="facebook.appid">561673983883162</property>
-
     <id>com.packtpub.hotshot.unifiedstatus</id>
     <name>Unified Status</name>
     <version>1.0</version>
@@ -53,10 +49,15 @@
     <deployment-targets>
         <target device="android">true</target>
         <target device="blackberry">false</target>
-        <target device="ipad">true</target>
+        <target device="ipad">false</target>
         <target device="iphone">true</target>
         <target device="mobileweb">false</target>
         <target device="tizen">false</target>
     </deployment-targets>
     <sdk-version>3.1.1.GA</sdk-version>
+
+    <property name="twitter.consumerKey">g1ppxsGIQVor7KkcmOII9A</property>
+    <property name="twitter.consumerSecret">iL859j6cdLLajwQAvtgIIOh0LAUfcabJwgTOiE2U5k4</property>
+
+    <property name="ti.facebook.appid">561673983883162</property>
 </ti:app>
