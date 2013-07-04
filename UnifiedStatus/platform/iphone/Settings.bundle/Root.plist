@@ -13,22 +13,6 @@
 			<string>Social Networks</string>
 		</dict>
 		<dict>
-			<key>Title</key>
-			<string>Name</string>
-			<key>Type</key>
-			<string>name_preference</string>
-			<key>DefaultValue</key>
-			<string></string>
-			<key>IsSecure</key>
-			<false/>
-			<key>KeyboardType</key>
-			<string>Alphabet</string>
-			<key>AutocapitalizationType</key>
-			<string>None</string>
-			<key>AutocorrectionType</key>
-			<string>No</string>
-		</dict>
-		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
