@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="Preferences">
+<PreferenceScreen 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:title="Preferences">
 
 	<PreferenceCategory android:title="Social Networks">
-        <CheckBoxPreference
-            android:title="Facebook"
-            android:defaultValue="false"
-            android:summary="Your messages will be published on your Facebook wall"
-            android:key="facebook_preference" />
-        <CheckBoxPreference
-            android:title="Twitter"
-            android:defaultValue="false"
-            android:summary="Your messages will be publised on you Twitter feed"
-            android:key="twitter_preference" />
+		<CheckBoxPreference
+			android:title="Facebook"
+			android:defaultValue="false"
+			android:summary="Your messages will be published on your Facebook wall"
+			android:key="facebook_preference" />
+		<CheckBoxPreference
+			android:title="Twitter"
+			android:defaultValue="false"
+			android:summary="Your messages will be published on you Twitter feed"
+			android:key="twitter_preference" />
 	</PreferenceCategory>
 
 </PreferenceScreen>
