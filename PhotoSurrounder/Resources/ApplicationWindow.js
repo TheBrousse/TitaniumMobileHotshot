@@ -6,7 +6,6 @@ function ApplicationWindow() {
 		backgroundColor: 'white'
 	});
 
-
 	var header = Ti.UI.createView({
 		backgroundColor: 'orange',
 		top: 0,
@@ -59,24 +58,10 @@ function ApplicationWindow() {
 		defaultItemTemplate : 'plain'
 	});
 
-	listView.addEventListener('itemclick', function(e){
-	    Ti.API.info(JSON.stringify(e.itemId));
- alert(
-	        "ItemId: " + e.itemId + "\n" +
-	        "BindId: " + e.bindId + "\n" +
-	        "Section Index: " + e.sectionIndex + ", Item Index: " + e.itemIndex
-	    );
-
-	    var detailWin = new DetailWindow(e.itemId);
-
-	    detailWin.open();
-	});
-
 	var xhr = Titanium.Network.createHTTPClient();
 	xhr.setRequestHeader('Content-Type', 'application/json');
 
 	xhr.onload = function() {
-		Ti.API.info(this.responseText);
 		var json = JSON.parse(this.responseText),
 			jsonImages = json.photos.photo,
 			images = [],
@@ -105,7 +90,7 @@ function ApplicationWindow() {
 				},
 				// Sets the regular list data properties
 				properties: {
-					itemId: images[i],
+					itemId: JSON.stringify(images[i]), // It only uses a string on Android
 				}
 			});
 		}
@@ -116,15 +101,17 @@ function ApplicationWindow() {
 			items : data
 		});
 		listView.appendSection(section);
-
-
-
 	};
 
 	self.add(listView);
 
-	self.refreshData = function() {
+	listView.addEventListener('itemclick', function(e){
+	    var detailWin = new DetailWindow(e.itemId);
 
+	    detailWin.open();
+	});
+
+	self.refreshData = function() {
 		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=48920d0d16a507334ff621ec016e56e4&has_geo=true&lat=48.856638&lon=2.352241&format=json&nojsoncallback=1');
 		xhr.send();
 	}

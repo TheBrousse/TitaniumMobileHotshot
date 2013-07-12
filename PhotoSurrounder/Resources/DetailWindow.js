@@ -1,8 +1,11 @@
-function DetailWindow(image) {
-	var self = Ti.UI.createWindow({
-		backgroundColor: '#000'
-	});
+function DetailWindow(param) {
+	var image = JSON.parse(param);
 
+	var self = Ti.UI.createWindow({
+		backgroundColor: '#000',
+		navBarHidden: false   //hack - setting this property ensures the window is "heavyweight" (associated with an Android activity)
+	});
+Ti.API.info('http://farm' + image.farm + '.staticflickr.com/' + image.server + '/' + image.id + '_' + image.secret + '_n.jpg');
 	 var image = Ti.UI.createImageView({
 		 image: 'http://farm' + image.farm + '.staticflickr.com/' + image.server + '/' + image.id + '_' + image.secret + '_n.jpg'
 	 });
