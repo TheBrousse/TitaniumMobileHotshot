@@ -44,6 +44,17 @@ function ApplicationWindow() {
 				left: 48,
 				top: 1
 			}
+		}, {
+			type: 'Ti.UI.Label', // Use a label
+			bindId: 'coordinates', // Bind ID for this label
+			properties: {// Sets the Label.left property
+				left: 48,
+				bottom: 15,
+				font: {
+					size: '6sp'
+				},
+				color: '#c0c0c0'
+			}
 		}]
 	};
 
@@ -66,14 +77,12 @@ function ApplicationWindow() {
 			jsonImages = json.photos.photo,
 			images = [],
 			preview = [],
-			images_big = [],
-			view,
 			image;
 
 		for (index in jsonImages) {
 			image = jsonImages[index];
 			images[index] = image;
-			preview[index] = 'http://farm' + image.farm + '.staticflickr.com/' + image.server + '/' + image.id + '_' + image.secret + '_m.jpg';
+			preview[index] = image.url_t;
 		}
 
 		var data = [];
@@ -88,6 +97,9 @@ function ApplicationWindow() {
 				pic: {
 					image: preview[i]
 				},
+				coordinates: {
+					text: images[i].longitude + ', ' + images[i].latitude
+				},
 				// Sets the regular list data properties
 				properties: {
 					itemId: JSON.stringify(images[i]), // It only uses a string on Android
@@ -95,11 +107,10 @@ function ApplicationWindow() {
 			});
 		}
 
-		listView.deleteSectionAt(0);
-
 		var section = Ti.UI.createListSection({
 			items : data
 		});
+
 		listView.appendSection(section);
 	};
 
@@ -112,7 +123,9 @@ function ApplicationWindow() {
 	});
 
 	self.refreshData = function() {
-		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=48920d0d16a507334ff621ec016e56e4&has_geo=true&lat=48.856638&lon=2.352241&format=json&nojsoncallback=1');
+		listView.deleteSectionAt(0);
+
+		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=6f21dd0e1b15a988e45ccdf77af06b39&has_geo=true&lat=48.856638&lon=2.352241&extras=geo%2C+url_t+%2C+url_n&format=json&nojsoncallback=1');
 		xhr.send();
 	}
 
