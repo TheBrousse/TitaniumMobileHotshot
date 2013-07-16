@@ -2,8 +2,32 @@ var DetailWindow = require('DetailWindow');
 
 function ApplicationWindow() {
 
+	var FLICKR_KEY = '48920d0d16a507334ff621ec016e56e4';
+	var longitude;
+	var latitude;
+
 	var self = Ti.UI.createWindow({
 		backgroundColor: 'white'
+	});
+
+	Ti.Geolocation.purpose = "Getting device location to search photos nearby.";
+
+	self.addEventListener('open', function() {
+		Titanium.Geolocation.getCurrentPosition(function(e) {
+			if (!e.success || e.error) {
+				Ti.API.error(JSON.stringify(e.error));
+				alert('error ' + JSON.stringify(e.error));
+
+				return;
+			}
+
+			longitude = e.coords.longitude;
+			latitude = e.coords.latitude;
+
+			Titanium.API.info('geo - current location:  long ' + longitude + ' lat ' + latitude);
+
+			self.refreshData();
+		});
 	});
 
 	var header = Ti.UI.createView({
@@ -135,12 +159,13 @@ function ApplicationWindow() {
 	self.refreshData = function() {
 		listView.deleteSectionAt(0);
 
-//		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=48920d0d16a507334ff621ec016e56e4&has_geo=true&lat=48.856638&lon=2.352241&format=json&nojsoncallback=1');
-		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=48920d0d16a507334ff621ec016e56e4&has_geo=true&lat=48.856638&lon=2.352241&extras=geo%2Curl_t%2Curl_n&format=json&nojsoncallback=1');
+		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key='
+					+ FLICKR_KEY +'&has_geo=true'
+					+ '&lat=' + latitude
+					+ '&lon=' + longitude
+					+ '&extras=geo%2Curl_t%2Curl_n&format=json&nojsoncallback=1');
 		xhr.send();
 	}
-
-	self.refreshData();
 
 	return self;
 };
