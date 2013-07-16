@@ -8,23 +8,31 @@ function DetailWindow(param) {
 	});
 
 	var header = Ti.UI.createView({
-		backgroundColor: 'orange',
-		opacity: 0.6,
+		backgroundColor: '#e66a3d',
 		zIndex: 10,
 		top: 0,
 		width: Ti.UI.FILL,
 		height: 50
 	});
 
-	var btnClose = Ti.UI.createButton({
-		title: 'C',
+	header.add(Ti.UI.createLabel({
+		text: image.title,
+		color: '#fff',   // No left so it is centered (tip)
+		font:{
+			fontSize: '22sp',
+			fontWeight: 'bold'
+		}
+	}));
+
+	var btnClose = Ti.UI.createImageView({
+		image: 'back.png',
 		left: 3
 	});
 	header.add(btnClose);
 
 	if (!Ti.Android) {
-		var btnSave = Ti.UI.createButton({
-			title: 'S',
+		var btnSave = Ti.UI.createImageView({
+			image: 'save.png',
 			right: 3
 		});
 		header.add(btnSave);
