@@ -7,7 +7,7 @@ function ApplicationWindow() {
 	var latitude;
 
 	var self = Ti.UI.createWindow({
-		backgroundColor: 'white'
+		backgroundColor: '#fffbd0'
 	});
 
 	Ti.Geolocation.purpose = "Getting device location to search photos nearby.";
@@ -31,7 +31,7 @@ function ApplicationWindow() {
 	});
 
 	var header = Ti.UI.createView({
-		backgroundColor: '#e66a3d',
+		backgroundColor: '#c13100',
 		top: 0,
 		width: Ti.UI.FILL,
 		height: 50
@@ -76,18 +76,23 @@ function ApplicationWindow() {
 			bindId: 'rowtitle', // Bind ID for this label
 			properties: {// Sets the Label.left property
 				left: 48,
-				top: 1
+				top: 1,
+				color: '#cc6600'
 			}
 		}, {
 			type: 'Ti.UI.Label', // Use a label
 			bindId: 'coordinates', // Bind ID for this label
 			properties: {// Sets the Label.left property
 				left: 48,
-				bottom: 15,
+				bottom: 2,
+				width: '75%',
+				textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+				color: '#fff',
+				backgroundColor: '#ff9900',
 				font: {
 					size: '6sp'
-				},
-				color: '#c0c0c0'
+				}
+
 			}
 		}]
 	};

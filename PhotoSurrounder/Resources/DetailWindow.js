@@ -7,7 +7,7 @@ function DetailWindow(param) {
 	});
 
 	var header = Ti.UI.createView({
-		backgroundColor: '#e66a3d',
+		backgroundColor: '#c13100',
 		zIndex: 10,
 		top: 0,
 		width: Ti.UI.FILL,
