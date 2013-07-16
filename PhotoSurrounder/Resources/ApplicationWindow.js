@@ -136,7 +136,7 @@ function ApplicationWindow() {
 		listView.deleteSectionAt(0);
 
 //		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=48920d0d16a507334ff621ec016e56e4&has_geo=true&lat=48.856638&lon=2.352241&format=json&nojsoncallback=1');
-		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=48920d0d16a507334ff621ec016e56e4&has_geo=true&lat=48.856638&lon=2.352241&extras=geo%2Curl_t%2C+url_n&format=json&nojsoncallback=1');
+		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=48920d0d16a507334ff621ec016e56e4&has_geo=true&lat=48.856638&lon=2.352241&extras=geo%2Curl_t%2Curl_n&format=json&nojsoncallback=1');
 		xhr.send();
 	}
 

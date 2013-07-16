@@ -1,7 +1,7 @@
 function DetailWindow(param) {
-
+Ti.API.info('param= ' + param);
 	var image = JSON.parse(param);
-
+Ti.API.info('image= ' + JSON.parse(param));
 	var self = Ti.UI.createWindow({
 		backgroundColor: '#000',
 		navBarHidden: false //hack - setting this property ensures the window is "heavyweight" (associated with an Android activity)
@@ -19,7 +19,7 @@ function DetailWindow(param) {
 		text: image.title,
 		color: '#fff',   // No left so it is centered (tip)
 		font:{
-			fontSize: '22sp',
+			fontSize: '18sp',
 			fontWeight: 'bold'
 		}
 	}));
@@ -40,11 +40,16 @@ function DetailWindow(param) {
 		btnSave.addEventListener('click', function() {
 			Titanium.Media.saveToPhotoGallery(photoView.toBlob());
 
-			Titanium.UI.createAlertDialog({title:'Photo Gallery',message:'Check your photo gallery'}).show();
+			Titanium.UI.createAlertDialog({
+				title: 'Photo Gallery',
+				message: 'This photo has been added to your photo gallery'
+			}).show();
 		});
 	}
 
 	self.add(header);
+
+Ti.API.info('IMG = ' + image.url_n);
 
 	var photoView = Ti.UI.createImageView({
 		width: '100%',
