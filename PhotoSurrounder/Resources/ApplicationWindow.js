@@ -7,14 +7,24 @@ function ApplicationWindow() {
 	});
 
 	var header = Ti.UI.createView({
-		backgroundColor: 'orange',
+		backgroundColor: '#e66a3d',
 		top: 0,
 		width: Ti.UI.FILL,
 		height: 50
 	});
 
-	var btnRefresh = Ti.UI.createButton({
-		title: 'R',
+	header.add(Ti.UI.createLabel({
+		text: 'Photos',
+		color: '#fff',
+		left: 10,
+		font:{
+			fontSize: '22sp',
+			fontWeight: 'bold'
+		}
+	}));
+
+	var btnRefresh = Ti.UI.createImageView({
+		image: 'refresh.png',
 		right: 3
 	});
 	header.add(btnRefresh);
@@ -125,7 +135,8 @@ function ApplicationWindow() {
 	self.refreshData = function() {
 		listView.deleteSectionAt(0);
 
-		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=6f21dd0e1b15a988e45ccdf77af06b39&has_geo=true&lat=48.856638&lon=2.352241&extras=geo%2C+url_t+%2C+url_n&format=json&nojsoncallback=1');
+//		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=48920d0d16a507334ff621ec016e56e4&has_geo=true&lat=48.856638&lon=2.352241&format=json&nojsoncallback=1');
+		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=48920d0d16a507334ff621ec016e56e4&has_geo=true&lat=48.856638&lon=2.352241&extras=geo%2Curl_t%2C+url_n&format=json&nojsoncallback=1');
 		xhr.send();
 	}
 
