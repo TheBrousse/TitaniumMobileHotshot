@@ -127,11 +127,13 @@ function ApplicationWindow() {
 		var data = [];
 
 		for (var i = 0; i < images.length; i++) {
+			var photoTitle = (images[i].title.length > 30) ? images[i].title.substring(0,30) : images[i].title;
+
 			data.push({
 				// Maps to the rowtitle component in the template
 				// Sets the text property of the Label component
 				rowtitle: {
-					text: images[i].title
+					text: photoTitle
 				},
 				pic: {
 					image: preview[i]
