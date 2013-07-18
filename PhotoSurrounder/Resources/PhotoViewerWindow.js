@@ -1,4 +1,4 @@
-function DetailWindow(param) {
+function PhotoViewerWindow(param) {
 	var image = JSON.parse(param);
 
 	var self = Ti.UI.createWindow({

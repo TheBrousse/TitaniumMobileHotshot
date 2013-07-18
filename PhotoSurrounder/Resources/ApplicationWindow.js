@@ -1,4 +1,4 @@
-var DetailWindow = require('DetailWindow');
+var PhotoViewerWindow = require('PhotoViewerWindow');
 
 function ApplicationWindow() {
 
@@ -158,9 +158,9 @@ function ApplicationWindow() {
 	self.add(listView);
 
 	listView.addEventListener('itemclick', function(e){
-	    var detailWin = new DetailWindow(e.itemId);
+	    var photoWin = new PhotoViewerWindow(e.itemId);
 
-	    detailWin.open();
+	    photoWin.open();
 	});
 
 	self.refreshData = function() {
