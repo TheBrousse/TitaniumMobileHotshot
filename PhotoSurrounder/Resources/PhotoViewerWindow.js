@@ -63,4 +63,4 @@ function PhotoViewerWindow(param) {
 	return self;
 }
 
-module.exports = DetailWindow;
+module.exports = PhotoViewerWindow;
