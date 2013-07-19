@@ -2,32 +2,16 @@ var PhotoViewerWindow = require('PhotoViewerWindow');
 
 function ApplicationWindow() {
 
-	var FLICKR_KEY = '48920d0d16a507334ff621ec016e56e4';
-	var longitude;
-	var latitude;
+	var FLICKR_KEY = Ti.App.Properties.getString('flickr.key');
 
 	var self = Ti.UI.createWindow({
 		backgroundColor: '#fffbd0'
 	});
 
-	Ti.Geolocation.purpose = "Getting device location to search photos nearby.";
+	Ti.Geolocation.purpose = "Location will be used for photo search";
 
 	self.addEventListener('open', function() {
-		Titanium.Geolocation.getCurrentPosition(function(e) {
-			if (!e.success || e.error) {
-				Ti.API.error(JSON.stringify(e.error));
-				alert('error ' + JSON.stringify(e.error));
-
-				return;
-			}
-
-			longitude = e.coords.longitude;
-			latitude = e.coords.latitude;
-
-			Titanium.API.info('geo - current location:  long ' + longitude + ' lat ' + latitude);
-
-			self.refreshData();
-		});
+		self.refreshData();
 	});
 
 	var header = Ti.UI.createView({
@@ -38,7 +22,7 @@ function ApplicationWindow() {
 	});
 
 	header.add(Ti.UI.createLabel({
-		text: 'Photos',
+		text: 'Photo Surrounder',
 		color: '#fff',
 		left: 10,
 		font:{
@@ -59,14 +43,14 @@ function ApplicationWindow() {
 		self.refreshData();
 	});
 
-	var plainTemplate = {
+	var photoTemplate = {
 		properties: {
 			height: 60,
-			accessoryType: Ti.UI.LIST_ACCESSORY_TYPE_DISCLOSURE
+			accessoryType: Ti.UI.LIST_ACCESSORY_TYPE_DETAIL
 		},
 		childTemplates: [{
 			type: 'Ti.UI.ImageView', // Use an image view
-			bindId: 'pic', // Bind ID for this image view
+			bindId: 'thumb', // Bind ID for this image view
 			properties: {// Sets the ImageView.image property
 				left: 0,
 				width: 45
@@ -99,13 +83,13 @@ function ApplicationWindow() {
 
 	var listView = Ti.UI.createListView({
 		top: 50,
-		// Maps the plainTemplate object to the 'plain' style name
+		// Maps the photoTemplate object to the 'photo' style name
 		templates : {
-			'plain' : plainTemplate
+			'photo' : photoTemplate
 		},
-		// Use the plain template, that is, the plainTemplate object defined earlier
+		// Use the photo template, that is, the photoTemplate object defined earlier
 		// for all data list items in this list view
-		defaultItemTemplate : 'plain'
+		defaultItemTemplate : 'photo'
 	});
 
 	var xhr = Titanium.Network.createHTTPClient();
@@ -135,7 +119,7 @@ function ApplicationWindow() {
 				rowtitle: {
 					text: photoTitle
 				},
-				pic: {
+				thumb: {
 					image: preview[i]
 				},
 				coordinates: {
@@ -158,20 +142,33 @@ function ApplicationWindow() {
 	self.add(listView);
 
 	listView.addEventListener('itemclick', function(e){
-	    var photoWin = new PhotoViewerWindow(e.itemId);
+		var photoWin = new PhotoViewerWindow(e.itemId);
 
-	    photoWin.open();
+		photoWin.open();
 	});
 
 	self.refreshData = function() {
-		listView.deleteSectionAt(0);
+		Titanium.Geolocation.getCurrentPosition(function(e) {
+			if (!e.success || e.error) {
+				Ti.API.error(JSON.stringify(e.error));
+				alert('error ' + JSON.stringify(e.error));
 
-		xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key='
-					+ FLICKR_KEY +'&has_geo=true'
-					+ '&lat=' + latitude
-					+ '&lon=' + longitude
-					+ '&extras=geo%2Curl_t%2Curl_n&format=json&nojsoncallback=1');
-		xhr.send();
+				return;
+			}
+
+			Titanium.API.info('Geolocation: long ' 
+					+ e.coords.longitude + ' lat ' + e.coords.latitude);
+
+			listView.deleteSectionAt(0);
+
+			xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search'
+						+ '&api_key=' + FLICKR_KEY 
+						+ '&has_geo=true'
+						+ '&lat=' + e.coords.latitude
+						+ '&lon=' + e.coords.longitude
+						+ '&extras=geo%2Curl_t%2Curl_n&format=json&nojsoncallback=1');
+			xhr.send();
+		});
 	}
 
 	return self;
