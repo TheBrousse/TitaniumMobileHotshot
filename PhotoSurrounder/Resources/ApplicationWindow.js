@@ -93,7 +93,6 @@ function ApplicationWindow() {
 	});
 
 	var xhr = Titanium.Network.createHTTPClient();
-	xhr.setRequestHeader('Content-Type', 'application/json');
 
 	xhr.onload = function() {
 		var json = JSON.parse(this.responseText),
@@ -127,7 +126,7 @@ function ApplicationWindow() {
 				},
 				// Sets the regular list data properties
 				properties: {
-					itemId: JSON.stringify(images[i]), // It only uses a string on Android
+					itemId: JSON.stringify(images[i]) // It only uses a string on Android
 				}
 			});
 		}
@@ -156,13 +155,13 @@ function ApplicationWindow() {
 				return;
 			}
 
-			Titanium.API.info('Geolocation: long ' 
+			Titanium.API.info('Geolocation: long '
 					+ e.coords.longitude + ' lat ' + e.coords.latitude);
 
 			listView.deleteSectionAt(0);
 
 			xhr.open('GET', 'http://api.flickr.com/services/rest/?method=flickr.photos.search'
-						+ '&api_key=' + FLICKR_KEY 
+						+ '&api_key=' + FLICKR_KEY
 						+ '&has_geo=true'
 						+ '&lat=' + e.coords.latitude
 						+ '&lon=' + e.coords.longitude

@@ -1,5 +1,5 @@
-function PhotoViewerWindow(param) {
-	var image = JSON.parse(param);
+function PhotoViewerWindow(itemId) {
+	var image = JSON.parse(itemId);
 
 	var self = Ti.UI.createWindow({
 		backgroundColor: '#000',
@@ -23,11 +23,11 @@ function PhotoViewerWindow(param) {
 		}
 	}));
 
-	var btnClose = Ti.UI.createImageView({
+	var btnBack = Ti.UI.createImageView({
 		image: 'back.png',
 		left: 3
 	});
-	header.add(btnClose);
+	header.add(btnBack);
 
 	if (!Ti.Android) {
 		var btnSave = Ti.UI.createImageView({
@@ -56,7 +56,7 @@ function PhotoViewerWindow(param) {
 
 	self.add(photoView);
 
-	btnClose.addEventListener('click', function() {
+	btnBack.addEventListener('click', function() {
 		self.close();
 	});
 
