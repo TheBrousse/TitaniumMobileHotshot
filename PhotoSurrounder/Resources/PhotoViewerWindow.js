@@ -37,9 +37,9 @@ function PhotoViewerWindow(itemId) {
 		header.add(btnSave);
 
 		btnSave.addEventListener('click', function() {
-			Titanium.Media.saveToPhotoGallery(photoView.toBlob());
+			Ti.Media.saveToPhotoGallery(photoView.toBlob());
 
-			Titanium.UI.createAlertDialog({
+			Ti.UI.createAlertDialog({
 				title: 'Photo Gallery',
 				message: 'This photo has been added to your photo gallery'
 			}).show();
