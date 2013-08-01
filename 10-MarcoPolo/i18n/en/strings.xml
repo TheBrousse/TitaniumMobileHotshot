@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-	<string name="home">Home</string>	
-	<string name="settings">Settings</string>
+	<string name="home">Marco</string>
+	<string name="settings">Polo</string>
 	<string name="openWindow">Open New Window</string>
 	<string name="newWindow">New Window</string>
 </resources>

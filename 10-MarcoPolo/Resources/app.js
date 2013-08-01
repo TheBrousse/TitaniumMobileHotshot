@@ -1,40 +1,89 @@
-/*
- * A tabbed application, consisting of multiple stacks of windows associated with tabs in a tab group.  
- * A starting point for tab-based application with multiple top-level windows. 
- * Requires Titanium Mobile SDK 1.8.0+.
- * 
- * In app.js, we generally take care of a few things:
- * - Bootstrap the application with any data we need
- * - Check for dependencies like device type, platform version or network connection
- * - Require and open our top-level UI component
- *  
- */
+var Cloud = require('ti.cloud');
+Cloud.debug = true;
 
-//bootstrap and check dependencies
 if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');
 }
 
+function createAppUser() {
+	Cloud.Users.create({
+		username: Ti.App.id,
+		password: '12345',
+		password_confirmation: '12345',
+		first_name: 'Marco',
+		last_name: 'Polo App'
+
+	}, function (e) {
+		 if (e.success) {
+	        var user = e.users[0];
+	        alert('Success:\n' +
+	            'id: ' + user.id + '\n' +
+	            'sessionId: ' + Cloud.sessionId + '\n' +
+	            'first name: ' + user.first_name + '\n' +
+	            'last name: ' + user.last_name);
+	    } else {
+	        alert('Error:\n' +
+	            ((e.error && e.message) || JSON.stringify(e)));
+	    }
+	});
+}
+
+function loginAppUser() {
+	Cloud.Users.login({
+	    login: Ti.App.id,
+	    password: '12345'
+	}, function (e) {
+	    if (e.success) {
+	        var user = e.users[0];
+	        alert('Success:\n' +
+	            'id: ' + user.id + '\n' +
+	            'sessionId: ' + Cloud.sessionId + '\n' +
+	            'first name: ' + user.first_name + '\n' +
+	            'last name: ' + user.last_name);
+
+	        //deleteAppUser();
+	    } else {
+	        alert('Error:\n' +
+	            ((e.error && e.message) || JSON.stringify(e)));
+	    }
+	});
+}
+
+function deleteAppUser() {
+	Cloud.Users.remove(function (e) {
+	    if (e.success) {
+	        alert('Success: Removed');
+	    } else {
+	        alert('Error:\n' +
+	            ((e.error && e.message) || JSON.stringify(e)));
+	    }
+	});
+}
+
 // This is a single context application with mutliple windows in a stack
 (function() {
-	//determine platform and form factor and render approproate components
-	var osname = Ti.Platform.osname,
-		version = Ti.Platform.version,
-		height = Ti.Platform.displayCaps.platformHeight,
-		width = Ti.Platform.displayCaps.platformWidth;
-	
-	//considering tablet to have one dimension over 900px - this is imperfect, so you should feel free to decide
-	//yourself what you consider a tablet form factor for android
-	var isTablet = osname === 'ipad' || (osname === 'android' && (width > 899 || height > 899));
-	
-	var Window;
-	if (isTablet) {
-		Window = require('ui/tablet/ApplicationWindow');
-	}
-	else {
-		Window = require('ui/handheld/ApplicationWindow');
-	}
+	var tabs = Ti.UI.createTabGroup();
 
-	var ApplicationTabGroup = require('ui/common/ApplicationTabGroup');
-	new ApplicationTabGroup(Window).open();
+	//create app tabs
+	var winMarco = require('MarcoWindow')();
+	var winPolo = require('PoloWindow')();
+
+	var tabMarco = Ti.UI.createTab({
+		title: 'Marco',
+		icon: 'KS_nav_ui.png',
+		window: winMarco
+	});
+
+	var tabPolo = Ti.UI.createTab({
+		title: 'Polo',
+		icon: 'KS_nav_views.png',
+		window: winPolo
+	});
+
+	tabs.addTab(tabMarco);
+	tabs.addTab(tabPolo);
+
+	tabs.open();
+
+	loginAppUser();
 })();

@@ -20,7 +20,7 @@
     <statusbar-hidden>false</statusbar-hidden>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
-    <analytics>true</analytics>
+    <analytics>false</analytics>
     <guid>3bbe7234-4f77-4722-be24-73d54cc19342</guid>
     <property name="ti.ui.defaultunit" type="string">system</property>
     <iphone>
@@ -45,6 +45,7 @@
     </mobileweb>
     <modules>
         <module platform="commonjs">ti.cloud</module>
+        <module platform="android">ti.map</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>
