@@ -8,39 +8,59 @@ function MarcoWindow() {
 		backgroundColor: '#fff'
 	});
 
-/*
-var mountainView = Titanium.Map.createAnnotation({
-	latitude:37.390749,
-	longitude:-122.081651,
-	title:"Appcelerator Headquarters",
-	subtitle:'Mountain View, CA',
-	pincolor:Titanium.Map.ANNOTATION_PURPLE,
-	animate:true,
-	image: 'KS_nav_ui.png',
-	leftButton: '../images/appcelerator_small.png',
-	myid:1 // Custom property to uniquely identify this annotation.
-});
-*/
-lblStatus = Ti.UI.createLabel();
+	var mountainView = Titanium.Map.createAnnotation({
+		latitude: 37.390749,
+		longitude: -122.081651,
+		title: "Appcelerator Headquarters",
+		subtitle: 'Mountain View, CA',
+		pincolor: Titanium.Map.ANNOTATION_PURPLE,
+		animate: true,
+		image: 'KS_nav_ui.png',
+		leftButton: 'KS_nav_views.png',
+	});
 
-var mapview = Titanium.Map.createView({
-	mapType : Titanium.Map.STANDARD_TYPE,
-	animate : true,
-	regionFit : true,
-	userLocation : true/*,
-	annotations: [ mountainView ]*/
-});
+	lblStatus = Ti.UI.createLabel();
 
-
+	var mapview = Titanium.Map.createView({
+		mapType: Titanium.Map.STANDARD_TYPE,
+		animate: true,
+		regionFit: true,
+		userLocation: true
+		//annotations: [mountainView]
+	});
 
 	self.addEventListener('open', function() {
 		findMe();
 
+		Cloud.Places.search({
+			// No params to get everyone
+		}, function(e) {
+			if (e.success) {
+				var annotations = [];
+				for (var i = 0; i < e.places.length; i++) {
+					var place = e.places[i];
+
+					annotations.push(Titanium.Map.createAnnotation({
+						latitude: place.latitude,
+						longitude: place.longitude,
+						title: place.name,
+						pincolor: Titanium.Map.ANNOTATION_PURPLE,
+						animate: true,
+					}));
+					Ti.API.debug('id: ' + place.id + '  name: ' + place.name + '  longitude: ' + place.longitude + '  latitude: ' + place.latitude);
+				}
+
+				mapview.setAnnotations(annotations);
+			} else {
+				alert('Error:\n' + ((e.error && e.message) || JSON.stringify(e)));
+			}
+		});
+
 		mapview.setRegion({
 			latitude: latitude,
 			longitude: longitude,
-			latitudeDelta:0.01,
-			longitudeDelta:0.01
+			latitudeDelta: 0.01,
+			longitudeDelta: 0.01
 		});
 	});
 
@@ -49,8 +69,7 @@ var mapview = Titanium.Map.createView({
 	return self;
 }
 
-
-/// CBR will me externalised
+/// CBR will be externalised
 function findMe(statusLabel) {
 	lblStatus.text = 'Geolocating...';
 
@@ -59,27 +78,24 @@ function findMe(statusLabel) {
 		Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_BEST;
 		Ti.Geolocation.distanceFilter = 0;
 
-		Ti.Geolocation.getCurrentPosition(function (e) {
+		Ti.Geolocation.getCurrentPosition(function(e) {
 			if (!e.success || e.error) {
 				lblStatus.text = 'GPS lost';
-			}
-			else {
+			} else {
 				lblStatus.text = 'Location determined...';
 
 				latitude = e.coords.latitude;
 				longitude = e.coords.longitude;
 			}
 		});
-	}
-	else {
-		Cloud.Clients.geolocate(function (e) {
+	} else {
+		Cloud.Clients.geolocate(function(e) {
 			if (e.success) {
 				lblStatus.text = 'Location determined...';
 
 				latitude = e.location.latitude;
 				longitude = e.location.longitude;
-			}
-			else {
+			} else {
 				lblStatus.text = 'GPS lost';
 			}
 		});
