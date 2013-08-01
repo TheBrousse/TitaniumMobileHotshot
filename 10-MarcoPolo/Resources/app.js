@@ -5,63 +5,31 @@ if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');
 }
 
-function createAppUser() {
-	Cloud.Users.create({
-		username: Ti.App.id,
-		password: '12345',
-		password_confirmation: '12345',
-		first_name: 'Marco',
-		last_name: 'Polo App'
-
-	}, function (e) {
-		 if (e.success) {
-	        var user = e.users[0];
-	        alert('Success:\n' +
-	            'id: ' + user.id + '\n' +
-	            'sessionId: ' + Cloud.sessionId + '\n' +
-	            'first name: ' + user.first_name + '\n' +
-	            'last name: ' + user.last_name);
-	    } else {
-	        alert('Error:\n' +
-	            ((e.error && e.message) || JSON.stringify(e)));
-	    }
-	});
-}
-
 function loginAppUser() {
 	Cloud.Users.login({
-	    login: Ti.App.id,
-	    password: '12345'
+		login: Ti.App.id,
+		password: '12345'
 	}, function (e) {
-	    if (e.success) {
-	        var user = e.users[0];
-	        alert('Success:\n' +
-	            'id: ' + user.id + '\n' +
-	            'sessionId: ' + Cloud.sessionId + '\n' +
-	            'first name: ' + user.first_name + '\n' +
-	            'last name: ' + user.last_name);
+		if (e.success) {
+			var user = e.users[0];
 
-	        //deleteAppUser();
-	    } else {
-	        alert('Error:\n' +
-	            ((e.error && e.message) || JSON.stringify(e)));
-	    }
-	});
-}
+			Ti.API.info('Success:\n' +
+				'id: ' + user.id + '\n' +
+				'sessionId: ' + Cloud.sessionId + '\n' +
+				'first name: ' + user.first_name + '\n' +
+				'last name: ' + user.last_name);
 
-function deleteAppUser() {
-	Cloud.Users.remove(function (e) {
-	    if (e.success) {
-	        alert('Success: Removed');
-	    } else {
-	        alert('Error:\n' +
-	            ((e.error && e.message) || JSON.stringify(e)));
-	    }
+		} else {
+			alert('Error:\n' +
+				((e.error && e.message) || JSON.stringify(e)));
+		}
 	});
 }
 
 // This is a single context application with mutliple windows in a stack
 (function() {
+	loginAppUser();
+
 	var tabs = Ti.UI.createTabGroup();
 
 	//create app tabs
@@ -84,6 +52,4 @@ function deleteAppUser() {
 	tabs.addTab(tabPolo);
 
 	tabs.open();
-
-	loginAppUser();
 })();

@@ -1,5 +1,3 @@
-
-
 var lblStatus;
 var longitude, latitude;
 
@@ -7,21 +5,40 @@ function PoloWindow() {
 
 	var self = Ti.UI.createWindow({
 		title: 'Polo',
-		backgroundColor: '#ff4321'
+		backgroundColor: '#fff'
 	});
 
+	self.add(Ti.UI.createLabel({
+		top: 27,
+		width: '80%',
+		height: Ti.UI.SIZE,
+		color: '#000',
+		text: 'Enter your name'
+	}));
+
+	var txtPlayerName = Ti.UI.createTextField({
+		top: 50,
+		width: '80%',
+		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+		value: 'Joe Jambon'
+	});
+
+	self.add(txtPlayerName);
 
 	var btnCheckin = Ti.UI.createImageView({
-		width: 100,
-		height: 100,
+		width: 150,
+		height: 150,
 		backgroundColor: 'red'
 	});
 
 	self.add(btnCheckin);
 
 	lblStatus = Ti.UI.createLabel({
-		bottom: 100,
+		bottom: 1,
 		width: Ti.UI.FILL,
+		backgroundColor: '#000',
+		color: '#fff',
+		opacity: 0.7,
 		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
 	});
 
@@ -29,20 +46,39 @@ function PoloWindow() {
 
 	btnCheckin.addEventListener('click', function(evt) {
 		lblStatus.text = 'Checking in, please wait...';
-		
-		Cloud.Places.create({
-			name: 'Joe Jambon',
-			latitude: latitude,
-			longitude: longitude
-		}, function(e) {
-			if (e.success) {
-				alert('Checked in!');
-			} else {
-				error(e);
-			}
-		})
-	});
+		var placeId = Ti.App.Properties.getString('PLACE_ID', '');
 
+		if (!placeId) {	 // No pace for this user yet
+			Cloud.Places.create({
+				name: txtPlayerName.text,
+				latitude: latitude,
+				longitude: longitude
+			}, function(e) {
+				var place = e.places[0];
+
+				Ti.App.Properties.setString('PLACE_ID', place.id);
+				if (e.success) {
+					lblStatus.text = 'Position registered successfully!';
+				} else {
+					error(e);
+				}
+			});
+		} else {  // A place already exists, se we update it
+			Cloud.Places.update({
+				place_id: placeId,
+				name: txtPlayerName.text,
+				latitude: latitude,
+				longitude: longitude
+			}, function(e) {
+				if (e.success) {
+					lblStatus.text = 'Position updated successfully!';
+				} else {
+					error(e);
+				}
+			});
+		}
+
+	});
 
 	self.addEventListener('open', findMe);
 
@@ -60,10 +96,10 @@ function findMe(statusLabel) {
 
 		Ti.Geolocation.getCurrentPosition(function (e) {
 			if (!e.success || e.error) {
-				lblStatus.text = 'GPS lost, looking nearby...';
+				lblStatus.text = 'GPS lost';
 			}
 			else {
-				lblStatus.text = 'Located, looking nearby...';
+				lblStatus.text = 'Location determined...';
 
 				latitude = e.coords.latitude;
 				longitude = e.coords.longitude;
@@ -73,13 +109,13 @@ function findMe(statusLabel) {
 	else {
 		Cloud.Clients.geolocate(function (e) {
 			if (e.success) {
-				lblStatus.text = 'Located, looking nearby...';
+				lblStatus.text = 'Location determined...';
 
 				latitude = e.location.latitude;
 				longitude = e.location.longitude;
 			}
 			else {
-				lblStatus.text = 'GPS lost, looking nearby...';
+				lblStatus.text = 'GPS lost';
 			}
 		});
 	}
@@ -87,12 +123,12 @@ function findMe(statusLabel) {
 
 
 function error(e) {
-    var msg = (e.error && e.message) || JSON.stringify(e);
-    if (e.code) {
-        alert(msg);
-    } else {
-        Ti.API.error(msg);
-    }
+	var msg = (e.error && e.message) || JSON.stringify(e);
+	if (e.code) {
+		alert(msg);
+	} else {
+		Ti.API.error(msg);
+	}
 }
 
 module.exports = PoloWindow;
