@@ -1,5 +1,5 @@
-exports.findMe = function(lblStatus) {
-	lblStatus.text = 'Geolocating...';
+exports.findMe = function() {
+	var status,	lat, lon;
 
 	if (Ti.Geolocation) {
 		Ti.Geolocation.purpose = 'To find current location.';
@@ -8,27 +8,32 @@ exports.findMe = function(lblStatus) {
 
 		Ti.Geolocation.getCurrentPosition(function (e) {
 			if (!e.success || e.error) {
-				lblStatus.text = 'GPS lost';
+				status = 'GPS lost';
 			}
 			else {
-				lblStatus.text = 'Location determined...';
+				status = 'Location determined...';
 
-				latitude = e.coords.latitude;
-				longitude = e.coords.longitude;
+				lat = e.coords.latitude;
+				lon = e.coords.longitude;
 			}
 		});
-	}
-	else {
+	} else {
 		Cloud.Clients.geolocate(function (e) {
 			if (e.success) {
-				lblStatus.text = 'Location determined...';
+				status = 'Location determined...';
 
-				latitude = e.location.latitude;
-				longitude = e.location.longitude;
+				lat = e.location.latitude;
+				lon = e.location.longitude;
 			}
 			else {
-				lblStatus.text = 'GPS lost';
+				status = 'GPS lost';
 			}
 		});
 	}
+
+	return {
+		status: status,
+		longitude: lon,
+		latitude: lat
+	};
 }

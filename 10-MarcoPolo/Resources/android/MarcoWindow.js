@@ -1,6 +1,3 @@
-var lblStatus;
-var longitude, latitude;
-
 var MapModule = require('ti.map');
 var GeolocationService = require('service/GeolocationService');
 
@@ -20,7 +17,7 @@ function MarcoWindow() {
 	});
 
 	self.addEventListener('open', function() {
-		GeolocationService.findMe(lblStatus);
+		var geo = GeolocationService.findMe();
 
 		Cloud.Places.search({
 			// No params to get everyone
@@ -46,8 +43,8 @@ function MarcoWindow() {
 		});
 
 		mapview.setRegion({
-			latitude: latitude,
-			longitude: longitude,
+			latitude: geo.latitude,
+			longitude: geo.longitude,
 			latitudeDelta: 0.01,
 			longitudeDelta: 0.01
 		});

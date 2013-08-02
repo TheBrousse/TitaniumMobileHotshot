@@ -1,6 +1,3 @@
-var lblStatus;
-var longitude, latitude;
-
 var GeolocationService = require('service/GeolocationService');
 
 function PoloWindow() {
@@ -51,7 +48,7 @@ function PoloWindow() {
 
 	self.add(btnCheckin);
 
-	lblStatus = Ti.UI.createLabel({
+	var lblStatus = Ti.UI.createLabel({
 		bottom: 0,
 		width: Ti.UI.FILL,
 		backgroundColor: '#6f0564',
@@ -69,13 +66,16 @@ function PoloWindow() {
 		}
 
 		lblStatus.text = 'Uploading location, please wait...';
+		var geo = GeolocationService.findMe(lblStatus)
+		lblStatus.text = geo.status;
+
 		var placeId = Ti.App.Properties.getString('PLACE_ID', '');
 
 		if (!placeId) {	 // No pace for this user yet
 			Cloud.Places.create({
 				name: txtPlayerName.text,
-				latitude: latitude,
-				longitude: longitude
+				latitude: geo.latitude,
+				longitude: geo.longitude
 			}, function(e) {
 				var place = e.places[0];
 
@@ -90,8 +90,8 @@ function PoloWindow() {
 			Cloud.Places.update({
 				place_id: placeId,
 				name: txtPlayerName.text,
-				latitude: latitude,
-				longitude: longitude
+				latitude: geo.latitude,
+				longitude: geo.longitude
 			}, function(e) {
 				if (e.success) {
 					lblStatus.text = 'Position updated successfully!';
@@ -105,9 +105,6 @@ function PoloWindow() {
 
 	self.addEventListener('click', function() {
 		txtPlayerName.blur();
-	});
-	self.addEventListener('open', function() {
-		GeolocationService.findMe(lblStatus)
 	});
 
 	return self;
