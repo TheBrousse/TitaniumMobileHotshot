@@ -33,7 +33,7 @@ function MarcoWindow() {
 						latitude: place.latitude,
 						longitude: place.longitude,
 						title: place.name,
-						pincolor: Titanium.Map.ANNOTATION_PURPLE,
+						pincolor: Titanium.Map.ANNOTATION_RED,
 						animate: true,
 					}));
 					Ti.API.debug('id: ' + place.id + '  name: ' + place.name + '  longitude: ' + place.longitude + '  latitude: ' + place.latitude);
