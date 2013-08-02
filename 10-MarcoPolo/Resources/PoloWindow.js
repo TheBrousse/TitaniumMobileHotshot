@@ -87,7 +87,7 @@ function PoloWindow() {
 				if (e.success) {
 					lblStatus.text = 'Position registered successfully!';
 				} else {
-					error(e);
+					Ti.API.error(msg);
 				}
 			});
 		} else {  // A place already exists, so we update it
@@ -100,7 +100,7 @@ function PoloWindow() {
 				if (e.success) {
 					lblStatus.text = 'Position updated successfully!';
 				} else {
-					error(e);
+					Ti.API.error(msg);
 				}
 			});
 		}
@@ -112,18 +112,6 @@ function PoloWindow() {
 	});
 
 	return self;
-}
-
-
-
-
-function error(e) {
-	var msg = (e.error && e.message) || JSON.stringify(e);
-	if (e.code) {
-		alert(msg);
-	} else {
-		Ti.API.error(msg);
-	}
 }
 
 module.exports = PoloWindow;
