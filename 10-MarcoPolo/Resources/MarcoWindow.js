@@ -1,6 +1,8 @@
 var lblStatus;
 var longitude, latitude;
 
+var GeolocationService = require('service/GeolocationService');
+
 function MarcoWindow() {
 
 	var self = Ti.UI.createWindow({
@@ -19,7 +21,7 @@ function MarcoWindow() {
 	});
 
 	self.addEventListener('open', function() {
-		findMe();
+		GeolocationService.findMe(lblStatus);
 
 		Cloud.Places.search({
 			// No params to get everyone

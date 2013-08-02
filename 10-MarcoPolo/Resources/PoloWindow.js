@@ -1,6 +1,8 @@
 var lblStatus;
 var longitude, latitude;
 
+var GeolocationService = require('service/GeolocationService');
+
 function PoloWindow() {
 
 	var self = Ti.UI.createWindow({
@@ -104,45 +106,14 @@ function PoloWindow() {
 	self.addEventListener('click', function() {
 		txtPlayerName.blur();
 	});
-	self.addEventListener('open', findMe);
+	self.addEventListener('open', function() {
+		GeolocationService.findMe(lblStatus)
+	});
 
 	return self;
 }
 
-function findMe(statusLabel) {
-	lblStatus.text = 'Geolocating...';
 
-	if (Ti.Geolocation) {
-		Ti.Geolocation.purpose = 'To find current location.';
-		Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_BEST;
-		Ti.Geolocation.distanceFilter = 0;
-
-		Ti.Geolocation.getCurrentPosition(function (e) {
-			if (!e.success || e.error) {
-				lblStatus.text = 'GPS lost';
-			}
-			else {
-				lblStatus.text = 'Location determined...';
-
-				latitude = e.coords.latitude;
-				longitude = e.coords.longitude;
-			}
-		});
-	}
-	else {
-		Cloud.Clients.geolocate(function (e) {
-			if (e.success) {
-				lblStatus.text = 'Location determined...';
-
-				latitude = e.location.latitude;
-				longitude = e.location.longitude;
-			}
-			else {
-				lblStatus.text = 'GPS lost';
-			}
-		});
-	}
-}
 
 
 function error(e) {
