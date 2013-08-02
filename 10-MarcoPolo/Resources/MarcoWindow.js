@@ -1,4 +1,5 @@
 var GeolocationService = require('service/GeolocationService');
+var Map = require('Map');
 
 function MarcoWindow() {
 	var self = Ti.UI.createWindow({
@@ -7,12 +8,7 @@ function MarcoWindow() {
 		barColor: '#8C001a'
 	});
 
-	var mapview = Titanium.Map.createView({
-		mapType: Titanium.Map.STANDARD_TYPE,
-		animate: true,
-		regionFit: true,
-		userLocation: true
-	});
+	var mapView = Map.createMap();
 
 	self.addEventListener('open', function() {
 		var geo = GeolocationService.findMe();
@@ -25,23 +21,21 @@ function MarcoWindow() {
 				for (var i = 0; i < e.places.length; i++) {
 					var place = e.places[i];
 
-					annotations.push(Titanium.Map.createAnnotation({
-						latitude: place.latitude,
-						longitude: place.longitude,
-						title: place.name,
-						pincolor: Titanium.Map.ANNOTATION_RED,
-						animate: true,
+					annotations.push(Map.createAnnotation({
+						lat: place.latitude,
+						lon: place.longitude,
+						title: place.name
 					}));
 					Ti.API.debug('id: ' + place.id + '  name: ' + place.name + '  longitude: ' + place.longitude + '  latitude: ' + place.latitude);
 				}
 
-				mapview.setAnnotations(annotations);
+				mapView.setAnnotations(annotations);
 			} else {
 				alert('Error:\n' + ((e.error && e.message) || JSON.stringify(e)));
 			}
 		});
 
-		mapview.setRegion({
+		mapView.setRegion({
 			latitude: geo.latitude,
 			longitude: geo.longitude,
 			latitudeDelta: 0.01,
@@ -49,7 +43,7 @@ function MarcoWindow() {
 		});
 	});
 
-	self.add(mapview);
+	self.add(mapView);
 
 	return self;
 }

@@ -1,4 +1,4 @@
-exports.findMe = function() {
+function findMe() {
 	var status,	lat, lon;
 
 	if (Ti.Geolocation) {
@@ -37,3 +37,5 @@ exports.findMe = function() {
 		latitude: lat
 	};
 }
+
+exports.findMe = findMe;
