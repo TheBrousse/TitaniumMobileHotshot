@@ -19,7 +19,8 @@ function PoloWindow() {
 	var txtPlayerName = Ti.UI.createTextField({
 		top: 40,
 		width: '80%',
-		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+		value: Ti.App.Properties.getString('PLAYER_NAME', '')
 	});
 
 	self.add(txtPlayerName);
@@ -65,6 +66,8 @@ function PoloWindow() {
 			return;
 		}
 
+		Ti.App.Properties.setString('PLAYER_NAME', txtPlayerName.value);
+
 		lblStatus.text = 'Uploading location, please wait...';
 		var geo = GeolocationService.findMe(lblStatus)
 		lblStatus.text = geo.status;
@@ -73,13 +76,14 @@ function PoloWindow() {
 
 		if (!placeId) {	 // No pace for this user yet
 			Cloud.Places.create({
-				name: txtPlayerName.text,
+				name: txtPlayerName.value,
 				latitude: geo.latitude,
 				longitude: geo.longitude
 			}, function(e) {
 				var place = e.places[0];
 
 				Ti.App.Properties.setString('PLACE_ID', place.id);
+
 				if (e.success) {
 					lblStatus.text = 'Position registered successfully!';
 				} else {
