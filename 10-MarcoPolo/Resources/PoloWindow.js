@@ -5,8 +5,8 @@ function PoloWindow() {
 
 	var self = Ti.UI.createWindow({
 		title: 'Polo',
-		backgroundColor: '#cccc99',
-		barColor: '#003366'
+		backgroundColor: '#f6fa9c',
+		barColor: '#8C001a'
 	});
 
 	self.add(Ti.UI.createLabel({
@@ -29,9 +29,9 @@ function PoloWindow() {
 	var btnCheckin = Ti.UI.createImageView({
 		width: 200,
 		height: 200,
-		backgroundColor: '#666699',
+		backgroundColor: '#8ca93e',
 		borderColor: '#fff',
-		borderWidth: 4,
+		borderWidth: 6,
 		borderRadius: '100%'
 	});
 
@@ -51,9 +51,9 @@ function PoloWindow() {
 	self.add(btnCheckin);
 
 	lblStatus = Ti.UI.createLabel({
-		bottom: 1,
+		bottom: 0,
 		width: Ti.UI.FILL,
-		backgroundColor: '#003333',
+		backgroundColor: '#6f0564',
 		color: '#fff',
 		opacity: 0.7,
 		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
