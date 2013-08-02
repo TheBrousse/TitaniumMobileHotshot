@@ -5,11 +5,12 @@ function PoloWindow() {
 
 	var self = Ti.UI.createWindow({
 		title: 'Polo',
-		backgroundColor: '#fff'
+		backgroundColor: '#cccc99',
+		barColor: '#003366'
 	});
 
 	self.add(Ti.UI.createLabel({
-		top: 27,
+		top: 17,
 		width: '80%',
 		height: Ti.UI.SIZE,
 		color: '#000',
@@ -17,7 +18,7 @@ function PoloWindow() {
 	}));
 
 	var txtPlayerName = Ti.UI.createTextField({
-		top: 50,
+		top: 40,
 		width: '80%',
 		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 		value: 'Joe Jambon'
@@ -26,17 +27,33 @@ function PoloWindow() {
 	self.add(txtPlayerName);
 
 	var btnCheckin = Ti.UI.createImageView({
-		width: 150,
-		height: 150,
-		backgroundColor: 'red'
+		width: 200,
+		height: 200,
+		backgroundColor: '#666699',
+		borderColor: '#fff',
+		borderWidth: 4,
+		borderRadius: '100%'
 	});
+
+	btnCheckin.add(Ti.UI.createLabel({
+		width: Ti.UI.FILL,
+		height: Ti.UI.SIZE,
+		color: '#fff',
+		text: 'Polo',
+		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+		font: {
+			fontSize: '45sp',
+			fontWeight: 'bold'
+		}
+	}));
+
 
 	self.add(btnCheckin);
 
 	lblStatus = Ti.UI.createLabel({
 		bottom: 1,
 		width: Ti.UI.FILL,
-		backgroundColor: '#000',
+		backgroundColor: '#003333',
 		color: '#fff',
 		opacity: 0.7,
 		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
@@ -86,7 +103,6 @@ function PoloWindow() {
 }
 
 function findMe(statusLabel) {
-
 	lblStatus.text = 'Geolocating...';
 
 	if (Ti.Geolocation) {
