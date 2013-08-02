@@ -5,18 +5,8 @@ function MarcoWindow() {
 
 	var self = Ti.UI.createWindow({
 		title: 'Marco',
-		backgroundColor: '#fff'
-	});
-
-	var mountainView = Titanium.Map.createAnnotation({
-		latitude: 37.390749,
-		longitude: -122.081651,
-		title: "Appcelerator Headquarters",
-		subtitle: 'Mountain View, CA',
-		pincolor: Titanium.Map.ANNOTATION_PURPLE,
-		animate: true,
-		image: 'KS_nav_ui.png',
-		leftButton: 'KS_nav_views.png',
+		backgroundColor: '#fff',
+		barColor: '#8C001a'
 	});
 
 	lblStatus = Ti.UI.createLabel();
@@ -26,7 +16,6 @@ function MarcoWindow() {
 		animate: true,
 		regionFit: true,
 		userLocation: true
-		//annotations: [mountainView]
 	});
 
 	self.addEventListener('open', function() {
