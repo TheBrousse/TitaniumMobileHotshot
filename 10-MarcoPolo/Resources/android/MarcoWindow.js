@@ -1,7 +1,6 @@
 var lblStatus;
 var longitude, latitude;
 
-
 var MapModule = require('ti.map');
 
 function MarcoWindow() {
@@ -12,24 +11,12 @@ function MarcoWindow() {
 
 	lblStatus = Ti.UI.createLabel();
 
-var mountainView = MapModule.createAnnotation({
-    latitude:"37.390749",
-    longitude:"-122.081651",
-    title:"Appcelerator Headquarters",
-    subtitle:'Mountain View, CA',
-    pincolor:MapModule.ANNOTATION_RED,
-    myid:1 // Custom property to uniquely identify this annotation.
-});
-
-var mapview = MapModule.createView({
-    mapType: MapModule.NORMAL_TYPE,
-    region: {latitude:33.74511, longitude:-84.38993,
-            latitudeDelta:0.01, longitudeDelta:0.01},
-    animate:true,
-    regionFit:true,
-    userLocation:true,
-    annotations:[mountainView]
-});
+	var mapview = MapModule.createView({
+		mapType: MapModule.NORMAL_TYPE,
+		animate:true,
+		regionFit:true,
+		userLocation:true
+	});
 
 	self.addEventListener('open', function() {
 		findMe();
@@ -42,29 +29,27 @@ var mapview = MapModule.createView({
 				for (var i = 0; i < e.places.length; i++) {
 					var place = e.places[i];
 
-				/*	annotations.push(Titanium.Map.createAnnotation({
+					annotations.push(MapModule.createAnnotation({
 						latitude: place.latitude,
 						longitude: place.longitude,
 						title: place.name,
 						pincolor: MapModule.ANNOTATION_RED,
-						animate: true,
-					}));*/
+					}));
 					Ti.API.debug('id: ' + place.id + '  name: ' + place.name + '  longitude: ' + place.longitude + '  latitude: ' + place.latitude);
 				}
 
-				//mapview.setAnnotations(annotations);
+				mapview.setAnnotations(annotations);
 			} else {
 				alert('Error:\n' + ((e.error && e.message) || JSON.stringify(e)));
 			}
 		});
-/*
+
 		mapview.setRegion({
 			latitude: latitude,
 			longitude: longitude,
 			latitudeDelta: 0.01,
 			longitudeDelta: 0.01
 		});
-*/
 	});
 
 	self.add(mapview);
