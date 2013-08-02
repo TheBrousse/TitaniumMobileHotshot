@@ -7,8 +7,6 @@ function MarcoWindow() {
 		backgroundColor: '#fff'
 	});
 
-	lblStatus = Ti.UI.createLabel();
-
 	var mapview = MapModule.createView({
 		mapType: MapModule.NORMAL_TYPE,
 		animate:true,

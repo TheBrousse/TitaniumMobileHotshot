@@ -1,7 +1,6 @@
 var GeolocationService = require('service/GeolocationService');
 
 function MarcoWindow() {
-
 	var self = Ti.UI.createWindow({
 		title: 'Marco',
 		backgroundColor: '#fff',
