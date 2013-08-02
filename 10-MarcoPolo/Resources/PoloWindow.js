@@ -20,8 +20,7 @@ function PoloWindow() {
 	var txtPlayerName = Ti.UI.createTextField({
 		top: 40,
 		width: '80%',
-		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-		value: 'Joe Jambon'
+		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 	});
 
 	self.add(txtPlayerName);
@@ -62,7 +61,12 @@ function PoloWindow() {
 	self.add(lblStatus);
 
 	btnCheckin.addEventListener('click', function(evt) {
-		lblStatus.text = 'Checking in, please wait...';
+		if (txtPlayerName.value.length < 3) {
+			alert('Please enter a valid name');
+			return;
+		}
+
+		lblStatus.text = 'Uploading location, please wait...';
 		var placeId = Ti.App.Properties.getString('PLACE_ID', '');
 
 		if (!placeId) {	 // No pace for this user yet
@@ -80,7 +84,7 @@ function PoloWindow() {
 					error(e);
 				}
 			});
-		} else {  // A place already exists, se we update it
+		} else {  // A place already exists, so we update it
 			Cloud.Places.update({
 				place_id: placeId,
 				name: txtPlayerName.text,
@@ -97,6 +101,9 @@ function PoloWindow() {
 
 	});
 
+	self.addEventListener('click', function() {
+		txtPlayerName.blur();
+	});
 	self.addEventListener('open', findMe);
 
 	return self;
