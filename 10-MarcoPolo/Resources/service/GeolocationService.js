@@ -11,7 +11,7 @@ function findMe() {
 				status = 'GPS lost';
 			}
 			else {
-				status = 'Location determined...';
+				status = 'Location acquired';
 
 				lat = e.coords.latitude;
 				lon = e.coords.longitude;
@@ -20,7 +20,7 @@ function findMe() {
 	} else {
 		Cloud.Clients.geolocate(function (e) {
 			if (e.success) {
-				status = 'Location determined...';
+				status = 'Location acquired';
 
 				lat = e.location.latitude;
 				lon = e.location.longitude;

@@ -1,7 +1,6 @@
 var GeolocationService = require('service/GeolocationService');
 
 function PoloWindow() {
-
 	var self = Ti.UI.createWindow({
 		title: 'Polo',
 		backgroundColor: '#f6fa9c',
@@ -25,7 +24,7 @@ function PoloWindow() {
 
 	self.add(txtPlayerName);
 
-	var btnCheckin = Ti.UI.createImageView({
+	var btnCheckin = Ti.UI.createView({
 		width: 200,
 		height: 200,
 		backgroundColor: '#8ca93e',
@@ -45,7 +44,6 @@ function PoloWindow() {
 			fontWeight: 'bold'
 		}
 	}));
-
 
 	self.add(btnCheckin);
 
@@ -85,7 +83,7 @@ function PoloWindow() {
 				Ti.App.Properties.setString('PLACE_ID', place.id);
 
 				if (e.success) {
-					lblStatus.text = 'Position registered successfully!';
+					lblStatus.text = 'Position saved to Cloud!';
 				} else {
 					Ti.API.error(msg);
 				}
@@ -98,13 +96,12 @@ function PoloWindow() {
 				longitude: geo.longitude
 			}, function(e) {
 				if (e.success) {
-					lblStatus.text = 'Position updated successfully!';
+					lblStatus.text = 'Cloud position updated successfully!';
 				} else {
 					Ti.API.error(msg);
 				}
 			});
 		}
-
 	});
 
 	self.addEventListener('click', function() {
