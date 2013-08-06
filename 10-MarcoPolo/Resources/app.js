@@ -38,13 +38,13 @@ function loginAppUser() {
 
 	var tabMarco = Ti.UI.createTab({
 		title: 'Marco',
-		icon: 'KS_nav_ui.png',
+		icon: 'marco.png',
 		window: winMarco
 	});
 
 	var tabPolo = Ti.UI.createTab({
 		title: 'Polo',
-		icon: 'KS_nav_views.png',
+		icon: 'polo.png',
 		window: winPolo
 	});
 
