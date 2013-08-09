@@ -4,7 +4,6 @@ function findMe() {
 	if (Ti.Geolocation) {
 		Ti.Geolocation.purpose = 'To find current location.';
 		Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_BEST;
-		Ti.Geolocation.distanceFilter = 0;
 
 		Ti.Geolocation.getCurrentPosition(function (e) {
 			if (!e.success || e.error) {
