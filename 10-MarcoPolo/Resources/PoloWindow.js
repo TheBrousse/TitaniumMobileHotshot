@@ -58,7 +58,7 @@ function PoloWindow() {
 
 	self.add(lblStatus);
 
-	btnCheckin.addEventListener('click', function(evt) {
+	btnCheckin.addEventListener('click', function(e) {
 		if (txtPlayerName.value.length < 3) {
 			alert('Please enter a valid name');
 			return;
@@ -72,7 +72,7 @@ function PoloWindow() {
 
 		var placeId = Ti.App.Properties.getString('PLACE_ID', '');
 
-		if (!placeId) {	 // No pace for this user yet
+		if (!placeId) {	 // No place for this user yet
 			Cloud.Places.create({
 				name: txtPlayerName.value,
 				latitude: geo.latitude,
