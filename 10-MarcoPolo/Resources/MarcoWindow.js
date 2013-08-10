@@ -10,9 +10,9 @@ function MarcoWindow() {
 
 	var mapView = Map.createMap();
 
-	self.addEventListener('open', function() {
-		var geo = GeolocationService.findMe();
+	self.add(mapView);
 
+	function updateMap(geo) {
 		Cloud.Places.search({
 			// No params to get everyone
 		}, function(e) {
@@ -38,12 +38,15 @@ function MarcoWindow() {
 		mapView.setRegion({
 			latitude: geo.latitude,
 			longitude: geo.longitude,
-			latitudeDelta: 0.01,
-			longitudeDelta: 0.01
+			animate: true,
+			latitudeDelta:0.75,
+			longitudeDelta:0.75
 		});
-	});
+	}
 
-	self.add(mapView);
+	self.addEventListener('open', function() {
+		GeolocationService.findMe(updateMap);
+	});
 
 	return self;
 }

@@ -58,16 +58,7 @@ function PoloWindow() {
 
 	self.add(lblStatus);
 
-	btnCheckin.addEventListener('click', function(e) {
-		if (txtPlayerName.value.length < 3) {
-			alert('Please enter a valid name');
-			return;
-		}
-
-		Ti.App.Properties.setString('PLAYER_NAME', txtPlayerName.value);
-
-		lblStatus.text = 'Getting location, please wait...';
-		var geo = GeolocationService.findMe()
+	function pushToCloud(geo) {
 		lblStatus.text = geo.status;
 
 		var placeId = Ti.App.Properties.getString('PLACE_ID', '');
@@ -78,8 +69,6 @@ function PoloWindow() {
 				latitude: geo.latitude,
 				longitude: geo.longitude
 			}, function(e) {
-				
-
 				if (e.success) {
 					var place = e.places[0];
 
@@ -104,6 +93,18 @@ function PoloWindow() {
 				}
 			});
 		}
+	}
+
+	btnCheckin.addEventListener('click', function(e) {
+		if (txtPlayerName.value.length < 3) {
+			alert('Please enter a valid name');
+			return;
+		}
+
+		Ti.App.Properties.setString('PLAYER_NAME', txtPlayerName.value);
+
+		lblStatus.text = 'Getting location, please wait...';
+		GeolocationService.findMe(pushToCloud);
 	});
 
 	self.addEventListener('click', function() {

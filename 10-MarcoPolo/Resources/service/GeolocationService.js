@@ -1,4 +1,4 @@
-function findMe() {
+function findMe(callback) {
 	var status,	lat, lon;
 
 	if (Ti.Geolocation) {
@@ -15,6 +15,11 @@ function findMe() {
 				lat = e.coords.latitude;
 				lon = e.coords.longitude;
 			}
+			callback({
+				status: status,
+				longitude: lon,
+				latitude: lat
+			});
 		});
 	} else {
 		Cloud.Clients.geolocate(function (e) {
@@ -27,14 +32,13 @@ function findMe() {
 			else {
 				status = 'GPS lost';
 			}
+			callback({
+				status: status,
+				longitude: lon,
+				latitude: lat
+			});
 		});
 	}
-
-	return {
-		status: status,
-		longitude: lon,
-		latitude: lat
-	};
 }
 
 exports.findMe = findMe;
