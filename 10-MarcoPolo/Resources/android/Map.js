@@ -13,9 +13,9 @@ function createMap() {
 
 function createAnnotation(params) {
 	var pin = MapModule.createAnnotation({
-		latitude: place.latitude,
-		longitude: place.longitude,
-		title: place.name,
+		latitude: params.lat,
+		longitude: params.lon,
+		title: params.title,
 		pincolor: MapModule.ANNOTATION_RED,
 	});
 
