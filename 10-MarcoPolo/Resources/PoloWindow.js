@@ -66,8 +66,8 @@ function PoloWindow() {
 
 		Ti.App.Properties.setString('PLAYER_NAME', txtPlayerName.value);
 
-		lblStatus.text = 'Uploading location, please wait...';
-		var geo = GeolocationService.findMe(lblStatus)
+		lblStatus.text = 'Getting location, please wait...';
+		var geo = GeolocationService.findMe()
 		lblStatus.text = geo.status;
 
 		var placeId = Ti.App.Properties.getString('PLACE_ID', '');
@@ -78,11 +78,13 @@ function PoloWindow() {
 				latitude: geo.latitude,
 				longitude: geo.longitude
 			}, function(e) {
-				var place = e.places[0];
-
-				Ti.App.Properties.setString('PLACE_ID', place.id);
+				
 
 				if (e.success) {
+					var place = e.places[0];
+
+					Ti.App.Properties.setString('PLACE_ID', place.id);
+
 					lblStatus.text = 'Position saved to Cloud!';
 				} else {
 					Ti.API.error(msg);
