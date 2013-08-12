@@ -9,10 +9,10 @@
 	<id>com.packtpub.hotshot.marcopolo</id>
 	<name>Worldwide Marco Polo</name>
 	<version>1.0</version>
-	<publisher>thebrousse</publisher>
+	<publisher>Christian Brousseau</publisher>
 	<url>http://www.packtpub.com</url>
 	<description>not specified</description>
-	<copyright>2013 by thebrousse</copyright>
+	<copyright>2013 by Christian Brousseau</copyright>
 	<icon>appicon.png</icon>
 	<persistent-wifi>false</persistent-wifi>
 	<prerendered-icon>false</prerendered-icon>
