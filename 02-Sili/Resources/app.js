@@ -1,5 +1,5 @@
 if (Ti.version < 1.8 ) {
-	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
+	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');
 }
 
 // User interface (UI) construction
@@ -12,13 +12,13 @@ var win = Ti.UI.createWindow({
 var headerView = Ti.UI.createView({
 	height: '10%',
 	width: '100%',
-	backgroundColor: '#002EB8'
+	backgroundColor: '#cecfce'
 });
 
-headerView.add(Ti.UI.createLabel({ 
-	text: win.title,
+headerView.add(Ti.UI.createLabel({
+	text: 'Sili',
 	left: 7,
-	color: '#ffffff',
+	color: '#84596b',
 	height: Ti.UI.FILL,
 	verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
 	font:{
@@ -29,14 +29,20 @@ headerView.add(Ti.UI.createLabel({
 
 var edit = Titanium.UI.createButton({
 	title: 'Edit',
-	right: 5,
-	visible: true
+	right: 7,
+	visible: true,
+	image: '/images/edit.png',
+	width: 110,
+	style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
 });
 
 var done = Titanium.UI.createButton({
 	title: 'Done',
 	right: 5,
-	visible: false
+	visible: false,
+	image: '/images/done.png',
+	width: 110,
+	style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
 });
 
 headerView.add(edit);
@@ -61,7 +67,7 @@ win.add(recordingsView);
 var buttonView = Ti.UI.createView({
 	width: '100%',
 	height: '25%',
-	backgroundColor: '#404040'
+	backgroundColor: '#cecfce'
 });
 
 var recordButton = Ti.UI.createImageView({
@@ -72,7 +78,7 @@ var recordButton = Ti.UI.createImageView({
 buttonView.add(recordButton);
 win.add(buttonView);
 
-// Make Table view editable to allow file deletion.
+// Make Table view "editable" to allow file deletion.
 edit.addEventListener('click', function(e) {
 	toggleEditMode();
 });
@@ -89,42 +95,48 @@ function toggleEditMode() {
 
 // Table view events
 table.addEventListener('click', function(e) {
-	var sound = Ti.Media.createSound({ 
-		url: e.rowData.fileName 
+	var sound = Ti.Media.createSound({
+		url: e.rowData.fileName
 	});
 	sound.play();
 });
 
 table.addEventListener('delete', function(e) {
 	var fileToDelete = Ti.Filesystem.getFile(e.rowData.fileName);
-	
+
 	Titanium.API.info("deleting file= " +  JSON.stringify(fileToDelete));
 	fileToDelete.deleteFile();
 });
-
-// Load the table view with previously recorded audio files
-loadExistingAudioFiles();
 
 // Record audio file
 Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAY_AND_RECORD;
 
 var APP_DATA_DIR = Ti.Filesystem.applicationDataDirectory;
-var recorder = Ti.Media.createAudioRecorder(); 
+var recorder = Ti.Media.createAudioRecorder();
 recorder.compression = Ti.Media.AUDIO_FORMAT_ULAW;
 recorder.format = Ti.Media.AUDIO_FILEFORMAT_WAVE;
+
+// Load the table view with previously recorded audio files
+loadExistingAudioFiles();
 
 recordButton.addEventListener('click', function(e) {
 	if (recorder.recording) {
 		var buffer = recorder.stop();
 		var newFile =Titanium.Filesystem.getFile(APP_DATA_DIR, new Date().getTime() + '.wav');
-		
+
 		newFile.write(buffer);
-		
+
 		table.setData([]);
 		loadExistingAudioFiles();
 
+		// Switch to bottom speaker
+		Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAYBACK;
+
 		e.source.image = '/images/recording_off.png';
 	} else {
+		// Record audio file
+		Ti.Media.audioSessionMode = Ti.Media.AUDIO_SESSION_MODE_PLAY_AND_RECORD;
+
 		recorder.start();
 		e.source.image = '/images/recording_on.png';
 	}
@@ -141,10 +153,10 @@ function loadExistingAudioFiles() {
 		var ts = new Date(recording.createTimestamp());
 		var rowLabel = String.formatDate(ts, 'medium') + ' - ' + String.formatTime(ts);
 
-		var row = Ti.UI.createTableViewRow({ 
+		var row = Ti.UI.createTableViewRow({
 			title: rowLabel,
 			leftImage: '/images/tape.png',
-			color: '#404040',
+			color: '#b58aa5',
 			className: 'recording',
 			font:{
 				fontSize: '24sp',
@@ -152,7 +164,7 @@ function loadExistingAudioFiles() {
 			},
 			fileName: APP_DATA_DIR + '/' + recording.name
 		});
-		tableData.push(row);	
+		tableData.push(row);
 	}
 
 	table.setData(tableData);
