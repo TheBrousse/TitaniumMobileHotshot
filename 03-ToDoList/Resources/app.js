@@ -12,7 +12,7 @@ var win = Ti.UI.createWindow({
 var headerView = Ti.UI.createView({
 	height: '50dp',
 	width: '100%',
-	backgroundColor: '#885511',
+	backgroundColor: '#447294',
 	layout: 'horizontal',
 	top: 0
 });
@@ -20,10 +20,9 @@ var headerView = Ti.UI.createView({
 var txtTaskName = Ti.UI.createTextField({
 	left: 15,
 	width: '75%',
-	height: Ti.UI.FILL,
 	hintText: 'Enter New Task Name',
-	borderColor: '#000000',
-	backgroundColor: '#ffffff'
+	backgroundColor: '#ffffff',
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 });
 headerView.add(txtTaskName);
 
@@ -39,7 +38,7 @@ btnAdd.addEventListener('click', function(e) {
 });
 
 txtTaskName.addEventListener('return', function() {
-	btnAdd.fireEvent('click');  
+	btnAdd.fireEvent('click');
 });
 
 headerView.add(btnAdd);
@@ -54,14 +53,15 @@ var taskView = Ti.UI.createView({
 var taskList = Ti.UI.createTableView({
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
-	separatorColor: '#bb8888'
+	backgroundColor: '#f8e4cc',
+	separatorColor: '#447294'
 });
 
 taskList.addEventListener('click', function(e) {
 	var todoItem = e.rowData;
 	var isComplete = (todoItem.hasCheck ? 0 : 1);
 
-	db.execute('UPDATE TODO_ITEMS SET IS_COMPLETE = ? WHERE ID = ?', 
+	db.execute('UPDATE TODO_ITEMS SET IS_COMPLETE = ? WHERE ID = ?',
 				isComplete, todoItem.id);
 	refreshTaskList();
 });
@@ -72,7 +72,7 @@ win.add(taskView);
 var buttonBar = Ti.UI.createView({
 	height: '50dp',
 	width: '100%',
-	backgroundColor: '#885511',
+	backgroundColor: '#447294',
 	bottom: 0
 });
 
@@ -86,7 +86,7 @@ if (Ti.Platform.name === 'iPhone OS') {
 		style: Titanium.UI.iPhone.SystemButtonStyle.BAR,
 		index: 0
 	});
-	
+
 	basicSwitch.addEventListener('click', function(e) {
 		toggleAllTasks(e.index === 0);
 	});
@@ -97,7 +97,7 @@ if (Ti.Platform.name === 'iPhone OS') {
 		titleOn: 'All',
 		titleOff: 'Active'
 	});
-	
+
 	basicSwitch.addEventListener('change', function(e) {
 		toggleAllTasks(e.value === true);
 	});
@@ -121,7 +121,7 @@ win.add(buttonBar);
 
 // Make sure the dababase is closed when the app exits
 win.addEventListener('close', function() {
-	db.close(); 
+	db.close();
 });
 
 refreshTaskList();
@@ -141,15 +141,15 @@ function refreshTaskList() {
 
 	while (rows.isValidRow()) {
 		var isComplete = rows.fieldByName('IS_COMPLETE');
-		
+
 		data.push({
 			title: '' + rows.fieldByName('NAME') + '',
 			hasCheck: (isComplete===1) ? true : false,
 			id: rows.fieldByName('ID'),
-			color: '#bbaaaa',
+			color: '#153450',
 			className: 'task'
 		});
-		
+
 		rows.next();
 	};
 
@@ -161,10 +161,10 @@ function toggleAllTasks(showAll) {
 		refreshTaskList();
 	} else {
 		var section = taskList.data[0];
-		
+
 		for (var i = 0; i < section.rowCount; i++) {
 			var row = section.rows[i];
-			
+
 			if (row.hasCheck) {
 				taskList.deleteRow(i);
 			}
