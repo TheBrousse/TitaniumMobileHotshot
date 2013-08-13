@@ -1,5 +1,5 @@
 if (Ti.version < 1.8 ) {
-	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
+	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');
 }
 
 var win = Ti.UI.createWindow({
@@ -35,7 +35,7 @@ var Stopwatch = require('stopwatch');
 var stopWatch = new Stopwatch(stopwatchListener, 10);
 
 function stopwatchListener(watch) {
-	label.text = watch.toString(); 
+	label.text = watch.toString();
 }
 
 // Container view for buttons
@@ -55,7 +55,8 @@ var buttonStopReset = Ti.UI.createButton({
 	font: {
 		fontSize: '25sp',
 		fontWeight: 'bold'
-	}
+	},
+	style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
 });
 
 buttonsView.add(buttonStopReset);
@@ -70,7 +71,8 @@ var buttonStartLap = Ti.UI.createButton({
 	font: {
 		fontSize: '25sp',
 		fontWeight: 'bold'
-	}
+	},
+	style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
 });
 
 buttonsView.add(buttonStartLap);
@@ -100,8 +102,8 @@ buttonStartLap.addEventListener('click', function(e) {
 				fontSize: '24sp',
 				fontWeight: 'bold'
 			}
-		});			
-		
+		});
+
 		table.appendRow(row);
 	} else {
 		// If the clock is not ticking, then we start it
