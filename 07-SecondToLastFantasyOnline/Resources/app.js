@@ -4,8 +4,7 @@ var win = Ti.UI.createWindow({ backgroundColor: 'black' });
 var quicktigame2d = require('com.googlecode.quicktigame2d');
 var io = require('socket.io'),
 
-SERVER_URI = 'ws://78.251.51.238:8080/';
-//SERVER_URI = 'ws://secondtolastfantasy-cbrousseau.rhcloud.com:8000/';
+SERVER_URI = 'ws://127.0.0.1:8080/';
 
 // Connect to the Game Server
 var socket = io.connect(SERVER_URI);
@@ -223,7 +222,7 @@ game.addEventListener('onload', function(e) {
 	}
 
 	var heroView = new HeroSelectionView(heroSelectedCallback);
-	
+
 	win.add(heroView);
 
 });
