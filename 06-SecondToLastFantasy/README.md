@@ -1,18 +1,13 @@
-Welcome to your Appcelerator Titanium Mobile Project
+# Chapter 6: J-RPG, make your own adventure game 
+![Screenshot](../screenshots/app06.png)
 
-This is a blank project.  Start by editing your application's app.js to 
-make your first mobile project using Titanium.
+This chapter guides the reader in creating a native mobile game. The game slows players to roam around a map from a tip view perspective, much like a classic Japanese RPG. It covers graphics manipulation and touch control.
 
+###Topics covered: 
+- Creating the map  
+- Creating the main character 
+- Having him move around the map
+- Loading game assets into a game
+- Interacting with the game using touch events
 
-
-----------------------------------
-Stuff our legal folk make us say:
-
-Appcelerator, Appcelerator Titanium and associated marks and logos are 
-trademarks of Appcelerator, Inc. 
-
-Titanium is Copyright (c) 2008-2013 by Appcelerator, Inc. All Rights Reserved.
-
-Titanium is licensed under the Apache Public License (Version 2). Please
-see the LICENSE file for the full license.
-
+By the end of this chapter, readers will have a barebones game that allows the player to move freely around the map. 

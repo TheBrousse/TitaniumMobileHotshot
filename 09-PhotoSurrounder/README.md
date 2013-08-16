@@ -1,18 +1,12 @@
-Welcome to your Appcelerator Titanium Mobile Project
+# Chapter 9: Photos taken around your location 
+![Screenshot](../screenshots/app09.png)
 
-This is a blank project.  Start by editing your application's app.js to 
-make your first mobile project using Titanium.
+This chapter guides the reader in creating an application that shows online pictures that were taken near the device’s current location. It covers location services, web API calls and Photo Gallery integration.
 
+###Topics covered:
+- Getting device’s coordinates
+- Retrieving photos based on nearby locations
+- Displaying the pictures
+- Saving the desired pictures to the Image Gallery
 
-
-----------------------------------
-Stuff our legal folk make us say:
-
-Appcelerator, Appcelerator Titanium and associated marks and logos are 
-trademarks of Appcelerator, Inc. 
-
-Titanium is Copyright (c) 2008-2013 by Appcelerator, Inc. All Rights Reserved.
-
-Titanium is licensed under the Apache Public License (Version 2). Please
-see the LICENSE file for the full license.
-
+By the end of this chapter, readers will have an application that allows them to view different pictures based on their location. Also, if they like a picture, they can also save this picture to the device’s Photo Gallery.

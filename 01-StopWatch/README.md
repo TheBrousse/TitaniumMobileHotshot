@@ -1,14 +1,7 @@
-Welcome to your Appcelerator Titanium Mobile Project
+# Chapter 1: Stopwatch 
+###(with Lap Counter) 
+![Screenshot](../screenshots/app01.png)
 
-This is a single window application with a single view - a mostly blank canvas. Requires Titanium Mobile SDK 1.8.0+
-
-----------------------------------
-Stuff our legal folk make us say:
-
-Appcelerator, Appcelerator Titanium and associated marks and logos are 
-trademarks of Appcelerator, Inc. 
-
-Titanium is Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
-
-Titanium is licensed under the Apache Public License (Version 2). Please
-see the LICENSE file for the full license.
+This chapter guides the reader in creating a standalone Stopwatch application. This first application is pretty straight forward, but it covers the interaction between user interface elements as well a data-structures. 
+###Topics covered:- Starting and stopping the stopwatch- Displaying current time with big numbers- Storing time on new each lap- Listing lap times- Resetting the timer
+By the end of this chapter, readers will have fully functional Stopwatch application with the ability to see the time for each lap. 

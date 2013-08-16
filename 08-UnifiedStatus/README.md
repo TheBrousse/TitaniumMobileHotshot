@@ -1,18 +1,14 @@
-Welcome to your Appcelerator Titanium Mobile Project
+# Chapter 8: Post your status both on Facebook and Twitter
+![Screenshot](../screenshots/app08.png)
 
-This is a blank project.  Start by editing your application's app.js to 
-make your first mobile project using Titanium.
+This chapter guides the reader in creating a social application that allows for posting their update status on Facebook and Twitter in a single click. It covers application preferences, social network authentication and integration.
 
+###Topics covered:
+- Entering credentials using preferences window
+- Authenticating to Facebook
+- Authenticating to Twitter
+- Posting the status to the world
+- Allowing destination selection (Just Facebook, just Twitter or both)
+- Saving application settings using preferences window
 
-
-----------------------------------
-Stuff our legal folk make us say:
-
-Appcelerator, Appcelerator Titanium and associated marks and logos are 
-trademarks of Appcelerator, Inc. 
-
-Titanium is Copyright (c) 2008-2013 by Appcelerator, Inc. All Rights Reserved.
-
-Titanium is licensed under the Apache Public License (Version 2). Please
-see the LICENSE file for the full license.
-
+By the end of this chapter, readers will have an application that allows them to enter their credentials for both Facebook and Twitter. From there, they will be able to post their online status to each social network. (or both at the same time) 

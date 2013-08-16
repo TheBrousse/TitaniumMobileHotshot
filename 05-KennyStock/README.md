@@ -1,14 +1,14 @@
-Welcome to your Appcelerator Titanium Mobile Project
+# Chapter 5: You've got to know when to hold 'em 
+![Screenshot](../screenshots/app05.png)
 
-This is a single window application with a single view - a mostly blank canvas. Requires Titanium Mobile SDK 1.8.0+
+This chapter guides the reader in creating a standalone Stock Portfolio application. It allows users to organize stocks (price and quantity). From there, the user selects an amount of money he wants to gain through his “investments”. The application will periodically retrieve stock prices from the web and calculate the sum of money earned. It will then indicate how far (or close) he is from his objective. It covers http API calls, Property persistence as well as a custom UI Control.
 
-----------------------------------
-Stuff our legal folk make us say:
+###Topics covered:
+- Retrieving a stock value from the web
+- Adding a stock to the Portfolio
+- Determining the objective
+- Retrieving all portfolio stock values
+- Displaying investment progress
 
-Appcelerator, Appcelerator Titanium and associated marks and logos are 
-trademarks of Appcelerator, Inc. 
+By the end of this chapter, readers will have an application that allows them to manage their stock portfolio as well as knowing when it is time to sell (or not).
 
-Titanium is Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
-
-Titanium is licensed under the Apache Public License (Version 2). Please
-see the LICENSE file for the full license.

@@ -1,18 +1,14 @@
-Welcome to your Appcelerator Titanium Mobile Project
+# Chapter 2: Silly, the assistant that just listens…
+![Screenshot](../screenshots/app02.png)
 
-This is a blank project.  Start by editing your application's app.js to 
-make your first mobile project using Titanium.
+This chapter guides the reader in creating a voice recorder application. While Siri “interprets” what the user is saying. This application simply “listens” by storing the recordings on the device for later use. It covers media management s well as file system access on the device.
 
+###Topics covered:
+- Recording and saving the message in a single button press
+- Playing back the recorded message
+- Storing more than one recording
+- Listing all stored recordings
+- Selecting and playing a specific recording
+- Deleting a specific recording
 
-
-----------------------------------
-Stuff our legal folk make us say:
-
-Appcelerator, Appcelerator Titanium and associated marks and logos are 
-trademarks of Appcelerator, Inc. 
-
-Titanium is Copyright (c) 2008-2012 by Appcelerator, Inc. All Rights Reserved.
-
-Titanium is licensed under the Apache Public License (Version 2). Please
-see the LICENSE file for the full license.
-
+By the end of this chapter, readers will have a fully featured voice recorder application where they can listen to their stored recordings on-demand. 
