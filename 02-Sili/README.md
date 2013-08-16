@@ -1,4 +1,5 @@
-# Chapter 2: Silly, the assistant that just listens…
+# Chapter 2
+## Silly, the assistant that just listens…
 ![Screenshot](../screenshots/app02.png)
 
 This chapter guides the reader in creating a voice recorder application. While Siri “interprets” what the user is saying. This application simply “listens” by storing the recordings on the device for later use. It covers media management s well as file system access on the device.

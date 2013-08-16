@@ -1,4 +1,5 @@
-# Chapter 5: You've got to know when to hold 'em 
+# Chapter 5
+## You've got to know when to hold 'em 
 ![Screenshot](../screenshots/app05.png)
 
 This chapter guides the reader in creating a standalone Stock Portfolio application. It allows users to organize stocks (price and quantity). From there, the user selects an amount of money he wants to gain through his “investments”. The application will periodically retrieve stock prices from the web and calculate the sum of money earned. It will then indicate how far (or close) he is from his objective. It covers http API calls, Property persistence as well as a custom UI Control.

@@ -1,4 +1,5 @@
-# Chapter 10: Worldwide Marco Polo 
+# Chapter 10
+## Worldwide Marco Polo 
 ![Screenshot](../screenshots/app10.png)
 
 TThis chapter guides the reader in creating a social application that allows users to “check-in” a location based on the device’s location. And then, share this check-in to the world using Appcelerator Cloud Services. It covers location services, Cloud integration and map view.

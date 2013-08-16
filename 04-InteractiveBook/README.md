@@ -1,4 +1,5 @@
-# Chapter 4: Interactive eBook for iPad
+# Chapter 4
+## Interactive eBook for iPad
 ![Screenshot](../screenshots/app04.png)
 
 This chapter guides the reader in creating an interactive electronic book (eBook) application with realistic page flipping. (Pretty much like a real book) This is an iPad specific application in order to benefit from the large screen resolution. It covers the integration and utilization of a native module as well a rich media presentation.
