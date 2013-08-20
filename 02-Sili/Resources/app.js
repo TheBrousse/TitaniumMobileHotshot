@@ -124,7 +124,7 @@ recordButton.addEventListener('click', function(e) {
 		var buffer = recorder.stop();
 		var newFile =Titanium.Filesystem.getFile(APP_DATA_DIR, new Date().getTime() + '.wav');
 
-		newFile.remoteBackup = false;
+		newFile.remoteBackup = true;
 		newFile.write(buffer);
 
 		table.setData([]);
