@@ -14,7 +14,7 @@
     <version>1.0</version>
     <publisher>Christian Brousseau</publisher>
     <url>http://www.packtpub.com</url>
-    <description>not specified</description>
+    <description>This chapter guides the reader in creating a standalone Stopwatch application. This first application is pretty straight forward, but it covers the interaction between user interface elements as well a data-structures.</description>
     <copyright>2013 by Christian Brousseau</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>

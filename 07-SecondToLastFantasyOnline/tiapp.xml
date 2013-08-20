@@ -5,7 +5,7 @@
     <version>1.0</version>
     <publisher>Christian Brousseau</publisher>
     <url>http://www.packtpub.com</url>
-    <description>not specified</description>
+    <description>This chapter guides the reader in adding online multiplayer functionality to a game. For the intent of this chapter, it reuses the code from the game created in chapter 6. It covers network interaction, intervals and testing.</description>
     <copyright>2013 by Christian Brousseau</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>

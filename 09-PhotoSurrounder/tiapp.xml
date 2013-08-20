@@ -5,7 +5,7 @@
     <version>1.0</version>
     <publisher>Christian Brousseau</publisher>
     <url>http://www.packtpub.com</url>
-    <description>not specified</description>
+    <description>This chapter guides the reader in creating an application that shows online pictures that were taken near the device’s current location. It covers location services, web API calls and Photo Gallery integration.</description>
     <copyright>2013 by Christian Brousseau</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>

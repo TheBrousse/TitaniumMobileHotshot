@@ -14,7 +14,7 @@
     <version>1.0</version>
     <publisher>Christian Brousseau</publisher>
     <url>http://www.packtpub.com</url>
-    <description>not specified</description>
+    <description>This chapter guides the reader in creating a voice recorder application. While Siri “interprets” what the user is saying. This application simply “listens” by storing the recordings on the device for later use. It covers media management s well as file system access on the device.</description>
     <copyright>2013 by Christian Brousseau</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>

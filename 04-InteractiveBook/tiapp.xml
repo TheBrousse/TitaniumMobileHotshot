@@ -14,7 +14,7 @@
     <version>1.0</version>
     <publisher>Christian Brousseau</publisher>
     <url>http://www.packtpub.com</url>
-    <description>not specified</description>
+    <description>This chapter guides the reader in creating an interactive electronic book (eBook) application with realistic page flipping. (Pretty much like a real book) This is an iPad specific application in order to benefit from the large screen resolution. It covers the integration and utilization of a native module as well a rich media presentation.</description>
     <copyright>2012 by Christian Brousseau</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>

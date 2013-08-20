@@ -11,7 +11,7 @@
 	<version>1.0</version>
 	<publisher>Christian Brousseau</publisher>
 	<url>http://www.packtpub.com</url>
-	<description>not specified</description>
+	<description>This chapter guides the reader in creating a social application that allows users to “check-in” a location based on the device’s location. And then, share this check-in to the world using Appcelerator Cloud Services. It covers location services, Cloud integration and map view.</description>
 	<copyright>2013 by Christian Brousseau</copyright>
 	<icon>appicon.png</icon>
 	<persistent-wifi>false</persistent-wifi>
