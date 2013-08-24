@@ -237,8 +237,8 @@ win.addEventListener('android:back', function(e) {
 function updateVpad() {
 	if (isVpadActive) {
 		// Is the character moving fast or slow?
-		var powerX = (touchX - (vpad.x + (vpad.width  * 0.5))) * 0.2;
-		var powerY = (touchY - (vpad.y + (vpad.height * 0.5))) * 0.2;
+		var speedX = (touchX - (vpad.x + (vpad.width  * 0.5))) * 0.2;
+		var speedY = (touchY - (vpad.y + (vpad.height * 0.5))) * 0.2;
 
 		vpad.color(0.78, 0.78, 0.78);
 		vpad_nav.x = touchX - (vpad_nav.width  * 0.5);
@@ -247,19 +247,19 @@ function updateVpad() {
 
 		// Change animation of the hero's sprite
 		// Is the wanted direction more vertical or horizontal
-		if (Math.abs(powerX) > Math.abs(powerY)) { // Horizontal
-			heroDirection = (powerX < 0) ? "LEFT" : "RIGHT";
+		if (Math.abs(speedX) > Math.abs(speedY)) { // Horizontal
+			heroDirection = (speedX < 0) ? "LEFT" : "RIGHT";
 		} else { // Vertical
-			heroDirection = (powerY < 0) ? "UP" : "DOWN";
+			heroDirection = (speedY < 0) ? "UP" : "DOWN";
 		}
 
 		hero.turnTowards(heroDirection);
 
-		var nextHeroX = hero.x + powerX;
-		var nextHeroY = hero.y + powerY;
+		var nextHeroX = hero.x + speedX;
+		var nextHeroY = hero.y + speedY;
 
-		var nextMapX = map.x - powerX;
-		var nextMapY = map.y - powerY;
+		var nextMapX = map.x - speedX;
+		var nextMapY = map.y - speedY;
 
 		// move hero and map layers
 		if (nextHeroX > 0 && nextHeroX < (game.screen.width  - hero.width)) {
