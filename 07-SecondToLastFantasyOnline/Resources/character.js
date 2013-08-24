@@ -21,20 +21,20 @@ function Character(scene, spriteSheet) {
 
 	self.halt = function() {
 		switch (self.direction) {
-		case "UP":
-			self.pauseAt(13);
-			break;
-		case "DOWN":
-			self.pauseAt(0);
-			break;
-		case "LEFT":
-			self.pauseAt(4);
-			break;
-		case "RIGHT":
-			self.pauseAt(8);
-			break;
-		default:
-			self.pauseAt(0);
+			case "UP":
+				self.pauseAt(13);
+				break;
+			case "DOWN":
+				self.pauseAt(0);
+				break;
+			case "LEFT":
+				self.pauseAt(4);
+				break;
+			case "RIGHT":
+				self.pauseAt(8);
+				break;
+			default:
+				self.pauseAt(0);
 		}
 	};
 
