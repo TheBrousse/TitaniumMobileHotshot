@@ -29,22 +29,11 @@ function PhotoViewerWindow(itemId) {
 	});
 	header.add(btnBack);
 
-	if (!Ti.Android) {
-		var btnSave = Ti.UI.createImageView({
-			image: 'save.png',
-			right: 3
-		});
-		header.add(btnSave);
-
-		btnSave.addEventListener('click', function() {
-			Ti.Media.saveToPhotoGallery(photoView.toBlob());
-
-			Ti.UI.createAlertDialog({
-				title: 'Photo Gallery',
-				message: 'This photo has been added to your photo gallery'
-			}).show();
-		});
-	}
+	var btnSave = Ti.UI.createImageView({
+		image: 'save.png',
+		right: 3
+	});
+	header.add(btnSave);
 
 	self.add(header);
 
@@ -55,6 +44,32 @@ function PhotoViewerWindow(itemId) {
 	});
 
 	self.add(photoView);
+
+	btnSave.addEventListener('click', function() {
+		if (Ti.Android) {
+			var tempDir = Ti.Filesystem.externalStorageDirectory;
+			var newFile =Ti.Filesystem.getFile(tempDir, new Date().getTime() + '.jpg');
+			var f = photoView.toImage();
+
+			newFile.write(f.media);
+
+			Ti.Media.Android.scanMediaFiles([newFile.nativePath], null, function(e) { });
+
+			var toast = Ti.UI.createNotification({
+			    message: 'This photo has been added to your photo gallery',
+			    duration: Ti.UI.NOTIFICATION_DURATION_LONG
+			});
+			toast.show();
+		} else {
+			Ti.Media.saveToPhotoGallery(photoView.toBlob());
+
+			Ti.UI.createAlertDialog({
+				title: 'Photo Gallery',
+				message: 'This photo has been added to your photo gallery'
+			}).show();
+
+		}
+	});
 
 	btnBack.addEventListener('click', function() {
 		self.close();
