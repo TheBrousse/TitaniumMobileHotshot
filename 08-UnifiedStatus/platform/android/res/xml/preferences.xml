@@ -12,7 +12,7 @@
 		<CheckBoxPreference
 			android:title="Twitter"
 			android:defaultValue="false"
-			android:summary="Your messages will be published on your Twitter feed"
+			android:summary="Your messages will be published in your Twitter feed"
 			android:key="twitter_preference" />
 	</PreferenceCategory>
 
