@@ -168,7 +168,7 @@ function ApplicationWindow() {
 						+ '&extras=geo%2Curl_t%2Curl_n&format=json&nojsoncallback=1');
 			xhr.send();
 		});
-	}
+	};
 
 	return self;
 };
