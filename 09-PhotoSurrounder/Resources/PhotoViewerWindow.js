@@ -54,21 +54,14 @@ function PhotoViewerWindow(itemId) {
 			newFile.write(f.media);
 
 			Ti.Media.Android.scanMediaFiles([newFile.nativePath], null, function(e) { });
-
-			var toast = Ti.UI.createNotification({
-			    message: 'This photo has been added to your photo gallery',
-			    duration: Ti.UI.NOTIFICATION_DURATION_LONG
-			});
-			toast.show();
 		} else {
 			Ti.Media.saveToPhotoGallery(photoView.toBlob());
-
-			Ti.UI.createAlertDialog({
-				title: 'Photo Gallery',
-				message: 'This photo has been added to your photo gallery'
-			}).show();
-
 		}
+
+		Ti.UI.createAlertDialog({
+			title: 'Photo Gallery',
+			message: 'This photo has been added to your photo gallery'
+		}).show();
 	});
 
 	btnBack.addEventListener('click', function() {
