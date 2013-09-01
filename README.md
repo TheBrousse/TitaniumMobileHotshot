@@ -1,7 +1,9 @@
-Appcelerator Titanium Mobile Hotshot
+Creating Mobile Apps with Appcelerator Titanium
 ====================================
 
 Appcelerator Titanium Mobile Hotshot will show you how to develop ten complete, fully featured mobile applications using a practical and hands-on approach. Get inspiration for developing you own applications with this book.
+
+![Book Cover](9267.png)
 
 Chapter | Title
 --- | ---
