@@ -2,13 +2,13 @@
 // ****************************************************************************************************************
 // test value can be 'raw' | 'socket.io' | 'nowjs'
 
-var test = 'raw', 
+var test = 'raw',
 
 // ****************************************************************************************************************
 // ****************************************************************************************************************
 // REMEMBER to change this with your data
 
-uri = 'ws://<IP:URL>:<PORT>'; 
+uri = 'ws://<IP:URL>:<PORT>';
 
 // ****************************************************************************************************************
 // ****************************************************************************************************************
@@ -32,7 +32,7 @@ if ('raw' === test) {
 	WS.addEventListener('message', function (ev) {
 		Ti.API.log(ev);
 	});
-	
+
 	WS.open(uri);
 }
 
@@ -43,9 +43,9 @@ if ('raw' === test) {
 else if ('socket.io' === test) {
 	var io = require('socket.io'),
 	socket = io.connect(uri);
-	
+
 	socket.on('connect', function () {
-		Ti.API.log('connected!')
+		Ti.API.log('connected!');
 	});
 }
 
@@ -62,11 +62,11 @@ else if ('nowjs' === test) {
 	});
 
 	now.core.on('error', function () {
-		Ti.API.error('error!')
+		Ti.API.error('error!');
 	});
 
 	now.core.on('ready', function () {
-		Ti.API.log('now is now ready')
+		Ti.API.log('now is now ready');
 	});
 
 	now.core.on('disconnect', function () {

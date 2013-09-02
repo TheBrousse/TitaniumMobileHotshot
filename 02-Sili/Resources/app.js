@@ -147,7 +147,7 @@ function loadExistingAudioFiles() {
 	// Read the audio files from device
 	var dir = Ti.Filesystem.getFile(APP_DATA_DIR);
 	var files = dir.getDirectoryListing();
-	var tableData = []
+	var tableData = [];
 
 	for (var i = 0; i < files.length; i++) {
 		var recording = Ti.Filesystem.getFile(APP_DATA_DIR, files[i]);

@@ -219,7 +219,7 @@ game.addEventListener('onload', function(e) {
 			id: hero.id,
 			image: hero.image.replace('assets/', '')
 		});
-	}
+	};
 
 	var heroView = new HeroSelectionView(heroSelectedCallback);
 
@@ -275,7 +275,7 @@ function updateVpad() {
 			map_items.y = map.y;
 		}
 
-		drawOtherPlayers()
+		drawOtherPlayers();
 
 		// Send absolute coordinated to the server
 		socket.emit('move', {

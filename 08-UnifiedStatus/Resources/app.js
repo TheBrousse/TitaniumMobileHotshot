@@ -50,7 +50,7 @@ txtStatus.addEventListener('change', function(e) {
 	if (e.value.length > 120) {
 		lblCount.color = '#ff0000';
 	} else {
-		lblCount.color = '#fff'
+		lblCount.color = '#fff';
 	}
 
 	btnPost.enabled = !(e.value.length === 0);
@@ -101,7 +101,7 @@ var twitView = Ti.UI.createImageView({
 });
 
 twitView.addEventListener('click', function() {
-	toggleTwitter(!twitter.isAuthorized())
+	toggleTwitter(!twitter.isAuthorized());
 });
 
 bottomView.add(twitView);

@@ -60,7 +60,7 @@ function Character(scene, spriteSheet) {
 			}
 			self.direction = newDirection;
 		}
-	}
+	};
 
 	self.say = function(caption) {
 		textsprite.text = caption;
@@ -70,8 +70,8 @@ function Character(scene, spriteSheet) {
 
 		textsprite.show();
 
-		setTimeout(function() { textsprite.hide() }, 5000);
-	}
+		setTimeout(function() { textsprite.hide(); }, 5000);
+	};
 
 	scene.add(self);
 	scene.add(textsprite);
