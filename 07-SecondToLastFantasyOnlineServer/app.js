@@ -33,7 +33,7 @@ function leanify(p) {
     }
     
     if (p.caption) {
-        leanPlayer.caption = caption;
+        leanPlayer.caption = p.caption;
     }
 
     return leanPlayer;
