@@ -1,6 +1,6 @@
 function ChatView(callback) {
     var self = Ti.UI.createView({
-        top: 150,
+        top: 80,
         backgroundColor: 'black',
         opacity: 0.9,
         height: 170,
@@ -50,7 +50,7 @@ function ChatView(callback) {
     btnSay.addEventListener('click', function(e) {
         txtSay.blur();
         callback(txtSay.value);
-        
+
         txtSay.value = '';
 
         self.hide();
