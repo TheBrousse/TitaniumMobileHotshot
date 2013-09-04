@@ -14,3 +14,6 @@ This chapter guides the reader in creating a social application that allows user
 - Displaying retrieved “Check-ins” on a MapView
 
 By the end of this chapter, readers will have a complete application that allows them to “Check-into” a location and see on a Map others who checked-in nearby also using the app. 
+
+###Appcelerator Cloud Services
+This application uses Appcelerator Cloud Module (ACS) to store and retrieve its information. All of its features is detailed in the [official Titanium Documentation](http://docs.appcelerator.com/cloud/latest/).

@@ -11,3 +11,6 @@ This chapter guides the reader in creating an application that shows online pict
 - Saving the desired pictures to the Image Gallery
 
 By the end of this chapter, readers will have an application that allows them to view different pictures based on their location. Also, if they like a picture, they can also save this picture to the device’s Photo Gallery.
+
+###Flickr API
+All images retrieved by the application come from the Flickr API. All the detailed information regarding each function is contained in their [developer website](http://www.flickr.com/services/api/).

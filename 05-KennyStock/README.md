@@ -13,3 +13,6 @@ This chapter guides the reader in creating a standalone Stock Portfolio applicat
 
 By the end of this chapter, readers will have an application that allows them to manage their stock portfolio as well as knowing when it is time to sell (or not).
 
+###Web Service
+All stock prices from this chapter are retrieved using a public Web Service provided by a company named Markit On Demand. The complete API documentation is available on their [developer website](http://dev.markitondemand.com).
+
