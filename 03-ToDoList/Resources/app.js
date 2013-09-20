@@ -82,9 +82,9 @@ if (!Ti.Android) {
 	basicSwitch = Ti.UI.iOS.createTabbedBar({
 		labels: ['All', 'Active'],
 		left: 5,
-		backgroundColor: buttonBar.backgroundColor,
+		backgroundColor: '#e9e9e9',
 		style: Titanium.UI.iPhone.SystemButtonStyle.BAR,
-		index: 0
+		index: 0,
 	});
 
 	basicSwitch.addEventListener('click', function(e) {
@@ -107,7 +107,8 @@ buttonBar.add(basicSwitch);
 
 var btnClearComplete = Ti.UI.createButton({
 	title: 'Clear Complete',
-	right: 5
+	right: 5,
+	color: '##e9e9e9'
 });
 
 btnClearComplete.addEventListener('click', function(e) {
