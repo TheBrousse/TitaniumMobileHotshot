@@ -1,5 +1,5 @@
 # Chapter 8
-## Post your status both on Facebook and Twitter
+## Social Networks
 ![Screenshot](../screenshots/app08.png)
 
 This chapter guides the reader in creating a social application that allows for posting their update status on Facebook and Twitter in a single click. It covers application preferences, social network authentication and integration.
