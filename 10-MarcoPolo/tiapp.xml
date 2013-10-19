@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <property name="[YOUR_PRODUCTION_ACS_OAUTH_SECRET]" type="string">uN06qi2AZbVVxdVc83UDa1MUFlHCXa5e</property>
-    <property name="[YOUR_PRODUCTION_ACS_OAUTH_KEY]" type="string">7xZZrYTosjexI6e4NfjcNpvunS02wwWt</property>
-    <property name="[YOUR_PRODUCTION_ACS_API_KEY]" type="string">9peueAOz7brB7Lafs9DGZ1KsHuuq3rxg</property>
-    <property name="[YOUR_DEVELOPMENT_ACS_OAUTH_SECRET]" type="string">3fukwUfRml6x77HBs9WkXrUytVu4Lxru</property>
-    <property name="[YOUR_DEVELOPMENT_ACS_OAUTH_KEY]" type="string">lWUZ9wdPPALyYkDkvIABsDMD00WCcEcM</property>
-    <property name="[YOUR_DEVELOPMENT_ACS_API_KEY]" type="string">VRussrXK2mLBAzrme8A3DFoHPPbgOi4w</property>
+    <property name="acs-oauth-secret-production" type="string">[YOUR_PRODUCTION_ACS_OAUTH_SECRET]</property>
+    <property name="acs-oauth-key-production" type="string">[YOUR_PRODUCTION_ACS_OAUTH_KEY]</property>
+    <property name="acs-api-key-production" type="string">[YOUR_PRODUCTION_ACS_API_KEY]</property>
+    <property name="acs-oauth-secret-development" type="string">[YOUR_DEVELOPMENT_ACS_OAUTH_SECRET]</property>
+    <property name="acs-oauth-key-development" type="string">[YOUR_DEVELOPMENT_ACS_OAUTH_KEY]</property>
+    <property name="acs-api-key-development" type="string">[YOUR_DEVELOPMENT_ACS_API_KEY]</property>
     <id>com.packtpub.hotshot.marcopolo</id>
     <name>Worldwide Marco Polo</name>
     <version>1.0</version>
