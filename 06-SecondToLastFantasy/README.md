@@ -1,5 +1,5 @@
 # Chapter 6
-## J-RPG, make your own adventure game 
+## J-RPG - Second to Last Fantasy
 ![Screenshot](../screenshots/app06.png)
 
 This chapter guides the reader in creating a native mobile game. The game slows players to roam around a map from a top view perspective, much like a classic Japanese RPG. It covers graphics manipulation and touch control.

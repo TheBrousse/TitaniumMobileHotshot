@@ -1,5 +1,5 @@
 # Chapter 7
-## JRPG Second to Last Fantasy Online
+## JRPG - Second to Last Fantasy Online
 ![Screenshot](../screenshots/app07.png)
 
 This chapter guides the reader in adding online multiplayer functionality to a game. For the intent of this chapter, it reuses the code from the game created in chapter 6. It covers network interaction, intervals and testing.

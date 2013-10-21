@@ -1,5 +1,5 @@
 # Chapter 9
-## Photos taken around your location 
+## Marvels of the World Around Us
 ![Screenshot](../screenshots/app09.png)
 
 This chapter guides the reader in creating an application that shows online pictures that were taken near the device’s current location. It covers location services, web API calls and Photo Gallery integration.
