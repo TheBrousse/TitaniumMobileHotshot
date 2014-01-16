@@ -163,11 +163,13 @@ function toggleAllTasks(showAll) {
 	} else {
 		var section = taskList.data[0];
 
-		for (var i = 0; i < section.rowCount; i++) {
-			var row = section.rows[i];
+		if (section) {
+			for (var i = 0; i < section.rowCount; i++) {
+				var row = section.rows[i];
 
-			if (row.hasCheck) {
-				taskList.deleteRow(i);
+				if (row.hasCheck) {
+					taskList.deleteRow(i);
+				}
 			}
 		}
 	}
